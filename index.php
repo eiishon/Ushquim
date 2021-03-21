@@ -2,6 +2,8 @@
 require_once __DIR__.'/app/Config.php';
 require_once __DIR__.'/app/Model.php';
 require_once __DIR__.'/app/controlador/Controller.php';
+session_start();
+$_SESSION['user_lvl'] = 0;
 
 $map = array(
       'inicio' => array('controller' => 'Controller', 'action' => 'inicio', 'user_lvl' => 0),
@@ -12,6 +14,7 @@ $map = array(
       'perfil' => array('controller' => 'Controller', 'action' => 'perfil', 'user_lvl' => 1),
       'editar_perfil' => array('controller' => 'Controller', 'action' => 'editar_perfil', 'user_lvl' => 1),
       'guardados' => array('controller' => 'Controller', 'action' => 'guardados', 'user_lvl' => 1),
+      'cerrarsesion' => array('controller' => 'Controller', 'action' => 'cerrarsesion', 'user_lvl' => 1),
       'error' => array('controller' => 'Controller', 'action' => 'error', 'user_lvl' => 0)
 );
 
