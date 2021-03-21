@@ -20,7 +20,7 @@
         <?php echo $contenido ?>
     </div>
     <div id="pie">
-        <div align="center">- Ushquim 2021 -</div>
+        <div align="center">Ushquim 2021</div>
     </div>
 </body>
 
