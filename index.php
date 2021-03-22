@@ -1,7 +1,7 @@
 <?php
-require_once __DIR__.'/app/Config.php';
-require_once __DIR__.'/app/Model.php';
-require_once __DIR__.'/app/controlador/Controller.php';
+require_once __DIR__.'/app/mvc/Config.php';
+require_once __DIR__.'/app/mvc/Model.php';
+require_once __DIR__.'/app/mvc/Controller.php';
 session_start();
 $_SESSION['user_lvl'] = 0;
 
