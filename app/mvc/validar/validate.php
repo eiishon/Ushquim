@@ -37,9 +37,9 @@ class Validacion
                                 $this,
                                 $validator
                             ))) {
-                                throw new BadMethodCallException("No se encontro el metodo $valores");
+      //                          throw new BadMethodCallException("No se encontro el metodo $valores");
                             }
-                            $respuesta = $this->$validator($rules['name'], $valor);
+   //                         $respuesta = $this->$validator($rules['name'], $valor);
                         }
                         break;
                     }
@@ -102,7 +102,7 @@ class Validacion
      * y llena el atributo validacion::$mensaje con un arreglo indicando el campo que mostrara el mensaje y el
      * mensaje que visualizara el usuario
      */
-    protected function _numeric($campo, $valor)
+   /* protected function _numeric($campo, $valor)
     {
         if (is_numeric($valor)) {
             return true;
@@ -110,7 +110,7 @@ class Validacion
             $this->mensaje[$campo][] = "el campo $campo debe de ser numerico";
             return false;
         }
-    }
+    } */
     
     /**
      * Metodo de verificacion de tipo email

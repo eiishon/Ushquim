@@ -15,7 +15,8 @@ $map = array(
       'editar_perfil' => array('controller' => 'Controller', 'action' => 'editar_perfil', 'user_lvl' => 1),
       'guardados' => array('controller' => 'Controller', 'action' => 'guardados', 'user_lvl' => 1),
       'cerrarsesion' => array('controller' => 'Controller', 'action' => 'cerrarsesion', 'user_lvl' => 1),
-      'error' => array('controller' => 'Controller', 'action' => 'error', 'user_lvl' => 0)
+      'error' => array('controller' => 'Controller', 'action' => 'error', 'user_lvl' => 0),
+      'gestion' => array('controller' => 'Controller', 'action' => 'gestion', 'user_lvl' => 2)
 );
 
 //PARSEO RUTA
