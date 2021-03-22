@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__.'/app/mvc/Config.php';
-require_once __DIR__.'/app/mvc/Model.php';
+require_once __DIR__.'/app/mvc/Model.php'; 
 require_once __DIR__.'/app/mvc/Controller.php';
 session_start();
 $_SESSION['user_lvl'] = 0;
@@ -25,7 +25,7 @@ if(isset($_GET['ctl'])){
         $ruta = $_GET['ctl'];
     }
     else{
-        header('Status: 404 Not Found');
+       header('Status: 404 Not Found');
         echo '<html><body><h1>Error 404: No existe la ruta <i>'.$_GET['ctl'].'</i> </h1></body></html>';
         exit;
     }

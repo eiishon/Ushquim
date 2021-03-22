@@ -102,7 +102,7 @@ class Validacion
      * y llena el atributo validacion::$mensaje con un arreglo indicando el campo que mostrara el mensaje y el
      * mensaje que visualizara el usuario
      */
-   /* protected function _numeric($campo, $valor)
+    protected function _numeric($campo, $valor)
     {
         if (is_numeric($valor)) {
             return true;
@@ -110,7 +110,7 @@ class Validacion
             $this->mensaje[$campo][] = "el campo $campo debe de ser numerico";
             return false;
         }
-    } */
+    } 
     
     /**
      * Metodo de verificacion de tipo email
@@ -133,7 +133,7 @@ class Validacion
  * Ejemplo de uso de la clase, es muy sencillo.
  */
 
-$datos['campo1'] = "d";
+/*$datos['campo1'] = "d";
 $datos['campo2'] = "usuario@gmail.com";
 
 $validacion = new Validacion();
@@ -149,6 +149,6 @@ $regla = array(
     
 );
 $validaciones = $validacion->rules($regla, $datos);
-print_r($validaciones);
+print_r($validaciones); */
 
 ?>
