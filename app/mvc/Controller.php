@@ -17,7 +17,7 @@ public function registro()
 
 public function login()
 {
-    require __DIR__ .'/../vista/paginas/login.php';
+    
     try {
         $user = "";
         $pwd = "";
@@ -28,19 +28,21 @@ public function login()
         $db = new Model();
         $resultado = "";
         if ($resultado == $db->getLogin($user, $pwd)) {
-            $_SESSION['nivel_usuario'] = 1; 
-           session_regenerate_id(true);
-           require __DIR__.'/../vista/paginas/inicio.php';
-        } else{
-            require __DIR__.'/../vista/paginas/error.php';
-        }
+            if($_SESSION['nivel_usuario'] == 1){
+                echo ('LVL USUARIO 1');
+                session_regenerate_id(true);
+                require __DIR__.'/../vista/paginas/inicio.php';
+            }
+
+        } 
     } catch (Exception $e) {
         error_log($e->getMessage() . microtime() . PHP_EOL, 3, "logException.txt");
-        //header('Location: index.php?ctl=error');
+        header('Location: index.php?ctl=error');
     } catch (Error $e) {
         error_log($e->getMessage() . microtime() . PHP_EOL, 3, "logError.txt");
-        //header('Location: index.php?ctl=error');
+        header('Location: index.php?ctl=error');
     }
+    require __DIR__ .'/../vista/paginas/login.php';
     
 }
 
