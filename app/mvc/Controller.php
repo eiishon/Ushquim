@@ -24,17 +24,17 @@ public function login()
         if(isset($_POST['enviar'])){
             $user = recoge('user');
             $pwd = recoge('pwd');
+            
         }
         $db = new Model();
         $resultado = "";
         if ($resultado == $db->getLogin($user, $pwd)) {
-            if($_SESSION['nivel_usuario'] == 1){
-                echo ('LVL USUARIO 1');
+                $_SESSION['user_lvl'] = 1;
                 session_regenerate_id(true);
                 require __DIR__.'/../vista/paginas/inicio.php';
-            }
-
-        } 
+        } else{
+            require __DIR__ .'/../vista/paginas/login.php';
+        }
     } catch (Exception $e) {
         error_log($e->getMessage() . microtime() . PHP_EOL, 3, "logException.txt");
         header('Location: index.php?ctl=error');
@@ -42,7 +42,7 @@ public function login()
         error_log($e->getMessage() . microtime() . PHP_EOL, 3, "logError.txt");
         header('Location: index.php?ctl=error');
     }
-    require __DIR__ .'/../vista/paginas/login.php';
+    
     
 }
 

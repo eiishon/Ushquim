@@ -31,9 +31,13 @@
         <li class="nav-item">
           <a class="nav-link" href="index.php?ctl=login">Inicio Sesión</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="index.php?ctl=cerrarsesion">Cerrar sesion </a>
+        </li>
         <?php
         } else {
-            if ($_SESSION['user_lvl'] >= 1) {
+          if ($_SESSION['user_lvl'] >= 1){
+             
                
         ?>
         <li class="nav-item dropdown">
@@ -59,7 +63,8 @@
 
       <?php 
                 }
-            }
+              }
+            
             ?>
     </div>
   </div>
@@ -77,7 +82,7 @@
                 echo '<a href="index.php?ctl=login">inicia sesión</a>';
             } else {
                 if ($_SESSION['user_lvl'] >= 1) {
-                   echo $user; */
+                   echo $user; 
             ?>
                     <ul>
                         <li><a href="index.php?ctl=perfil">Ver perfil</a></li>
@@ -86,7 +91,7 @@
                         <li><a href="index.php?ctl=guardados">Recetas guardadas</a></li>
                         <li><a href="index.php?ctl=cerrarsesion">Cerrar Sesión</a></li>
                         <?php 
-                           /* if($_SESSION['user_lvl'] == 2){ ?>
+                           if($_SESSION['user_lvl'] == 2){ ?>
                                 <li><a href="index.php?ctl=gestion">Gestionar recetas</a></li>
                                 <?php
                             }
@@ -95,8 +100,8 @@
                     </ul>
             <?php 
                 }
-            }*/
-
+            }
+*/
 
             ?>
         </nav> -->
