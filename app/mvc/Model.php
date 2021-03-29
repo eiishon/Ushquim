@@ -21,7 +21,7 @@ class Model extends PDO
         $result->bindParam(':pwd', $pwd);
         $result->execute();
         $result->fetch();
-            return $result;
+        return $result;
     }
     public function setRegistro($nomUser, $apUser, $email, $user, $pwd, $bio = 'NULL', $pfp = 'NULL')
     {
