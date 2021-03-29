@@ -30,8 +30,9 @@ public function login()
         $resultado = "";
         if ($resultado == $db->getLogin($user, $pwd)) {
                 echo 'WORKS';
-                echo $_SESSION['user_lvl'];
                 $_SESSION['user_lvl'] = 1;
+                echo $_SESSION['user_lvl'];
+                $_SESSION['user'] = $user;
                 session_regenerate_id(true);
                 require __DIR__.'/../vista/paginas/inicio.php';
         } else{
