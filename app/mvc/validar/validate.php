@@ -144,6 +144,140 @@ function sinEspacios($frase) {
     return $texto;
 }
 
+
+function cFile($nombre, $ruta, $extensionesValidas, &$errores)
+{
+    if ($_FILES[$nombre]['error'] != 0) {
+        switch ($_FILES[$nombre]['error']) {
+            case 1:
+                $errores[] = "UPLOAD_ERR_INI_SIZE";
+                $errores[] = "Fichero demasiado grande";
+                break;
+            case 2:
+                $errores[] = "UPLOAD_ERR_FORM_SIZE";
+                $errores[] = 'El fichero es demasiado grande';
+                break;
+            case 3:
+                $errores[] = "UPLOAD_ERR_PARTIAL";
+                $errores[] = 'El fichero no se ha podido subir entero';
+                break;
+            case 4:
+                $errores[] = "UPLOAD_ERR_NO_FILE";
+                $errores[] = 'No se ha podido subir el fichero';
+                break;
+            case 6:
+                $errores[] = "UPLOAD_ERR_NO_TMP_DIR";
+                $errores[] = "Falta carpeta temporal";
+                break;
+            case 7:
+                $errores[] = "UPLOAD_ERR_CANT_WRITE";
+                $errores[] = "No se ha podido escribir en el disco";
+                break;
+                
+            default:
+                $errores[] = 'Error indeterminado.';
+        }
+        return false;
+    } else {
+      /*  // Guardamos el nombre original del fichero
+        $nombreArchivo = $user;
+        // Guardamos nombre del fichero en el servidor
+        $directorioTemp = $_FILES[$nombre]['tmp_name']; */
+        $extension = $_FILES[$nombre]['type'];
+        // Comprobamos la extension del archivo dentro de la lista que hemos definido al principio
+        if (! in_array($extension, $extensionesValidas)) {
+            $errores[] = "La extensión del archivo no es válida o no se ha subido ningún archivo";
+            return false;
+        }
+        
+        /*// Almacenamos el archivo en ubicacion definitiva
+        // Añadimos time() al nombre del fichero, asi lo haremos unico y si tuviera doble extension
+        
+        if (is_file($ruta . $nombreArchivo)) {
+            
+            // Podemos utilizar microtime() para paginas con mucho trafico
+            $nombreArchivo = time() . $nombreArchivo;
+        }
+        // Movemos el fichero a la ubicacion definitiva
+        if (move_uploaded_file($directorioTemp, $ruta . $nombreArchivo)) {
+            // En este caso devolvemos solo el nombre del fichero sin la ruta
+            return $nombreArchivo;
+        } else {
+            $errores[] = "Error: No se puede mover el fichero a su destino";
+            // return false; 
+        }*/
+    }
+}
+
+function recogeArray($var)
+{
+    if (!empty($_REQUEST[$var])){
+        $array=$_REQUEST[$var];
+        foreach ($array as $value){
+            $tmp[]=strip_tags(sinEspacios($value));
+        }
+    }else
+        $tmp= "";
+        
+        
+        return $tmp;
+}
+function cText($text, &$errores, $max = 50, $min = 1)
+{
+    $valido = true;
+    if ((mb_strlen($text) > $max) || (mb_strlen($text) < $min)) {
+        $errores[] = "$text no es válido. Debe tener entre $min y $max letras";
+        $valido = false;
+    }
+    if (! preg_match("/^[A-Za-zñÑ]+$/", sinTildes($text))) {
+        $errores[] = "$text no es válido. Sólo debe tener letras";
+        $valido = false;
+    }
+    
+    return $valido;
+}
+
+function cName($text, &$errores, $max = 20, $min = 1)
+{
+    $valido = true;
+    if ((mb_strlen($text) > $max) || (mb_strlen($text) < $min)) {
+        $errores[] = "$text no es válido. Debe tener entre $min y $max letras";
+        $valido = false;
+    }
+    if (! preg_match("/^[A-Za-zñÑ]+$/", sinTildes($text))) {
+        $errores[] = "$text no es válido. Sólo debe tener letras";
+        $valido = false;
+    }
+    
+    return $valido;
+}
+
+//VALIDAR PATRÓN
+function validoPatron($pattern, $text, &$errores, $max = 15, $min=1){
+        $valido = true;
+        if(!preg_match($pattern, $text)){
+            $valido = false;
+            $errores[] ="$text no es válido. Sólo debe incluir letras, números, *, _, -, $, &, /, \ o +.";
+        }
+        if((mb_strlen($text) > $max) || (mb_strlen($text) < $min)){
+            $errores[] ="$text no es válido. Debe ser menor de 15 caracteres";
+            $valido = false;
+        }
+        return $valido;
+    
+} 
+
+
+function validoEmail($email, &$errores){
+    $valido = true;
+    if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+        $valido = false;
+        $errores[] = "$email no es válido.";
+    }
+    return $valido;
+}
+
+
 /*
  * Ejemplo de uso de la clase, es muy sencillo.
  */
