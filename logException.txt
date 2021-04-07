@@ -11,3 +11,7 @@ SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in you
 SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ':=user and pwd:=pwd' at line 10.17914700 1616492164
 SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ':=user and pwd:=pwd' at line 10.34454800 1616492164
 SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '' for key 'user'0.01558800 1617786680
+SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'nomUser' cannot be null0.95607200 1617788018
+SQLSTATE[HY093]: Invalid parameter number: parameter was not defined0.18329500 1617788251
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '' for key 'user'0.36279500 1617788295
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '' for key 'user'0.71140200 1617788315

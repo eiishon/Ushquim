@@ -143,6 +143,13 @@ function sinEspacios($frase) {
     $texto = trim(preg_replace('/ +/', ' ', $frase));
     return $texto;
 }
+function sinTildes($frase) {
+
+	$no_permitidas= array ("á","é","í","ó","ú","Á","É","Í","Ó","Ú","à","è","ì","ò","ù","À","È","Ì","Ò","Ù");
+	$permitidas= array ("a","e","i","o","u","A","E","I","O","U","a","e","i","o","u","A","E","I","O","U");
+	$texto = str_replace($no_permitidas, $permitidas ,$frase);
+	return $texto;
+}
 
 
 function cFile($nombre, $ruta, $extensionesValidas, &$errores)
