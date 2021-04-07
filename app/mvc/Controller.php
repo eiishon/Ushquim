@@ -19,25 +19,22 @@ public function registro()
     $pwd = "";
     $email = "";
     $bio = "";
-    $pfp = "";
-    $alergias = array(
-        'gluten' => 0,
-        'crustaceos' => 0,
-        'huevos' => 0,
-        'pescado' => 0,
-        'cacahuetes' => 0,
-        'soja' => 0,
-        'lactosa' => 0,
-        'frutosdecascara' => 0,
-        'apio' => 0,
-        'mostaza' => 0,
-        'sesamo' => 0,
-        'sulfitos' => 0,
-        'moluscos' => 0,
-        'altramuces' => 0,
-        'vegan' => 0,
-        'vegetarian' => 0
-    );
+    $gluten = 0;
+    $crustaceos = 0;
+    $huevos = 0;
+    $pescado = 0;
+    $cacahuetes = 0;
+    $soja = 0;
+    $lactosa = 0;
+    $frutosdecascara = 0;
+    $apio = 0;
+    $mostaza = 0;
+    $sesamo = 0;
+    $sulfitos = 0;
+    $moluscos = 0;
+    $altramuces = 0;
+    $vegan = 0;
+    $vegetarian = 0;
     $errores = [];
     $pattern = "/^[a-zÃ±0-9*_+\-\$&\/\\\]+$/i";
         if(isset($_POST['enviar'])){
@@ -109,16 +106,17 @@ public function login()
             $user = recoge('user');
             $pwd = recoge('pwd');
             
-        }
+        
         $db = new Model();
         $resultado = $db->getLogin($user, $pwd);
         if ($resultado == true) {
                 $_SESSION['user_lvl'] = 1;
                 $_SESSION['user'] = $user;
                 echo $_SESSION['user'];
+                echo $_SESSION['user_lvl'];
                 session_regenerate_id(true);
         } 
-            
+    } 
         
     } catch (Exception $e) {
         error_log($e->getMessage() . microtime() . PHP_EOL, 3, "logException.txt");
