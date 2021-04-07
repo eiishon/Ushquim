@@ -87,10 +87,26 @@ public function registro()
             move_uploaded_file($origen, $destino);
 
         }
-    }catch(Exception $e){
+        //LO PASAMOS A EJECUTAR AL MODELO
+        $db = new Model();
+        $resultado = $db->setRegistro($name, $apellidos, $user, $pwd, $email, $bio, $destino);
+        //CONSEGUIMOS IDUSER
+        $idUser = $db->getIdUser($user);
+        $resultadoAlergenos = $db->setAlergenos($gluten, $crustaceos, $huevos, $pescado, $cacahuetes, $soja,
+        $lactosa, $frutosdecascara, $apio, $mostaza, $sesamo, $sulfitos, $moluscos, $altramuces, $vegan, $vegetarian,
+        $idUser);
 
-    }catch(Error $e){
+        if($resultado && $resultadoAlergenos){
+            $contenido = 'Se ha registrado correctamente. <a href="index.php?ctl=inicio">Volver al inicio.</a>';
+        }
 
+
+    }catch (Exception $e) {
+        error_log($e->getMessage() . microtime() . PHP_EOL, 3, "logException.txt");
+        header('Location: index.php?ctl=error');
+    } catch (Error $e) {
+        error_log($e->getMessage() . microtime() . PHP_EOL, 3, "logError.txt");
+        header('Location: index.php?ctl=error');
     }
     require __DIR__ .'/../vista/paginas/registro.php';
 }

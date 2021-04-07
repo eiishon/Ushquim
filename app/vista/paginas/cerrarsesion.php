@@ -1,6 +1,6 @@
 <?php ob_start();
 
-if(($_SESSION['user_lvl'] == 1) || $_SESSION['user_lvl'] == 2){
+if($_SESSION['user_lvl'] >= 1) {
     
     session_destroy();
     $contenido = 'Ha cerrado sesión correctamente. <a href="index.php?ctl=inicio">Volver al inicio.</a>';

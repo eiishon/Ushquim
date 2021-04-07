@@ -70,4 +70,13 @@ class Model extends PDO
         $result->execute();
         return $result->fetch();
     }
+
+    public function getIdUser($user){
+        $consulta = "select idUser from users where user=:user";
+        $result = $this->conexion->prepare($consulta);
+        $result->bindParam(':user', $user);
+        $result->execute();
+        $result-> fetch();
+        return $result;
+    }
 }
