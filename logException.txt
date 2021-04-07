@@ -10,3 +10,4 @@ SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in you
 SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ':=user and pwd:=pwd' at line 10.49701100 1616492163
 SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ':=user and pwd:=pwd' at line 10.17914700 1616492164
 SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ':=user and pwd:=pwd' at line 10.34454800 1616492164
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '' for key 'user'0.01558800 1617786680

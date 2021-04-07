@@ -19,22 +19,7 @@ public function registro()
     $pwd = "";
     $email = "";
     $bio = "";
-    $gluten = 0;
-    $crustaceos = 0;
-    $huevos = 0;
-    $pescado = 0;
-    $cacahuetes = 0;
-    $soja = 0;
-    $lactosa = 0;
-    $frutosdecascara = 0;
-    $apio = 0;
-    $mostaza = 0;
-    $sesamo = 0;
-    $sulfitos = 0;
-    $moluscos = 0;
-    $altramuces = 0;
-    $vegan = 0;
-    $vegetarian = 0;
+
     $errores = [];
     $pattern = "/^[a-zÃ±0-9*_+\-\$&\/\\\]+$/i";
         if(isset($_POST['enviar'])){
@@ -90,16 +75,6 @@ public function registro()
         //LO PASAMOS A EJECUTAR AL MODELO
         $db = new Model();
         $resultado = $db->setRegistro($name, $apellidos, $user, $pwd, $email, $bio, $destino);
-        //CONSEGUIMOS IDUSER
-        $idUser = $db->getIdUser($user);
-        $resultadoAlergenos = $db->setAlergenos($gluten, $crustaceos, $huevos, $pescado, $cacahuetes, $soja,
-        $lactosa, $frutosdecascara, $apio, $mostaza, $sesamo, $sulfitos, $moluscos, $altramuces, $vegan, $vegetarian,
-        $idUser);
-
-        if($resultado && $resultadoAlergenos){
-            $contenido = 'Se ha registrado correctamente. <a href="index.php?ctl=inicio">Volver al inicio.</a>';
-        }
-
 
     }catch (Exception $e) {
         error_log($e->getMessage() . microtime() . PHP_EOL, 3, "logException.txt");
@@ -108,6 +83,41 @@ public function registro()
         error_log($e->getMessage() . microtime() . PHP_EOL, 3, "logError.txt");
         header('Location: index.php?ctl=error');
     }
+    try{
+        $gluten = 0;
+        $crustaceos = 0;
+        $huevos = 0;
+        $pescado = 0;
+        $cacahuetes = 0;
+        $soja = 0;
+        $lactosa = 0;
+        $frutosdecascara = 0;
+        $apio = 0;
+        $mostaza = 0;
+        $sesamo = 0;
+        $sulfitos = 0;
+        $moluscos = 0;
+        $altramuces = 0;
+        $vegan = 0;
+        $vegetarian = 0;
+        
+        $db = new Model();
+        $idUser = $db->getIdUser($user);
+        $resultadoAlergenos = $db->setAlergenos($gluten, $crustaceos, $huevos, $pescado, $cacahuetes, $soja,
+        $lactosa, $frutosdecascara, $apio, $mostaza, $sesamo, $sulfitos, $moluscos, $altramuces, $vegan, $vegetarian,
+        $idUser);
+
+    }catch (Exception $e) {
+        error_log($e->getMessage() . microtime() . PHP_EOL, 3, "logException.txt");
+        header('Location: index.php?ctl=error');
+    } catch (Error $e) {
+        error_log($e->getMessage() . microtime() . PHP_EOL, 3, "logError.txt");
+        header('Location: index.php?ctl=error');
+    }
+    if($resultado && $resultadoAlergenos){
+        $contenido = 'Se ha registrado correctamente. <a href="index.php?ctl=inicio">Volver al inicio.</a>';
+    }
+
     require __DIR__ .'/../vista/paginas/registro.php';
 }
 
