@@ -15,3 +15,5 @@ SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'nomUser' cannot be
 SQLSTATE[HY093]: Invalid parameter number: parameter was not defined0.18329500 1617788251
 SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '' for key 'user'0.36279500 1617788295
 SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '' for key 'user'0.71140200 1617788315
+SQLSTATE[HY093]: Invalid parameter number: parameter was not defined0.70092800 1617788568
+SQLSTATE[HY093]: Invalid parameter number: parameter was not defined0.52031700 1617788811

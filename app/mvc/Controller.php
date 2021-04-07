@@ -75,19 +75,20 @@ class Controller
                     cText($bio, $errores);
                 }
                 //FOTO DE PERFIL RECOGER Y MOVER
-                $rutaPFP = __DIR__ . "/app/vista/paginas/img/pfp";
+                $rutaPFP = __DIR__ . "/app/vista/paginas/img/pfp/";
                 $extensionesValidas = ["image/jpeg", "image/gif"];
                 if (isset($_FILES["pfp"]) && !empty($_FILES["pfp"])) {
-                    $file = cfile("pfp", $rutaPFP, $extensionesValidas, $errores);
-                }
+                $file = cfile("pfp", $rutaPFP, $extensionesValidas, $errores);
                 $_FILES["pfp"]["name"] =  $user . ".jpg";
                 $origen = $_FILES["pfp"]['tmp_name'];
                 $destino = $rutaPFP . $_FILES["pfp"]["name"];
                 move_uploaded_file($origen, $destino);
+                }
+                
                 //LO PASAMOS A EJECUTAR AL MODELO
                 $db = new Model();
                 $idUser = "";
-                $resultado = $db->setRegistro($name, $apellidos, $user, $pwd, $email, $bio, $destino);
+                $resultado = $db->setRegistro($name, $apellidos, $email, $user, $pwd, $bio, $destino);
                 $resultadoAlergenos = $db->setAlergenos($gluten, $crustaceos, $huevos, $pescado, $cacahuetes, $soja,
 $lactosa, $frutosdecascara, $apio, $mostaza, $sesamo, $sulfitos, $moluscos, $altramuces, $vegan, $vegetarian,
 $idUser);
