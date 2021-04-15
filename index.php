@@ -3,8 +3,9 @@ require_once __DIR__.'/app/mvc/Config.php';
 require_once __DIR__.'/app/mvc/Model.php'; 
 require_once __DIR__.'/app/mvc/Controller.php';
 session_start();
-$_SESSION['user_lvl'] = 0;
-
+if (!isset($_SESSION['user_lvl'])) {
+    $_SESSION['user_lvl'] = 0;
+}
 $map = array(
       'inicio' => array('controller' => 'Controller', 'action' => 'inicio', 'user_lvl' => 0),
       'recetas' => array('controller' => 'Controller', 'action' => 'recetas', 'user_lvl' => 0),

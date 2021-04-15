@@ -10,7 +10,7 @@
 <body>
     <header>
 
-    <!-- USO BOOTSTRAP -->
+    <!-- USO BOOTSTRAP 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
     <a class="navbar-brand" href="index.php?ctl=inicio">inicio</a>
@@ -23,7 +23,7 @@
           <a class="nav-link" href="index.php?ctl=recetas">Recetas</a>
         </li>
         <?php
-        if ($_SESSION['user_lvl'] == 0) {
+        /*if ($_SESSION['user_lvl'] == 0) {
             ?>
         <li class="nav-item">
           <a class="nav-link" href="index.php?ctl=registro">Registro</a>
@@ -42,7 +42,7 @@
         ?>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-           <?php  echo $user; ?>
+           <?php  echo $_SESSION['user']; ?>
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <li><a class="dropdown-item" href="index.php?ctl=perfil">Mi Perfil</a></li>
@@ -64,25 +64,25 @@
       <?php 
                 }
               }
-            
+            */
             ?>
     </div>
   </div>
-</nav>
+</nav> -->
 
 
 
-    <!-- SIN BOOTSTRAP
+    <!-- SIN BOOTSTRAP -->
         <nav>
             <a href="index.php?ctl=inicio">inicio</a>
             <a href="index.php?ctl=recetas">recetas</a>
             <?php
-            /*if ($_SESSION['user_lvl'] == 0) {
+            if ($_SESSION['user_lvl'] == 0) {
                 echo '<a href="index.php?ctl=registro">registro</a>';
                 echo '<a href="index.php?ctl=login">inicia sesión</a>';
             } else {
                 if ($_SESSION['user_lvl'] >= 1) {
-                   echo $user; 
+                  echo $_SESSION['user']; 
             ?>
                     <ul>
                         <li><a href="index.php?ctl=perfil">Ver perfil</a></li>
@@ -101,10 +101,10 @@
             <?php 
                 }
             }
-*/
+
 
             ?>
-        </nav> -->
+        </nav> 
     </header>
     <div id="contenido">
         <?php echo $contenido ?>

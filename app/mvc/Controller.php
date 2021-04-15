@@ -126,8 +126,6 @@ $idUser);
                 if ($resultado == true) {
                     $_SESSION['user_lvl'] = 1;
                     $_SESSION['user'] = $user;
-                    echo $_SESSION['user'];
-                    echo $_SESSION['user_lvl'];
                     session_regenerate_id(true);
                 }
             }
