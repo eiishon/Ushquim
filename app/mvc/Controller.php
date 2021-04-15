@@ -35,6 +35,7 @@ class Controller
             $altramuces = 0;
             $vegan = 0;
             $vegetarian = 0;
+            $cont = 0;
             $errores = [];
             $pattern = "/^[a-zÃ±0-9*_+\-\$&\/\\\]+$/i";
             if (isset($_POST['enviar'])) {
@@ -74,24 +75,110 @@ class Controller
                 if (!empty($bio)) {
                     cText($bio, $errores);
                 }
+
+                //ALERGENOS
+                if (isset($_POST["gluten"])) {
+                    $gluten = 1;
+                    $cont++;
+                }
+                if (isset($_POST["crustaceos"])) {
+                    $crustaceos = 1;
+                    $cont++;
+                }
+                if (isset($_POST["huevos"])) {
+                    $huevos = 1;
+                    $cont++;
+                }
+                if (isset($_POST["pescado"])) {
+                    $pescado = 1;
+                    $cont++;
+                }
+                if (isset($_POST["cacahuetes"])) {
+                    $cacahuetes = 1;
+                    $cont++;
+                }
+                if (isset($_POST["soja"])) {
+                    $lactosa = 1;
+                    $cont++;
+                }
+                if (isset($_POST["lactosa"])) {
+                    $lactosa = 1;
+                    $cont++;
+                }
+                if (isset($_POST["frutosdecascara"])) {
+                    $frutosdecascara = 1;
+                    $cont++;
+                }
+                if (isset($_POST["apio"])) {
+                    $apio = 1;
+                    $cont++;
+                }
+                if (isset($_POST["mostaza"])) {
+                    $mostaza = 1;
+                    $cont++;
+                }
+                if (isset($_POST["sesamo"])) {
+                    $sesamo = 1;
+                    $cont++;
+                }
+                if (isset($_POST["sulfitos"])) {
+                    $sulfitos = 1;
+                    $cont++;
+                }
+                if (isset($_POST["moluscos"])) {
+                    $moluscos = 1;
+                    $cont++;
+                }
+                if (isset($_POST["altramuces"])) {
+                    $altramuces = 1;
+                    $cont++;
+                }
+                if (isset($_POST["vegan"])) {
+                    $vegan = 1;
+                    $cont++;
+                }
+                if (isset($_POST["vegetarian"])) {
+                    $vegetarian = 1;
+                    $cont++;
+                }
+                if ($cont == 0) {
+                    $errores[] = "* Al menos debes marcar una alergia o preferencia alimenticia.";
+                }
+
                 //FOTO DE PERFIL RECOGER Y MOVER
                 $rutaPFP = __DIR__ . "/app/vista/paginas/img/pfp/";
                 $extensionesValidas = ["image/jpeg", "image/gif"];
                 if (isset($_FILES["pfp"]) && !empty($_FILES["pfp"])) {
-                $file = cfile("pfp", $rutaPFP, $extensionesValidas, $errores);
-                $_FILES["pfp"]["name"] =  $user . ".jpg";
-                $origen = $_FILES["pfp"]['tmp_name'];
-                $destino = $rutaPFP . $_FILES["pfp"]["name"];
-                move_uploaded_file($origen, $destino);
+                    $file = cfile("pfp", $rutaPFP, $extensionesValidas, $errores);
+                    $_FILES["pfp"]["name"] =  $user . ".jpg";
+                    $origen = $_FILES["pfp"]['tmp_name'];
+                    $destino = $rutaPFP . $_FILES["pfp"]["name"];
+                    move_uploaded_file($origen, $destino);
                 }
-                
+
                 //LO PASAMOS A EJECUTAR AL MODELO
                 $db = new Model();
                 $idUser = "";
                 $resultado = $db->setRegistro($name, $apellidos, $email, $user, $pwd, $bio, $destino);
-                $resultadoAlergenos = $db->setAlergenos($gluten, $crustaceos, $huevos, $pescado, $cacahuetes, $soja,
-$lactosa, $frutosdecascara, $apio, $mostaza, $sesamo, $sulfitos, $moluscos, $altramuces, $vegan, $vegetarian,
-$idUser);
+                $resultadoAlergenos = $db->setAlergenos(
+                    $gluten,
+                    $crustaceos,
+                    $huevos,
+                    $pescado,
+                    $cacahuetes,
+                    $soja,
+                    $lactosa,
+                    $frutosdecascara,
+                    $apio,
+                    $mostaza,
+                    $sesamo,
+                    $sulfitos,
+                    $moluscos,
+                    $altramuces,
+                    $vegan,
+                    $vegetarian,
+                    $idUser
+                );
                 if ($resultado && $resultadoAlergenos) {
                     $contenido = 'Se ha registrado correctamente. <a href="index.php?ctl=inicio">Volver al inicio.</a>';
                 }
