@@ -79,4 +79,19 @@ class Model extends PDO
         $result-> fetch();
         return $result;
     }
+
+    public function setReceta($nomReceta, $receta, $tPrep, $fecha_subida, $ingredientes, $aprobada = 0, $idUser){
+        $consulta = "insert into recetas (nomReceta, receta, tPrep, fecha_subida, ingredientes, aprobada, idUser)
+        values (:nomReceta, :receta, :tPrep, :fecha_subida, :ingredientes, :aprobada, :idUser)";
+        $result=$this->conexion->prepare($consulta);
+        $result->bindParam(':nomReceta', $nomReceta);
+        $result->bindParam(':receta', $receta);
+        $result->bindParam(':tPrep', $tPrep);
+        $result->bindParam(':fecha_subida', $fecha_subida);
+        $result->bindParam(':ingredientes', $ingredientes);
+        $result->bindParam(':aprobada', $aprobada);
+        $result->bindParam(':idUser', $idUser);
+        $result->execute();
+        return $result->fetch();
+    }
 }

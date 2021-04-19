@@ -214,6 +214,7 @@ class Controller
                     $_SESSION['user_lvl'] = 1;
                     $_SESSION['user'] = $user;
                     session_regenerate_id(true);
+                    echo "Inicio sesión correcto.";
                 }
             }
         } catch (Exception $e) {
@@ -255,7 +256,144 @@ class Controller
     {
         require __DIR__ . '/../vista/paginas/subir_recetas.php';
         try {
-            
+            $nomReceta = "";
+            $tPrep = "";
+            $ingredientes = "";
+            $receta = "";
+            $gluten = 0;
+            $crustaceos = 0;
+            $huevos = 0;
+            $pescado = 0;
+            $cacahuetes = 0;
+            $soja = 0;
+            $lactosa = 0;
+            $frutosdecascara = 0;
+            $apio = 0;
+            $mostaza = 0;
+            $sesamo = 0;
+            $sulfitos = 0;
+            $moluscos = 0;
+            $altramuces = 0;
+            $vegan = 0;
+            $vegetarian = 0;
+            $cont = 0;
+            $fecha_subida = date("d  M  Y  H:i");
+            $idUser = "";
+            $errores = [];
+            if (isset($_POST['enviar'])) {
+                $nomReceta = recoge('nomReceta');
+                $ingredientes = recoge('ingredientes');
+                $receta = recoge('receta');
+                if (!empty($nomReceta)) {
+                    cName($nomReceta, $errores);
+                } else {
+                    $errores[] = "* El campo título de la receta es obligatorio. <br>";
+                }
+                if (empty($ingredientes)) {
+                    $errores[] = "* El campo ingredientes es obligatorio. <br>";
+                }
+
+                if (empty($receta)) {
+                    $errores[] = "* El campo receta es obligatorio. <br>";
+                }
+                if(empty($tPrep)){
+                    $errores[] = "* El campo tiempo de preparación es obligatorio. <br>"
+                }
+                //ALERGENOS
+                if (isset($_POST["gluten"])) {
+                    $gluten = 1;
+                    $cont++;
+                }
+                if (isset($_POST["crustaceos"])) {
+                    $crustaceos = 1;
+                    $cont++;
+                }
+                if (isset($_POST["huevos"])) {
+                    $huevos = 1;
+                    $cont++;
+                }
+                if (isset($_POST["pescado"])) {
+                    $pescado = 1;
+                    $cont++;
+                }
+                if (isset($_POST["cacahuetes"])) {
+                    $cacahuetes = 1;
+                    $cont++;
+                }
+                if (isset($_POST["soja"])) {
+                    $lactosa = 1;
+                    $cont++;
+                }
+                if (isset($_POST["lactosa"])) {
+                    $lactosa = 1;
+                    $cont++;
+                }
+                if (isset($_POST["frutosdecascara"])) {
+                    $frutosdecascara = 1;
+                    $cont++;
+                }
+                if (isset($_POST["apio"])) {
+                    $apio = 1;
+                    $cont++;
+                }
+                if (isset($_POST["mostaza"])) {
+                    $mostaza = 1;
+                    $cont++;
+                }
+                if (isset($_POST["sesamo"])) {
+                    $sesamo = 1;
+                    $cont++;
+                }
+                if (isset($_POST["sulfitos"])) {
+                    $sulfitos = 1;
+                    $cont++;
+                }
+                if (isset($_POST["moluscos"])) {
+                    $moluscos = 1;
+                    $cont++;
+                }
+                if (isset($_POST["altramuces"])) {
+                    $altramuces = 1;
+                    $cont++;
+                }
+                if (isset($_POST["vegan"])) {
+                    $vegan = 1;
+                    $cont++;
+                }
+                if (isset($_POST["vegetarian"])) {
+                    $vegetarian = 1;
+                    $cont++;
+                }
+                if ($cont == 0) {
+                    $errores[] = "* Al menos debes marcar una alergia o preferencia alimenticia.";
+                }
+                                //LO PASAMOS A EJECUTAR AL MODELO
+                $db = new Model();
+                $idUser = "";
+                $resultado = $db->setReceta($nomReceta, $receta, $tPrep, $fecha_subida, $ingredientes);
+                $resultadoAlergenos = $db->setAlergenos(
+                                    $gluten,
+                                    $crustaceos,
+                                    $huevos,
+                                    $pescado,
+                                    $cacahuetes,
+                                    $soja,
+                                    $lactosa,
+                                    $frutosdecascara,
+                                    $apio,
+                                    $mostaza,
+                                    $sesamo,
+                                    $sulfitos,
+                                    $moluscos,
+                                    $altramuces,
+                                    $vegan,
+                                    $vegetarian,
+                                    $idUser
+                                );
+                if ($resultado && $resultadoAlergenos) {
+                                    $contenido = 'Se ha registrado correctamente la receta. <a href="index.php?ctl=inicio">Volver al inicio.</a>';
+                                }
+            }
         } catch (Exception $e) {
             error_log($e->getMessage() . microtime() . PHP_EOL, 3, "logException.txt");
             header('Location: index.php?ctl=error');
