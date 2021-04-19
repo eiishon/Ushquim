@@ -254,5 +254,14 @@ class Controller
     public function subir_recetas()
     {
         require __DIR__ . '/../vista/paginas/subir_recetas.php';
+        try {
+            
+        } catch (Exception $e) {
+            error_log($e->getMessage() . microtime() . PHP_EOL, 3, "logException.txt");
+            header('Location: index.php?ctl=error');
+        } catch (Error $e) {
+            error_log($e->getMessage() . microtime() . PHP_EOL, 3, "logError.txt");
+            header('Location: index.php?ctl=error');
+        }
     }
 }
