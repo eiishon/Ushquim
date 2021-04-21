@@ -297,7 +297,7 @@ class Controller
                     $errores[] = "* El campo receta es obligatorio. <br>";
                 }
                 if(empty($tPrep)){
-                    $errores[] = "* El campo tiempo de preparación es obligatorio. <br>"
+                    $errores[] = "* El campo tiempo de preparación es obligatorio. <br>";
                 }
                 //ALERGENOS
                 if (isset($_POST["gluten"])) {
@@ -370,7 +370,7 @@ class Controller
                                 //LO PASAMOS A EJECUTAR AL MODELO
                 $db = new Model();
                 $idUser = "";
-                $resultado = $db->setReceta($nomReceta, $receta, $tPrep, $fecha_subida, $ingredientes);
+                $resultado = $db->setReceta($nomReceta, $receta, $tPrep, $fecha_subida, $ingredientes, $aprobada = 0,$idUser);
                 $resultadoAlergenos = $db->setAlergenos(
                                     $gluten,
                                     $crustaceos,
