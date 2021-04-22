@@ -77,6 +77,7 @@ class Model extends PDO
         $result->bindParam(':user', $user);
         $result->execute();
         $result-> fetch();
+        //$_SESSION["idUser"] = $result;
         return $result;
     }
 

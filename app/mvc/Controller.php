@@ -160,6 +160,7 @@ class Controller
                 $db = new Model();
                 $idUser = "";
                 $resultado = $db->setRegistro($name, $apellidos, $email, $user, $pwd, $bio, $destino);
+                //$idUser = $db->getIdUser($_SESSION["user"]);
                 $resultadoAlergenos = $db->setAlergenos(
                     $gluten,
                     $crustaceos,

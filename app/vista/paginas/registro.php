@@ -1,5 +1,4 @@
 <?php ob_start() ?>
-
 <body>
     <main>
         <div class="container">
