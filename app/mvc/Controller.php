@@ -160,7 +160,6 @@ class Controller
                 $db = new Model();
                // $idUser = "";
                 $resultado = $db->setRegistro($name, $apellidos, $email, $user, $pwd, $bio, $destino);
-               /* */
                 if ($resultado) {
                     $_SESSION['user'] = $user;
                     $getidUser = $db->getIdUser($user);
@@ -168,6 +167,8 @@ class Controller
                         echo "ENTRO EN IDUSER";
                         $idUser = $_SESSION["idUser"];
                         echo $idUser;
+                    }else{
+                        echo "NO ENTRO EN IDUSER";
                     }
                     $resultadoAlergenos = $db->setAlergenos(
                         $gluten,
