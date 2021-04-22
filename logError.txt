@@ -1,0 +1,2 @@
+
+Cannot use object of type PDOStatement as array0.69922200 1619081696

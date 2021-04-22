@@ -158,30 +158,41 @@ class Controller
 
                 //LO PASAMOS A EJECUTAR AL MODELO
                 $db = new Model();
-                $idUser = "";
+               // $idUser = "";
                 $resultado = $db->setRegistro($name, $apellidos, $email, $user, $pwd, $bio, $destino);
-                //$idUser = $db->getIdUser($_SESSION["user"]);
-                $resultadoAlergenos = $db->setAlergenos(
-                    $gluten,
-                    $crustaceos,
-                    $huevos,
-                    $pescado,
-                    $cacahuetes,
-                    $soja,
-                    $lactosa,
-                    $frutosdecascara,
-                    $apio,
-                    $mostaza,
-                    $sesamo,
-                    $sulfitos,
-                    $moluscos,
-                    $altramuces,
-                    $vegan,
-                    $vegetarian,
-                    $idUser
-                );
-                if ($resultado && $resultadoAlergenos) {
-                    $contenido = 'Se ha registrado correctamente. <a href="index.php?ctl=inicio">Volver al inicio.</a>';
+               /* */
+                if ($resultado) {
+                    $_SESSION['user'] = $user;
+                    $getidUser = $db->getIdUser($user);
+                    if($getidUser){
+                        echo "ENTRO EN IDUSER";
+                        $idUser = $_SESSION["idUser"];
+                        echo $idUser;
+                    }
+                    $resultadoAlergenos = $db->setAlergenos(
+                        $gluten,
+                        $crustaceos,
+                        $huevos,
+                        $pescado,
+                        $cacahuetes,
+                        $soja,
+                        $lactosa,
+                        $frutosdecascara,
+                        $apio,
+                        $mostaza,
+                        $sesamo,
+                        $sulfitos,
+                        $moluscos,
+                        $altramuces,
+                        $vegan,
+                        $vegetarian,
+                        $idUser
+                    );
+                    if($resultadoAlergenos){
+                        $contenido = 'Se ha registrado correctamente. <a href="index.php?ctl=inicio">Volver al inicio.</a>';
+                    }
+                }else{
+                    echo "HA HABIDO UN ERROR";
                 }
             }
         } catch (Exception $e) {

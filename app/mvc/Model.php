@@ -36,8 +36,8 @@ class Model extends PDO
         $result->bindParam(':bio', $bio);
         $result->bindParam(':pfp', $pfp);
         $result->execute();
-
-        return $result->fetch();
+        $result->fetch();
+        return $result;
     }
 
     public function setAlergenos($gluten = '0', $crustaceos = '0', $huevos = '0', $pescado = '0', $cacahuetes = '0',
@@ -76,8 +76,8 @@ class Model extends PDO
         $result = $this->conexion->prepare($consulta);
         $result->bindParam(':user', $user);
         $result->execute();
-        $result-> fetch();
-        //$_SESSION["idUser"] = $result;
+        $result-> fetch(PDO::FETCH_ASSOC);
+        $_SESSION["idUser"] = $result[1];
         return $result;
     }
 
