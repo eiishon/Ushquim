@@ -77,35 +77,35 @@ class Controller
                 }
 
                 //ALERGENOS
-                if (isset($_POST["gluten"])) {
+                if (isset($_POST['gluten'])) {
                     $gluten = 1;
                     $cont++;
                 }
-                if (isset($_POST["crustaceos"])) {
+                if (isset($_POST['crustaceos'])) {
                     $crustaceos = 1;
                     $cont++;
                 }
-                if (isset($_POST["huevos"])) {
+                if (isset($_POST['huevos'])) {
                     $huevos = 1;
                     $cont++;
                 }
-                if (isset($_POST["pescado"])) {
+                if (isset($_POST['pescado'])) {
                     $pescado = 1;
                     $cont++;
                 }
-                if (isset($_POST["cacahuetes"])) {
+                if (isset($_POST['cacahuetes'])) {
                     $cacahuetes = 1;
                     $cont++;
                 }
-                if (isset($_POST["soja"])) {
+                if (isset($_POST['soja'])) {
                     $lactosa = 1;
                     $cont++;
                 }
-                if (isset($_POST["lactosa"])) {
+                if (isset($_POST['lactosa'])) {
                     $lactosa = 1;
                     $cont++;
                 }
-                if (isset($_POST["frutosdecascara"])) {
+                if (isset($_POST['frutosdecascara'])) {
                     $frutosdecascara = 1;
                     $cont++;
                 }
@@ -156,20 +156,15 @@ class Controller
                     move_uploaded_file($origen, $destino);
                 }
 
+
                 //LO PASAMOS A EJECUTAR AL MODELO
                 $db = new Model();
-               // $idUser = "";
                 $resultado = $db->setRegistro($name, $apellidos, $email, $user, $pwd, $bio, $destino);
                 if ($resultado) {
                     $_SESSION['user'] = $user;
-                    $getidUser = $db->getIdUser($user);
-                    if($getidUser){
-                        echo "ENTRO EN IDUSER";
-                        $idUser = $_SESSION["idUser"];
-                        echo $idUser;
-                    }else{
-                        echo "NO ENTRO EN IDUSER";
-                    }
+                    $idUser = $db->getIdUser($user);
+                    $_SESSION['idUser'] =$idUser;
+                    $idUser = $_SESSION["idUser"];
                     $resultadoAlergenos = $db->setAlergenos(
                         $gluten,
                         $crustaceos,
@@ -193,14 +188,15 @@ class Controller
                         $contenido = 'Se ha registrado correctamente. <a href="index.php?ctl=inicio">Volver al inicio.</a>';
                     }
                 }else{
-                    echo "HA HABIDO UN ERROR";
+                    $_SESSION['mensajeError'] = "Ha habido un fallo a la hora de registrarse";
+                    throw new Exception("Ha habido un fallo a la hora de registrarse");
                 }
             }
         } catch (Exception $e) {
-            error_log($e->getMessage() . microtime() . PHP_EOL, 3, "logException.txt");
+            $_SESSION['mensajeError'] = error_log($e->getMessage() . microtime() . PHP_EOL, 3, "logException.txt");
             header('Location: index.php?ctl=error');
         } catch (Error $e) {
-            error_log($e->getMessage() . microtime() . PHP_EOL, 3, "logError.txt");
+            $_SESSION['mensajeError'] = error_log($e->getMessage() . microtime() . PHP_EOL, 3, "logError.txt");
             header('Location: index.php?ctl=error');
         }
 
@@ -223,7 +219,7 @@ class Controller
 
                 $db = new Model();
                 $resultado = $db->getLogin($user, $pwd);
-                if (!is_null($resultado)) {
+                if ($resultado === true) {
                     $_SESSION['user_lvl'] = 1;
                     $_SESSION['user'] = $user;
                     $idUser = $db->getIdUser($user);
@@ -231,8 +227,8 @@ class Controller
                     session_regenerate_id(true);
                     header('Location: index.php?ctl=inicio');
                 } else {
-                    $_SESSION['mensajeError']='El usuario o password no son correctos';
-                	throw new Exception("El usuario o password no son correctos");
+                    $_SESSION['mensajeError']='El usuario o contraseña no son correctos';
+                	throw new Exception("El usuario o contraseña no son correctos");
                 }
             }
         } catch (Exception $e) {

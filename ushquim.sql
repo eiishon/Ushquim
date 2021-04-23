@@ -51,9 +51,9 @@ CREATE TABLE `alergenos` (
   `altramuces` BIT NOT NULL DEFAULT 0,
   `vegan` BIT NOT NULL DEFAULT 0,
   `vegetarian` BIT NOT NULL DEFAULT 0,
-  `idUser` int(11) NOT NULL,
+  `idUser` int(11),
   FOREIGN KEY (`idUser`) REFERENCES users(`idUser`) ON DELETE CASCADE,
-  `idReceta` int(11) NOT NULL,
+  `idReceta` int(11),
   FOREIGN KEY (`idReceta`) REFERENCES recetas(`idReceta`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

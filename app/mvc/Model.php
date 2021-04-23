@@ -48,7 +48,7 @@ class Model extends PDO
         $consulta = "insert into alergenos (gluten, crustaceos, huevos, pescado, cacahuetes, soja, lactosa,
         frutosdecascara, apio, mostaza, sesamo, sulfitos, moluscos, altramuces, vegan, vegetarian, idUser,
         idReceta) values (:gluten, :crustaceos, :huevos, :pescado, :cacahuetes, :soja, :lactosa, :frutosdecascara, 
-        :apio, :mostaza, :sesamo, :sulfitoa, :moluscos, :altramuces, :vegan, :vegetarian, :idUser, :idReceta)";
+        :apio, :mostaza, :sesamo, :sulfitos, :moluscos, :altramuces, :vegan, :vegetarian, :idUser, :idReceta)";
         $result = $this->conexion->prepare($consulta);
         $result->bindParam(':gluten', $gluten);
         $result->bindParam(':crustaceos', $crustaceos);
