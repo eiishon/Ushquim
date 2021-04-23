@@ -223,11 +223,16 @@ class Controller
 
                 $db = new Model();
                 $resultado = $db->getLogin($user, $pwd);
-                if ($resultado == true) {
+                if (!is_null($resultado)) {
                     $_SESSION['user_lvl'] = 1;
                     $_SESSION['user'] = $user;
+                    $idUser = $db->getIdUser($user);
+                    $_SESSION['idUser'] = $idUser;
                     session_regenerate_id(true);
-                    echo "Inicio sesión correcto.";
+                    header('Location: index.php?ctl=inicio');
+                } else {
+                    $_SESSION['mensajeError']='El usuario o password no son correctos';
+                	throw new Exception("El usuario o password no son correctos");
                 }
             }
         } catch (Exception $e) {

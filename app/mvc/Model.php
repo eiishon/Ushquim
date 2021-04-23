@@ -20,8 +20,9 @@ class Model extends PDO
         $result->bindParam(':user', $user);
         $result->bindParam(':pwd', $pwd);
         $result->execute();
-        $result->fetch();
-        return $result;
+        $row = $result->fetch();
+        if ($row == false) return false;
+        else return true;
     }
     public function setRegistro($nomUser, $apUser, $email, $user, $pwd, $bio = NULL, $pfp = NULL)
     {
@@ -76,9 +77,8 @@ class Model extends PDO
         $result = $this->conexion->prepare($consulta);
         $result->bindParam(':user', $user);
         $result->execute();
-        $result-> fetch(PDO::FETCH_ASSOC);
-        $_SESSION["idUser"] = $result[1];
-        return $result;
+        $row = $result-> fetch();
+        return $row["idUser"];
     }
 
     public function setReceta($nomReceta, $receta, $tPrep, $fecha_subida, $ingredientes, $aprobada = 0, $idUser){
