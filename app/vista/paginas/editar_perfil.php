@@ -6,19 +6,23 @@
                 <fieldset>
                     <legend>¡Cambia tus datos!</legend>
                     <div class="uno">
-                        <label for="name"> Nombre: *</label>
+                        <label for="name"> Nombre: </label>
                         <input type="text" name="name" id="name">
-                        <label for="apellidos">Apellidos: *</label>
+                        <label for="apellidos">Apellidos: </label>
                         <input type="text" name="apellidos" id="apellidos">
                         <div class="dos">
-                            <label for="usuario">Nombre de usuario: *</label>
+                            <label for="usuario">Nombre de usuario: </label>
                             <input type="text" name="user" id="user">
-                            <label for="pwd">Contraseña: *</label>
+                            <label for="pwd">Contraseña: </label>
                             <input type="password" name="pwd" id="pwd">
+                            <label for="reppwd">Repite tu contraseña: </label>
+                            <input type="password" name="reppwd" id="reppwd">
                         </div>
                         <div class="tres">
-                            <label for="email">Email: *</label>
+                            <label for="email">Email: </label>
                             <input type="email" name="email" id="email">
+                            <label for="repemail">Repite el email: </label>
+                            <input type="email" name="repemail" id="repemail">
                             <label for="bio">Cuéntanos un poco sobre ti:</label>
                             <textarea id="bio" name="bio" rows="4" cols="40"></textarea>
                         <label for="pfp">Sube una foto de perfil:</label>

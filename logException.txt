@@ -3,3 +3,4 @@ El usuario o password no son correctos0.19055400 1619171980
 SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'gg' for key 'user'0.63832100 1619172062
 SQLSTATE[HY093]: Invalid parameter number: parameter was not defined0.41627400 1619173653
 SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'idReceta' cannot be null0.36095600 1619173835
+SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'pescado' cannot be null0.06569000 1619365296

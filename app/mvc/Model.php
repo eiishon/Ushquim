@@ -81,6 +81,15 @@ class Model extends PDO
         return $row["idUser"];
     }
 
+    public function getAdmin($user){
+        $consulta = "select admin from users where user=:user";
+        $result = $this->conexion->prepare($consulta);
+        $result->bindParam(':user', $user);
+        $result->execute();
+        $row = $result->fetch();
+        return $row["admin"];
+    }
+
     public function setReceta($nomReceta, $receta, $tPrep, $fecha_subida, $ingredientes, $aprobada = 0, $idUser){
         $consulta = "insert into recetas (nomReceta, receta, tPrep, fecha_subida, ingredientes, aprobada, idUser)
         values (:nomReceta, :receta, :tPrep, :fecha_subida, :ingredientes, :aprobada, :idUser)";

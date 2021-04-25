@@ -98,7 +98,7 @@ class Controller
                     $cont++;
                 }
                 if (isset($_POST['soja'])) {
-                    $lactosa = 1;
+                    $soja = 1;
                     $cont++;
                 }
                 if (isset($_POST['lactosa'])) {
@@ -220,7 +220,12 @@ class Controller
                 $db = new Model();
                 $resultado = $db->getLogin($user, $pwd);
                 if ($resultado === true) {
-                    $_SESSION['user_lvl'] = 1;
+                    $esAdmin = $db->getAdmin($user);
+                    if($esAdmin == 1){
+                        $_SESSION['user_lvl'] = 2;
+                    } else{
+                        $_SESSION['user_lvl'] = 1;
+                    }
                     $_SESSION['user'] = $user;
                     $idUser = $db->getIdUser($user);
                     $_SESSION['idUser'] = $idUser;
