@@ -77,19 +77,19 @@ class Controller
                 }
 
                 //ALERGENOS
-                if (isset($_POST['gluten'])) {
+                if (isset($_REQUEST['gluten'])) {
                     $gluten = 1;
                     $cont++;
                 }
-                if (isset($_POST['crustaceos'])) {
+                if (isset($_REQUEST['crustaceos'])) {
                     $crustaceos = 1;
                     $cont++;
                 }
-                if (isset($_POST['huevos'])) {
+                if (isset($_REQUEST['huevos'])) {
                     $huevos = 1;
                     $cont++;
                 }
-                if (isset($_POST['pescado'])) {
+                if (isset($_REQUEST['pescado'])) {
                     $pescado = 1;
                     $cont++;
                 }
@@ -156,14 +156,14 @@ class Controller
                     move_uploaded_file($origen, $destino);
                 }
 
-
+                if(empty($errores)){
                 //LO PASAMOS A EJECUTAR AL MODELO
                 $db = new Model();
                 $resultado = $db->setRegistro($name, $apellidos, $email, $user, $pwd, $bio, $destino);
                 if ($resultado) {
                     $_SESSION['user'] = $user;
                     $idUser = $db->getIdUser($user);
-                    $_SESSION['idUser'] =$idUser;
+                    $_SESSION['idUser'] = $idUser;
                     $idUser = $_SESSION["idUser"];
                     $resultadoAlergenos = $db->setAlergenos(
                         $gluten,
@@ -185,13 +185,22 @@ class Controller
                         $idUser
                     );
                     if($resultadoAlergenos){
-                        $contenido = 'Se ha registrado correctamente. <a href="index.php?ctl=inicio">Volver al inicio.</a>';
+                        header('Location: index.php?ctl=inicio');
+                    }else{
+                        $_SESSION['mensajeError'] = "Ha habido un fallo a la hora de registrarse";
+                        throw new Exception("Ha habido un fallo a la hora de registrarse");
                     }
                 }else{
                     $_SESSION['mensajeError'] = "Ha habido un fallo a la hora de registrarse";
                     throw new Exception("Ha habido un fallo a la hora de registrarse");
                 }
+            }else{
+                foreach($errores as $error){
+                    echo $error;
+                }
             }
+        }
+
         } catch (Exception $e) {
             $_SESSION['mensajeError'] = error_log($e->getMessage() . microtime() . PHP_EOL, 3, "logException.txt");
             header('Location: index.php?ctl=error');
@@ -295,6 +304,7 @@ class Controller
             $altramuces = 0;
             $vegan = 0;
             $vegetarian = 0;
+            $aprobada = 0;
             $cont = 0;
             $fecha_subida = date("d  M  Y  H:i");
             $idUser = "";
@@ -340,7 +350,7 @@ class Controller
                     $cont++;
                 }
                 if (isset($_POST["soja"])) {
-                    $lactosa = 1;
+                    $soja = 1;
                     $cont++;
                 }
                 if (isset($_POST["lactosa"])) {
@@ -388,8 +398,9 @@ class Controller
                 }
                                 //LO PASAMOS A EJECUTAR AL MODELO
                 $db = new Model();
-                $idUser = "";
-                $resultado = $db->setReceta($nomReceta, $receta, $tPrep, $fecha_subida, $ingredientes, $aprobada = 0,$idUser);
+                $idUser = $_SESSION["idUser"];
+                $resultado = $db->setReceta($nomReceta, $receta, $tPrep, $fecha_subida, $ingredientes, $aprobada, $idUser);
+                $idReceta = 
                 $resultadoAlergenos = $db->setAlergenos(
                                     $gluten,
                                     $crustaceos,

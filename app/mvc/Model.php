@@ -90,6 +90,15 @@ class Model extends PDO
         return $row["admin"];
     }
 
+    public function getIdReceta($nomReceta){
+        $consulta = "select idReceta from recetas where nomReceta=:nomReceta";
+        $result = $this->conexion->prepare($consulta);
+        $result->bindParam(':nomReceta', $nomReceta);
+        $result->execute();
+        $row = $result->fetch();
+        return $row["nomReceta"];
+    }
+
     public function setReceta($nomReceta, $receta, $tPrep, $fecha_subida, $ingredientes, $aprobada = 0, $idUser){
         $consulta = "insert into recetas (nomReceta, receta, tPrep, fecha_subida, ingredientes, aprobada, idUser)
         values (:nomReceta, :receta, :tPrep, :fecha_subida, :ingredientes, :aprobada, :idUser)";

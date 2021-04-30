@@ -12,7 +12,7 @@ CREATE TABLE `users` (
   `idUser` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `nomUser` varchar(30) NOT NULL,
   `apUser` varchar(50) NOT NULL,
-  `email` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL UNIQUE,
   `user` varchar(15) NOT NULL UNIQUE,
   `pwd` varchar(15) NOT NULL,
   `bio` varchar(240),
@@ -24,7 +24,7 @@ CREATE TABLE `users` (
 CREATE TABLE `recetas` (
   `idReceta` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `nomReceta` varchar(100) NOT NULL,
-  `receta` text NOT NULL,
+  `receta` text NOT NULL UNIQUE,
   `tPrep` varchar(30) NOT NULL,
   `fecha_subida` date NOT NULL,
   `ingredientes` text NOT NULL,
