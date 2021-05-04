@@ -113,4 +113,41 @@ class Model extends PDO
         $result->execute();
         return $result->fetch();
     }
+    public function getRecetaId($nomReceta, $receta, $tPrep, $fecha_subida, $ingredientes, $aprobada = 0, $idUser){
+        $consulta = "select idReceta from recetas where 
+        	nomReceta=:nomReceta and
+        	receta=:receta and 
+        	tPrep=:tPrep and
+        	fecha_subida=:fecha_subida and
+        	ingredientes=:ingredientes and
+        	aprobada=:aprobada and
+        	idUser=:idUser";
+        $result=$this->conexion->prepare($consulta);
+        $result->bindParam(':nomReceta', $nomReceta);
+        $result->bindParam(':receta', $receta);
+        $result->bindParam(':tPrep', $tPrep);
+        $result->bindParam(':fecha_subida', $fecha_subida);
+        $result->bindParam(':ingredientes', $ingredientes);
+        $result->bindParam(':aprobada', $aprobada);
+        $result->bindParam(':idUser', $idUser);
+        $result->execute();
+	    $row = $result->fetch();
+        return $row["idReceta"];
+    }
+
+    public function editar_perfil($idUser, $nomUser = NULL, $apUser = NULL, $email = null, $user = NULL, $pwd = null, $bio = NULL, $pfp = NULL){
+        $consulta = "update users set nomUser=:nomUser, apUser=:apUser, email=:email, user=:user, pwd=:pwd, bio=:bio, pfp=:pfp WHERE idUser=:idUser";
+        $result = $this->conexion->prepare($consulta);
+        $result->bindParam(':idUser', $idUser);
+        $result->bindParam(':nomUser', $nomUser);
+        $result->bindParam(':apUser', $apUser);
+        $result->bindParam(':email', $email);
+        $result->bindParam(':user', $user);
+        $result->bindParam(':pwd', $pwd);
+        $result->bindParam(':bio', $bio);
+        $result->bindParam(':pfp', $pfp);
+        $result->execute();
+        $result->fetch();
+        return $result;
+    }
 }
