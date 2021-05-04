@@ -396,33 +396,43 @@ class Controller
                 if ($cont == 0) {
                     $errores[] = "* Al menos debes marcar una alergia o preferencia alimenticia.";
                 }
+                //#endregion
                                 //LO PASAMOS A EJECUTAR AL MODELO
                 $db = new Model();
                 $idUser = $_SESSION["idUser"];
                 $resultado = $db->setReceta($nomReceta, $receta, $tPrep, $fecha_subida, $ingredientes, $aprobada, $idUser);
-                $idReceta = 
-                $resultadoAlergenos = $db->setAlergenos(
-                                    $gluten,
-                                    $crustaceos,
-                                    $huevos,
-                                    $pescado,
-                                    $cacahuetes,
-                                    $soja,
-                                    $lactosa,
-                                    $frutosdecascara,
-                                    $apio,
-                                    $mostaza,
-                                    $sesamo,
-                                    $sulfitos,
-                                    $moluscos,
-                                    $altramuces,
-                                    $vegan,
-                                    $vegetarian,
-                                    $idUser
-                                );
-                if ($resultado && $resultadoAlergenos) {
-                                    $contenido = 'Se ha registrado correctamente la receta. <a href="index.php?ctl=inicio">Volver al inicio.</a>';
-                                }
+                if($resultado){
+                    $idReceta = $db->getIdReceta($nomReceta);
+                    $_SESSION["idReceta"] = $idReceta;
+                    $resultadoAlergenos = $db->setAlergenos(
+                                        $gluten,
+                                        $crustaceos,
+                                        $huevos,
+                                        $pescado,
+                                        $cacahuetes,
+                                        $soja,
+                                        $lactosa,
+                                        $frutosdecascara,
+                                        $apio,
+                                        $mostaza,
+                                        $sesamo,
+                                        $sulfitos,
+                                        $moluscos,
+                                        $altramuces,
+                                        $vegan,
+                                        $vegetarian,
+                                        $idUser,
+                                        $idReceta
+                                    );
+                                    if ($resultadoAlergenos) {
+                                        header('Location: index.php?ctl=inicio');
+                                    } else{
+                                        $_SESSION['mensajeError'] = "Ha habido un fallo a la hora de subir la receta";
+                        throw new Exception("Ha habido un fallo a la hora de subir la receta");
+                                    }
+                }
+               
+
             }
         } catch (Exception $e) {
             error_log($e->getMessage() . microtime() . PHP_EOL, 3, "logException.txt");

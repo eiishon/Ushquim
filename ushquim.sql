@@ -17,7 +17,7 @@ CREATE TABLE `users` (
   `pwd` varchar(15) NOT NULL,
   `bio` varchar(240),
   `pfp` varchar(255),
-  `admin` BIT NOT NULL DEFAULT 0
+  `admin` TINYINT(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -26,31 +26,31 @@ CREATE TABLE `recetas` (
   `nomReceta` varchar(100) NOT NULL,
   `receta` text NOT NULL UNIQUE,
   `tPrep` varchar(30) NOT NULL,
-  `fecha_subida` date NOT NULL,
+  `fecha_subida` datetime NOT NULL,
   `ingredientes` text NOT NULL,
-  `aprobada` BIT NOT NULL,
+  `aprobada` TINYINT(1) NOT NULL,
   `idUser` int(11) NOT NULL AUTO_INCREMENT,
   FOREIGN KEY (`idUser`) REFERENCES users(`idUser`) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 CREATE TABLE `alergenos` (
-  `gluten` BIT NOT NULL DEFAULT 0,
-  `crustaceos` BIT NOT NULL DEFAULT 0,
-  `huevos` BIT NOT NULL DEFAULT 0,
-  `pescado` BIT NOT NULL DEFAULT 0,
-  `cacahuetes` BIT NOT NULL DEFAULT 0,
-  `soja` BIT NOT NULL DEFAULT 0,
-  `lactosa` BIT NOT NULL DEFAULT 0,
-  `frutosdecascara` BIT NOT NULL DEFAULT 0,
-  `apio` BIT NOT NULL DEFAULT 0,
-  `mostaza` BIT NOT NULL DEFAULT 0,
-  `sesamo` BIT NOT NULL DEFAULT 0,
-  `sulfitos` BIT NOT NULL DEFAULT 0,
-  `moluscos` BIT NOT NULL DEFAULT 0,
-  `altramuces` BIT NOT NULL DEFAULT 0,
-  `vegan` BIT NOT NULL DEFAULT 0,
-  `vegetarian` BIT NOT NULL DEFAULT 0,
+  `gluten` TINYINT(1) NOT NULL DEFAULT 0,
+  `crustaceos` TINYINT(1) NOT NULL DEFAULT 0,
+  `huevos` TINYINT(1) NOT NULL DEFAULT 0,
+  `pescado` TINYINT(1) NOT NULL DEFAULT 0,
+  `cacahuetes` TINYINT(1) NOT NULL DEFAULT 0,
+  `soja` TINYINT(1) NOT NULL DEFAULT 0,
+  `lactosa` TINYINT(1) NOT NULL DEFAULT 0,
+  `frutosdecascara` TINYINT(1) NOT NULL DEFAULT 0,
+  `apio` TINYINT(1) NOT NULL DEFAULT 0,
+  `mostaza` TINYINT(1) NOT NULL DEFAULT 0,
+  `sesamo` TINYINT(1) NOT NULL DEFAULT 0,
+  `sulfitos` TINYINT(1) NOT NULL DEFAULT 0,
+  `moluscos` TINYINT(1) NOT NULL DEFAULT 0,
+  `altramuces` TINYINT(1) NOT NULL DEFAULT 0,
+  `vegan` TINYINT(1) NOT NULL DEFAULT 0,
+  `vegetarian` TINYINT(1) NOT NULL DEFAULT 0,
   `idUser` int(11),
   FOREIGN KEY (`idUser`) REFERENCES users(`idUser`) ON DELETE CASCADE,
   `idReceta` int(11),
