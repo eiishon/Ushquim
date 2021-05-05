@@ -17,7 +17,23 @@ CREATE TABLE `users` (
   `pwd` varchar(15) NOT NULL,
   `bio` varchar(240),
   `pfp` varchar(255),
-  `admin` TINYINT(1) NOT NULL DEFAULT 0
+  `admin` tinyint(1) NOT NULL DEFAULT 0,
+  `gluten` tinyint(1) NOT NULL DEFAULT 0,
+  `crustaceos` tinyint(1) NOT NULL DEFAULT 0,
+  `huevos` tinyint(1) NOT NULL DEFAULT 0,
+  `pescado` tinyint(1) NOT NULL DEFAULT 0,
+  `cacahuetes` tinyint(1) NOT NULL DEFAULT 0,
+  `soja` tinyint(1) NOT NULL DEFAULT 0,
+  `lactosa` tinyint(1) NOT NULL DEFAULT 0,
+  `frutosdecascara` tinyint(1) NOT NULL DEFAULT 0,
+  `apio` tinyint(1) NOT NULL DEFAULT 0,
+  `mostaza` tinyint(1) NOT NULL DEFAULT 0,
+  `sesamo` tinyint(1) NOT NULL DEFAULT 0,
+  `sulfitos` tinyint(1) NOT NULL DEFAULT 0,
+  `moluscos` tinyint(1) NOT NULL DEFAULT 0,
+  `altramuces` tinyint(1) NOT NULL DEFAULT 0,
+  `vegan` tinyint(1) NOT NULL DEFAULT 0,
+  `vegetarian` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -28,33 +44,25 @@ CREATE TABLE `recetas` (
   `tPrep` varchar(30) NOT NULL,
   `fecha_subida` datetime NOT NULL,
   `ingredientes` text NOT NULL,
-  `aprobada` TINYINT(1) NOT NULL,
-  `idUser` int(11) NOT NULL AUTO_INCREMENT,
-  FOREIGN KEY (`idUser`) REFERENCES users(`idUser`) ON DELETE SET NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-CREATE TABLE `alergenos` (
-  `gluten` TINYINT(1) NOT NULL DEFAULT 0,
-  `crustaceos` TINYINT(1) NOT NULL DEFAULT 0,
-  `huevos` TINYINT(1) NOT NULL DEFAULT 0,
-  `pescado` TINYINT(1) NOT NULL DEFAULT 0,
-  `cacahuetes` TINYINT(1) NOT NULL DEFAULT 0,
-  `soja` TINYINT(1) NOT NULL DEFAULT 0,
-  `lactosa` TINYINT(1) NOT NULL DEFAULT 0,
-  `frutosdecascara` TINYINT(1) NOT NULL DEFAULT 0,
-  `apio` TINYINT(1) NOT NULL DEFAULT 0,
-  `mostaza` TINYINT(1) NOT NULL DEFAULT 0,
-  `sesamo` TINYINT(1) NOT NULL DEFAULT 0,
-  `sulfitos` TINYINT(1) NOT NULL DEFAULT 0,
-  `moluscos` TINYINT(1) NOT NULL DEFAULT 0,
-  `altramuces` TINYINT(1) NOT NULL DEFAULT 0,
-  `vegan` TINYINT(1) NOT NULL DEFAULT 0,
-  `vegetarian` TINYINT(1) NOT NULL DEFAULT 0,
-  `idUser` int(11),
-  FOREIGN KEY (`idUser`) REFERENCES users(`idUser`) ON DELETE CASCADE,
-  `idReceta` int(11),
-  FOREIGN KEY (`idReceta`) REFERENCES recetas(`idReceta`) ON DELETE CASCADE
+  `aprobada` tinyint(1) NOT NULL,
+  `idUser` int(11) NOT NULL,
+   FOREIGN KEY (`idUser`) REFERENCES users(`idUser`) ON DELETE CASCADE,
+  `gluten` tinyint(1) NOT NULL DEFAULT 0,
+  `crustaceos` tinyint(1) NOT NULL DEFAULT 0,
+  `huevos` tinyint(1) NOT NULL DEFAULT 0,
+  `pescado` tinyint(1) NOT NULL DEFAULT 0,
+  `cacahuetes` tinyint(1) NOT NULL DEFAULT 0,
+  `soja` tinyint(1) NOT NULL DEFAULT 0,
+  `lactosa` tinyint(1) NOT NULL DEFAULT 0,
+  `frutosdecascara` tinyint(1) NOT NULL DEFAULT 0,
+  `apio` tinyint(1) NOT NULL DEFAULT 0,
+  `mostaza` tinyint(1) NOT NULL DEFAULT 0,
+  `sesamo` tinyint(1) NOT NULL DEFAULT 0,
+  `sulfitos` tinyint(1) NOT NULL DEFAULT 0,
+  `moluscos` tinyint(1) NOT NULL DEFAULT 0,
+  `altramuces` tinyint(1) NOT NULL DEFAULT 0,
+  `vegan` tinyint(1) NOT NULL DEFAULT 0,
+  `vegetarian` tinyint(1) NOT NULL DEFAULT 0  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
