@@ -10,7 +10,7 @@
                     <label for="tPrep">Tiempo preparación</label>
                     <input type="time" name="tPrep" id="tPrep" required>
                     <label for="ingredientes">Ingredientes</label>
-                   <textarea name="indredientes" id="" cols="30" rows="10" required></textarea>
+                   <textarea name="ingredientes" id="" cols="30" rows="10" required></textarea>
                     <label for="alergias">Alergias: </label>
                         <div class="al">
                             <input type="checkbox" id="gluten" name="gluten" value="gluten">
