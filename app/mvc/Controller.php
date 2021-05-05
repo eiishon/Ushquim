@@ -77,19 +77,19 @@ class Controller
                 }
 
                 //ALERGENOS
-                if (isset($_REQUEST['gluten'])) {
+                if (isset($_POST['gluten'])) {
                     $gluten = 1;
                     $cont++;
                 }
-                if (isset($_REQUEST['crustaceos'])) {
+                if (isset($_POST['crustaceos'])) {
                     $crustaceos = 1;
                     $cont++;
                 }
-                if (isset($_REQUEST['huevos'])) {
+                if (isset($_POST['huevos'])) {
                     $huevos = 1;
                     $cont++;
                 }
-                if (isset($_REQUEST['pescado'])) {
+                if (isset($_POST['pescado'])) {
                     $pescado = 1;
                     $cont++;
                 }
@@ -148,7 +148,9 @@ class Controller
                 //FOTO DE PERFIL RECOGER Y MOVER
                 $rutaPFP = __DIR__ . "/app/vista/paginas/img/pfp/";
                 $extensionesValidas = ["image/jpeg", "image/gif"];
-                if (isset($_FILES["pfp"]) && !empty($_FILES["pfp"])) {
+                $destino = "";
+                
+                if ( (isset($_POST["pfp"])) && (!empty($_POST["pfp"])) ) {
                     $file = cfile("pfp", $rutaPFP, $extensionesValidas, $errores);
                     $_FILES["pfp"]["name"] =  $user . ".jpg";
                     $origen = $_FILES["pfp"]['tmp_name'];
@@ -159,37 +161,17 @@ class Controller
                 if(empty($errores)){
                 //LO PASAMOS A EJECUTAR AL MODELO
                 $db = new Model();
-                $resultado = $db->setRegistro($name, $apellidos, $email, $user, $pwd, $bio, $destino);
+                $resultado = $db->setRegistro($name, $apellidos, $email, $user, $pwd, $bio, $destino,
+                $gluten, $crustaceos, $huevos, $pescado, $cacahuetes, $soja, $lactosa, $frutosdecascara, 
+                $apio, $mostaza, $sesamo, $sulfitos, $moluscos, $altramuces, $vegan, $vegetarian);
+                
                 if ($resultado) {
+                
                     $_SESSION['user'] = $user;
                     $idUser = $db->getIdUser($user);
                     $_SESSION['idUser'] = $idUser;
                     $idUser = $_SESSION["idUser"];
-                    $resultadoAlergenos = $db->setAlergenos(
-                        $gluten,
-                        $crustaceos,
-                        $huevos,
-                        $pescado,
-                        $cacahuetes,
-                        $soja,
-                        $lactosa,
-                        $frutosdecascara,
-                        $apio,
-                        $mostaza,
-                        $sesamo,
-                        $sulfitos,
-                        $moluscos,
-                        $altramuces,
-                        $vegan,
-                        $vegetarian,
-                        $idUser
-                    );
-                    if($resultadoAlergenos){
-                        header('Location: index.php?ctl=inicio');
-                    }else{
-                        $_SESSION['mensajeError'] = "Ha habido un fallo a la hora de registrarse";
-                        throw new Exception("Ha habido un fallo a la hora de registrarse");
-                    }
+                    
                 }else{
                     $_SESSION['mensajeError'] = "Ha habido un fallo a la hora de registrarse";
                     throw new Exception("Ha habido un fallo a la hora de registrarse");
@@ -306,13 +288,16 @@ class Controller
             $vegetarian = 0;
             $aprobada = 0;
             $cont = 0;
-            $fecha_subida = date("d  M  Y  H:i");
+            $fecha_subida = date('Y-m-d H:i:s');
             $idUser = "";
             $errores = [];
+            
             if (isset($_POST['enviar'])) {
+            
                 $nomReceta = recoge('nomReceta');
                 $ingredientes = recoge('ingredientes');
                 $receta = recoge('receta');
+                
                 if (!empty($nomReceta)) {
                     cName($nomReceta, $errores);
                 } else {
@@ -328,6 +313,7 @@ class Controller
                 if(empty($tPrep)){
                     $errores[] = "* El campo tiempo de preparación es obligatorio. <br>";
                 }
+                
                 //ALERGENOS
                 if (isset($_POST["gluten"])) {
                     $gluten = 1;
@@ -396,36 +382,23 @@ class Controller
                 if ($cont == 0) {
                     $errores[] = "* Al menos debes marcar una alergia o preferencia alimenticia.";
                 }
-                //#endregion
-                                //LO PASAMOS A EJECUTAR AL MODELO
-                                $db = new Model();
-                                $idUser = $_SESSION["idUser"];
-                                $resultado = $db->setReceta($nomReceta, $receta, $tPrep, $fecha_subida, $ingredientes, $aprobada, $idUser);
-                                $idReceta = $db->getRecetaId($nomReceta, $receta, $tPrep, $fecha_subida, $ingredientes, $aprobada, $idUser);
-                                $resultadoAlergenos = $db->setAlergenos(
-                                                    $gluten,
-                                                    $crustaceos,
-                                                    $huevos,
-                                                    $pescado,
-                                                    $cacahuetes,
-                                                    $soja,
-                                                    $lactosa,
-                                                    $frutosdecascara,
-                                                    $apio,
-                                                    $mostaza,
-                                                    $sesamo,
-                                                    $sulfitos,
-                                                    $moluscos,
-                                                    $altramuces,
-                                                    $vegan,
-                                                    $vegetarian,
-                                                    $idUser,
-                                                    $idReceta
-                                                );
-                                if ($resultado && $resultadoAlergenos) {
-                                                    $contenido = 'Se ha registrado correctamente la receta. <a href="index.php?ctl=inicio">Volver al inicio.</a>';
-                                                }
-                                            }
+                
+                //LO PASAMOS A EJECUTAR AL MODELO
+                                  
+                                
+                $db = new Model();
+                $idUser = $_SESSION["idUser"];
+                
+                $resultado = $db->setReceta($nomReceta, $receta, $tPrep, $fecha_subida, $ingredientes, $idUser, $aprobada, 
+                $gluten, $crustaceos, $huevos, $pescado, $cacahuetes, $soja, $lactosa, $frutosdecascara, 
+                $apio, $mostaza, $sesamo, $sulfitos, $moluscos, $altramuces, $vegan, $vegetarian);
+                
+                if ($resultado) {
+                	$contenido = 'Se ha registrado correctamente la receta. <a href="index.php?ctl=inicio">Volver al inicio.</a>';
+                	echo $contenido;
+                }
+                
+            }
         } catch (Exception $e) {
             error_log($e->getMessage() . microtime() . PHP_EOL, 3, "logException.txt");
             header('Location: index.php?ctl=error');
