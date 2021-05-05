@@ -46,7 +46,7 @@ CREATE TABLE `recetas` (
   `ingredientes` text NOT NULL,
   `aprobada` tinyint(1) NOT NULL,
   `idUser` int(11) NOT NULL,
-   FOREIGN KEY (`idUser`) REFERENCES users(`idUser`) ON DELETE CASCADE,
+   FOREIGN KEY (`idUser`) REFERENCES users(`idUser`) ON DELETE SET NULL,
   `gluten` tinyint(1) NOT NULL DEFAULT 0,
   `crustaceos` tinyint(1) NOT NULL DEFAULT 0,
   `huevos` tinyint(1) NOT NULL DEFAULT 0,
