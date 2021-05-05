@@ -13,6 +13,8 @@ class Model extends PDO
         $this->conexion->exec("set names utf8");
         $this->conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
+    
+    
     public function getLogin($user, $pwd)
     {
         $consulta = "select user, pwd, admin from users where user=:user and pwd=:pwd";
@@ -24,10 +26,22 @@ class Model extends PDO
         if ($row == false) return false;
         else return true;
     }
-    public function setRegistro($nomUser, $apUser, $email, $user, $pwd, $bio = NULL, $pfp = NULL)
+    
+    
+    public function setRegistro($nomUser, $apUser, $email, $user, $pwd, $bio = NULL, $pfp = NULL,
+    $gluten = 0, $crustaceos = 0, $huevos = 0, $pescado = 0, $cacahuetes = 0,
+    $soja = 0, $lactosa = 0, $frutosdecascara = 0, $apio = 0, $mostaza = 0, $sesamo = 0, $sulfitos = 0,
+    $moluscos = 0, $altramuces = 0, $vegan = 0, $vegetarian=0)
     {
-        $consultaUsu = "insert into users (nomUser, apUser, email, user, pwd, bio, pfp) values (:nomUser, 
-        :apUser, :email, :user, :pwd, :bio, :pfp)";
+        $consultaUsu = "insert into users (
+        nomUser, apUser, email, user, pwd, bio, pfp,
+        gluten, crustaceos, huevos, pescado, cacahuetes, soja, lactosa, frutosdecascara, 
+        apio, mostaza, sesamo, sulfitos, moluscos, altramuces, vegan, vegetarian
+        ) values (
+        :nomUser, :apUser, :email, :user, :pwd, :bio, :pfp, 
+        :gluten, :crustaceos, :huevos, :pescado, :cacahuetes, :soja, :lactosa, :frutosdecascara, 
+        :apio, :mostaza, :sesamo, :sulfitos, :moluscos, :altramuces, :vegan, :vegetarian
+        )";
         $result = $this->conexion->prepare($consultaUsu);
         $result->bindParam(':nomUser', $nomUser);
         $result->bindParam(':apUser', $apUser);
@@ -36,20 +50,6 @@ class Model extends PDO
         $result->bindParam(':pwd', $pwd);
         $result->bindParam(':bio', $bio);
         $result->bindParam(':pfp', $pfp);
-        $result->execute();
-        $result->fetch();
-        return $result;
-    }
-
-    public function setAlergenos($gluten = '0', $crustaceos = '0', $huevos = '0', $pescado = '0', $cacahuetes = '0',
-    $soja = '0', $lactosa = '0', $frutosdecascara = '0', $apio = '0', $mostaza = '0', $sesamo = '0', $sulfitos = '0',
-    $moluscos = '0', $altramuces = '0', $vegan = '0', $vegetarian='0', $idUser = null, $idReceta = null)
-    {
-        $consulta = "insert into alergenos (gluten, crustaceos, huevos, pescado, cacahuetes, soja, lactosa,
-        frutosdecascara, apio, mostaza, sesamo, sulfitos, moluscos, altramuces, vegan, vegetarian, idUser,
-        idReceta) values (:gluten, :crustaceos, :huevos, :pescado, :cacahuetes, :soja, :lactosa, :frutosdecascara, 
-        :apio, :mostaza, :sesamo, :sulfitos, :moluscos, :altramuces, :vegan, :vegetarian, :idUser, :idReceta)";
-        $result = $this->conexion->prepare($consulta);
         $result->bindParam(':gluten', $gluten);
         $result->bindParam(':crustaceos', $crustaceos);
         $result->bindParam(':huevos', $huevos);
@@ -65,12 +65,12 @@ class Model extends PDO
         $result->bindParam(':moluscos', $moluscos);
         $result->bindParam(':altramuces', $altramuces);
         $result->bindParam(':vegan', $vegan);
-        $result->bindParam(':vegetarian', $vegetarian);
-        $result->bindParam(':idUser', $idUser);
-        $result->bindParam(':idReceta', $idReceta);
+        $result->bindParam(':vegetarian', $vegetarian);        
         $result->execute();
-        return $result->fetch();
+        $result->fetch();
+        return $result;
     }
+
 
     public function getIdUser($user){
         $consulta = "select idUser from users where user=:user";
@@ -90,18 +90,18 @@ class Model extends PDO
         return $row["admin"];
     }
 
-    public function getIdReceta($nomReceta){
-        $consulta = "select idReceta from recetas where nomReceta=:nomReceta";
-        $result = $this->conexion->prepare($consulta);
-        $result->bindParam(':nomReceta', $nomReceta);
-        $result->execute();
-        $row = $result->fetch();
-        return $row["nomReceta"];
-    }
-
-    public function setReceta($nomReceta, $receta, $tPrep, $fecha_subida, $ingredientes, $aprobada = 0, $idUser){
-        $consulta = "insert into recetas (nomReceta, receta, tPrep, fecha_subida, ingredientes, aprobada, idUser)
-        values (:nomReceta, :receta, :tPrep, :fecha_subida, :ingredientes, :aprobada, :idUser)";
+    public function setReceta($nomReceta, $receta, $tPrep, $fecha_subida, $ingredientes, $idUser, $aprobada = 0,
+    $gluten = 0, $crustaceos = 0, $huevos = 0, $pescado = 0, $cacahuetes = 0,
+    $soja = 0, $lactosa = 0, $frutosdecascara = 0, $apio = 0, $mostaza = 0, $sesamo = 0, $sulfitos = 0,
+    $moluscos = 0, $altramuces = 0, $vegan = 0, $vegetarian=0 ) {
+        $consulta = "insert into recetas (
+        nomReceta, receta, tPrep, fecha_subida, ingredientes, aprobada, idUser,
+        gluten, crustaceos, huevos, pescado, cacahuetes, soja, lactosa, frutosdecascara, 
+        apio, mostaza, sesamo, sulfitos, moluscos, altramuces, vegan, vegetarian
+        ) values (
+        :nomReceta, :receta, :tPrep, :fecha_subida, :ingredientes, :aprobada, :idUser,
+        :gluten, :crustaceos, :huevos, :pescado, :cacahuetes, :soja, :lactosa, :frutosdecascara, 
+        :apio, :mostaza, :sesamo, :sulfitos, :moluscos, :altramuces, :vegan, :vegetarian)";
         $result=$this->conexion->prepare($consulta);
         $result->bindParam(':nomReceta', $nomReceta);
         $result->bindParam(':receta', $receta);
@@ -110,44 +110,25 @@ class Model extends PDO
         $result->bindParam(':ingredientes', $ingredientes);
         $result->bindParam(':aprobada', $aprobada);
         $result->bindParam(':idUser', $idUser);
-        $result->execute();
-        return $result->fetch();
-    }
-    public function getRecetaId($nomReceta, $receta, $tPrep, $fecha_subida, $ingredientes, $aprobada = 0, $idUser){
-        $consulta = "select idReceta from recetas where 
-        	nomReceta=:nomReceta and
-        	receta=:receta and 
-        	tPrep=:tPrep and
-        	fecha_subida=:fecha_subida and
-        	ingredientes=:ingredientes and
-        	aprobada=:aprobada and
-        	idUser=:idUser";
-        $result=$this->conexion->prepare($consulta);
-        $result->bindParam(':nomReceta', $nomReceta);
-        $result->bindParam(':receta', $receta);
-        $result->bindParam(':tPrep', $tPrep);
-        $result->bindParam(':fecha_subida', $fecha_subida);
-        $result->bindParam(':ingredientes', $ingredientes);
-        $result->bindParam(':aprobada', $aprobada);
-        $result->bindParam(':idUser', $idUser);
-        $result->execute();
-	    $row = $result->fetch();
-        return $row["idReceta"];
-    }
-
-    public function editar_perfil($idUser, $nomUser = NULL, $apUser = NULL, $email = null, $user = NULL, $pwd = null, $bio = NULL, $pfp = NULL){
-        $consulta = "update users set nomUser=:nomUser, apUser=:apUser, email=:email, user=:user, pwd=:pwd, bio=:bio, pfp=:pfp WHERE idUser=:idUser";
-        $result = $this->conexion->prepare($consulta);
-        $result->bindParam(':idUser', $idUser);
-        $result->bindParam(':nomUser', $nomUser);
-        $result->bindParam(':apUser', $apUser);
-        $result->bindParam(':email', $email);
-        $result->bindParam(':user', $user);
-        $result->bindParam(':pwd', $pwd);
-        $result->bindParam(':bio', $bio);
-        $result->bindParam(':pfp', $pfp);
+        $result->bindParam(':gluten', $gluten);
+        $result->bindParam(':crustaceos', $crustaceos);
+        $result->bindParam(':huevos', $huevos);
+        $result->bindParam(':pescado', $pescado);
+        $result->bindParam(':cacahuetes', $cacahuetes);
+        $result->bindParam(':soja', $soja);
+        $result->bindParam(':lactosa', $lactosa);
+        $result->bindParam(':frutosdecascara', $frutosdecascara);
+        $result->bindParam(':apio', $apio);
+        $result->bindParam(':mostaza', $mostaza);
+        $result->bindParam(':sesamo', $sesamo);
+        $result->bindParam(':sulfitos', $sulfitos);
+        $result->bindParam(':moluscos', $moluscos);
+        $result->bindParam(':altramuces', $altramuces);
+        $result->bindParam(':vegan', $vegan);
+        $result->bindParam(':vegetarian', $vegetarian);    
         $result->execute();
         $result->fetch();
+        
         return $result;
     }
 }
