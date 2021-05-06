@@ -262,7 +262,7 @@ class Controller
             $idUser = $_SESSION["idUser"];
             $resultado = $db->getPerfil($idUser);
             if($resultado){
-              /*  echo "Nombre: ".$resultado["nomUser"]." ";
+                echo "Nombre: ".$resultado["nomUser"]." ";
                 echo $resultado ["apUser"]."<br>";
                 echo "Email: ".$resultado["email"]."<br>";
                 echo "Nombre de usuario: ".$resultado["user"]."<br>";
@@ -321,7 +321,7 @@ class Controller
                     if($resultado["vegetarian"] == 1){
                         echo "Vegetarian<br>";
                     }    
-                }*/
+                }
                 
             }else{
                 $_SESSION['mensajeError']='Ha habido un error a la hora de visualizar el contenido';
