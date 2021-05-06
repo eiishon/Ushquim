@@ -132,6 +132,14 @@ class Model extends PDO
         return $result;
     }
 
+    public function getRecetasNoAprobadas(){
+        $consulta = "SELECT `nomReceta`, `receta`, `tPrep`, `fecha_subida`, `ingredientes`, `aprobada`, `idUser`, `gluten`, `crustaceos`, `huevos`, `pescado`, `cacahuetes`, `soja`, `lactosa`, `frutosdecascara`, `apio`, `mostaza`, `sesamo`, `sulfitos`, `moluscos`, `altramuces`, `vegan`, `vegetarian` FROM `recetas` WHERE aprobada = 0";
+        $result = $this->conexion->prepare($consulta);
+        $result->execute();
+        $row = $result->fetch();
+        return $row;
+    }
+
     public function getPerfil($idUser){
         $consulta = "select `nomUser`, `apUser`, `email`, `user`, `pwd`, `bio`, `pfp`, `gluten`, `crustaceos`, `huevos`, `pescado`, `cacahuetes`, `soja`, `lactosa`, `frutosdecascara`, `apio`, `mostaza`, `sesamo`, `sulfitos`, `moluscos`, `altramuces`, `vegan`, `vegetarian` from `users` WHERE idUser=:idUser";
         $result = $this->conexion->prepare($consulta);
