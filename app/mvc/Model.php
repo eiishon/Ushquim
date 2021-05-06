@@ -17,7 +17,7 @@ class Model extends PDO
     
     public function getLogin($user, $pwd)
     {
-        $consulta = "select user, pwd, admin from users where user=:user and pwd=:pwd";
+        $consulta = "select user, pwd from users where user=:user and pwd=:pwd";
         $result = $this->conexion->prepare($consulta);
         $result->bindParam(':user', $user);
         $result->bindParam(':pwd', $pwd);
@@ -130,5 +130,14 @@ class Model extends PDO
         $result->fetch();
         
         return $result;
+    }
+
+    public function getPerfil($idUser){
+        $consulta = "select `nomUser`, `apUser`, `email`, `user`, `pwd`, `bio`, `pfp`, `gluten`, `crustaceos`, `huevos`, `pescado`, `cacahuetes`, `soja`, `lactosa`, `frutosdecascara`, `apio`, `mostaza`, `sesamo`, `sulfitos`, `moluscos`, `altramuces`, `vegan`, `vegetarian` from `users` WHERE idUser=:idUser";
+        $result = $this->conexion->prepare($consulta);
+        $result->bindParam(':idUser', $idUser);
+        $result->execute();
+        $row = $result->fetch();
+        return $row;
     }
 }

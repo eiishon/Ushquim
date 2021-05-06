@@ -257,6 +257,83 @@ class Controller
     public function perfil()
     {
         require __DIR__ . '/../vista/paginas/perfil.php';
+        try{
+            $db = new Model();
+            $idUser = $_SESSION["idUser"];
+            $resultado = $db->getPerfil($idUser);
+            if($resultado){
+              /*  echo "Nombre: ".$resultado["nomUser"]." ";
+                echo $resultado ["apUser"]."<br>";
+                echo "Email: ".$resultado["email"]."<br>";
+                echo "Nombre de usuario: ".$resultado["user"]."<br>";
+                echo "Contraseña: ".$resultado["pwd"]."<br>";
+                echo "Biografía: ".$resultado["bio"]."<br>";
+                echo $resultado["pfp"]."<br>";
+                echo "<h2>Alérgenos:</h2>";
+                if($resultado["gluten"] == 1){
+                    echo "Gluten <br>";
+                }
+                if($resultado["crustaceos"] == 1){
+                    echo "Crustáceos <br>";
+                }if($resultado["huevos"] == 1){
+                    echo "Huevos<br>";
+                }
+                if($resultado["pescado"] == 1){
+                    echo "Pescado<br>";
+                }
+                if($resultado["cacahuetes"] == 1){
+                    echo "Cacahuetes<br>";
+                }
+                if($resultado["soja"] == 1){
+                    echo "Soja<br>";
+                }
+                if($resultado["lactosa"] == 1){
+                    echo "Lactosa <br>";
+                }
+                if($resultado["frutosdecascara"] == 1){
+                    echo "Frutos de cáscara<br>";
+                }
+                if($resultado["apio"] == 1){
+                    echo "Apio<br>";
+                }
+                if($resultado["mostaza"] == 1){
+                    echo "Mostaza<br>";
+                }
+                if($resultado["sesamo"] == 1){
+                    echo "Sésamo<br>";
+                }
+                if($resultado["sulfitos"] == 1){
+                    echo "Sulfitos<br>";
+                }
+                if($resultado["moluscos"] == 1){
+                    echo "Moluscos<br>";
+                }
+                if($resultado["altramuces"] == 1){
+                    echo "Altramuces<br>";
+                }
+                if($resultado["vegan"] == 1 || $resultado["vegetarian"] == 1){
+                    
+                    echo "<h2>Preferencias alimenticias:</h2>";
+
+                    if($resultado["vegan"] == 1){
+                        echo "Vegan<br>";
+                    }
+                    if($resultado["vegetarian"] == 1){
+                        echo "Vegetarian<br>";
+                    }    
+                }*/
+                
+            }else{
+                $_SESSION['mensajeError']='Ha habido un error a la hora de visualizar el contenido';
+                throw new Exception("Ha habido un error a la hora de visualizar el contenido");
+            }
+        }catch (Exception $e) {
+            error_log($e->getMessage() . microtime() . PHP_EOL, 3, "logException.txt");
+            header('Location: index.php?ctl=error');
+        } catch (Error $e) {
+            error_log($e->getMessage() . microtime() . PHP_EOL, 3, "logError.txt");
+            header('Location: index.php?ctl=error');
+        }
     }
     public function recetas()
     {
