@@ -140,6 +140,34 @@ class Model extends PDO
         return $row;
     }
 
+    public function getIdReceta($receta){
+        $consulta = "select idReceta from recetas where receta=:receta";
+        $result = $this->conexion->prepare($consulta);
+        $result->bindParam(':receta', $receta);
+        $result->execute();
+        $row = $result-> fetch();
+        return $row["idReceta"];
+    }
+
+    public function aceptarReceta($idReceta){
+        $consulta = "update recetas set aprobada = 1 where idReceta=:idReceta";
+        $result = $this->conexion->prepare($consulta);
+        $result->bindParam(":idReceta", $idReceta);
+        $result->execute();
+        $result->fetch();
+        return $result;
+    }
+
+    public function rechazarReceta($idReceta){
+        $consulta = "delete from recetas where idReceta=:idReceta";
+        $result = $this->conexion->prepare($consulta);
+        $result->bindParam(":idReceta", $idReceta);
+        $result->execute();
+        $result->fetch();
+        return $result;
+    }
+
+
     public function getPerfil($idUser){
         $consulta = "select `nomUser`, `apUser`, `email`, `user`, `pwd`, `bio`, `pfp`, `gluten`, `crustaceos`, `huevos`, `pescado`, `cacahuetes`, `soja`, `lactosa`, `frutosdecascara`, `apio`, `mostaza`, `sesamo`, `sulfitos`, `moluscos`, `altramuces`, `vegan`, `vegetarian` from `users` WHERE idUser=:idUser";
         $result = $this->conexion->prepare($consulta);

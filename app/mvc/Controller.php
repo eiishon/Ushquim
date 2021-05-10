@@ -243,13 +243,194 @@ class Controller
 
     public function editar_perfil()
     {
+        try {
+            $name = "";
+            $apellidos = "";
+            $user = "";
+            $pwd = "";
+            $email = "";
+            $bio = "";
+            $gluten = 0;
+            $crustaceos = 0;
+            $huevos = 0;
+            $pescado = 0;
+            $cacahuetes = 0;
+            $soja = 0;
+            $lactosa = 0;
+            $frutosdecascara = 0;
+            $apio = 0;
+            $mostaza = 0;
+            $sesamo = 0;
+            $sulfitos = 0;
+            $moluscos = 0;
+            $altramuces = 0;
+            $vegan = 0;
+            $vegetarian = 0;
+            $cont = 0;
+            $errores = [];
+            $pattern = "/^[a-zÃ±0-9*_+\-\$&\/\\\]+$/i";
+            if (isset($_POST['enviar'])) {
+                $name = recoge('name');
+                $apellidos = recoge('apellidos');
+                $user = recoge('user');
+                $pwd = recoge('pwd');
+                $email = recoge('email');
+                $bio = recoge('bio');
+                //COMPROBAR QUE CAMPOS NO VACIOS Y VALIDAR DATOS
+                if (!empty($name)) {
+                    cName($name, $errores);
+                } else {
+                    $errores[] = "* El campo nombre es obligatorio. <br>";
+                }
+
+                if (!empty($apellidos)) {
+                    cText($apellidos, $errores);
+                } else {
+                    $errores[] = "* El campo apellidos es obligatorio.<br>";
+                }
+                if (!empty($user)) {
+                    validoPatron($pattern, $user, $errores);
+                } else {
+                    $errores[] = "* El campo usuario es obligatorio.<br>";
+                }
+                if (!empty($pwd)) {
+                    validoPatron($pattern, $pwd, $errores);
+                } else {
+                    $errores[] = "* El campo contraseña es obligatorio.<br>";
+                }
+                if (!empty($email)) {
+                    validoEmail($email, $errores);
+                } else {
+                    $errores[] = "* El campo email es obligatorio.<br>";
+                }
+                if (!empty($bio)) {
+                    cText($bio, $errores);
+                }
+
+                //ALERGENOS
+                if (isset($_POST['gluten'])) {
+                    $gluten = 1;
+                    $cont++;
+                }
+                if (isset($_POST['crustaceos'])) {
+                    $crustaceos = 1;
+                    $cont++;
+                }
+                if (isset($_POST['huevos'])) {
+                    $huevos = 1;
+                    $cont++;
+                }
+                if (isset($_POST['pescado'])) {
+                    $pescado = 1;
+                    $cont++;
+                }
+                if (isset($_POST['cacahuetes'])) {
+                    $cacahuetes = 1;
+                    $cont++;
+                }
+                if (isset($_POST['soja'])) {
+                    $soja = 1;
+                    $cont++;
+                }
+                if (isset($_POST['lactosa'])) {
+                    $lactosa = 1;
+                    $cont++;
+                }
+                if (isset($_POST['frutosdecascara'])) {
+                    $frutosdecascara = 1;
+                    $cont++;
+                }
+                if (isset($_POST["apio"])) {
+                    $apio = 1;
+                    $cont++;
+                }
+                if (isset($_POST["mostaza"])) {
+                    $mostaza = 1;
+                    $cont++;
+                }
+                if (isset($_POST["sesamo"])) {
+                    $sesamo = 1;
+                    $cont++;
+                }
+                if (isset($_POST["sulfitos"])) {
+                    $sulfitos = 1;
+                    $cont++;
+                }
+                if (isset($_POST["moluscos"])) {
+                    $moluscos = 1;
+                    $cont++;
+                }
+                if (isset($_POST["altramuces"])) {
+                    $altramuces = 1;
+                    $cont++;
+                }
+                if (isset($_POST["vegan"])) {
+                    $vegan = 1;
+                    $cont++;
+                }
+                if (isset($_POST["vegetarian"])) {
+                    $vegetarian = 1;
+                    $cont++;
+                }
+                if ($cont == 0) {
+                    $errores[] = "* Al menos debes marcar una alergia o preferencia alimenticia.";
+                }
+
+                //FOTO DE PERFIL RECOGER Y MOVER
+                $rutaPFP = __DIR__ . "/app/vista/paginas/img/pfp/";
+                $extensionesValidas = ["image/jpeg", "image/gif"];
+                $destino = "";
+                
+                if ( (isset($_POST["pfp"])) && (!empty($_POST["pfp"])) ) {
+                    $file = cfile("pfp", $rutaPFP, $extensionesValidas, $errores);
+                    $_FILES["pfp"]["name"] =  $user . ".jpg";
+                    $origen = $_FILES["pfp"]['tmp_name'];
+                    $destino = $rutaPFP . $_FILES["pfp"]["name"];
+                    move_uploaded_file($origen, $destino);
+                }
+
+                if(empty($errores)){
+                //LO PASAMOS A EJECUTAR AL MODELO
+                $db = new Model();
+                $resultado = $db->setRegistro($name, $apellidos, $email, $user, $pwd, $bio, $destino,
+                $gluten, $crustaceos, $huevos, $pescado, $cacahuetes, $soja, $lactosa, $frutosdecascara, 
+                $apio, $mostaza, $sesamo, $sulfitos, $moluscos, $altramuces, $vegan, $vegetarian);
+                
+                if ($resultado) {
+                
+                    $_SESSION['user'] = $user;
+                    $idUser = $db->getIdUser($user);
+                    $_SESSION['idUser'] = $idUser;
+                    $idUser = $_SESSION["idUser"];
+                    
+                }else{
+                    $_SESSION['mensajeError'] = "Ha habido un fallo a la hora de registrarse";
+                    throw new Exception("Ha habido un fallo a la hora de registrarse");
+                }
+            }else{
+                foreach($errores as $error){
+                    echo $error;
+                }
+            }
+        }
+
+        } catch (Exception $e) {
+            $_SESSION['mensajeError'] = error_log($e->getMessage() . microtime() . PHP_EOL, 3, "logException.txt");
+            header('Location: index.php?ctl=error');
+        } catch (Error $e) {
+            $_SESSION['mensajeError'] = error_log($e->getMessage() . microtime() . PHP_EOL, 3, "logError.txt");
+            header('Location: index.php?ctl=error');
+        }
+
         require __DIR__ . '/../vista/paginas/editar_perfil.php';
     }
 
     public function gestion()
     {
-        require __DIR__ . '/../vista/paginas/gestion.php';
+        ob_start();
+        echo "<h1>Gestión de Recetas </h1>";
         try{
+
             $db = new Model();
             $resultado = $db->getRecetasNoAprobadas();
             if($resultado){
@@ -322,9 +503,23 @@ class Controller
                 echo $resultado["ingredientes"]."<br>";
                 echo "<h4>Preparación</h4>";
                 echo $resultado["receta"]."<br>";
+                echo " <form method=\"POST\" action=\"".$_SERVER["PHP_SELF"]."\" name=\"gestion\" enctype=\"multipart/form-data\">
+                <button type= \"button\" name= \"aceptar\">Aceptar</button> 
+                <button type = \"button\" name= \"rechazar\">Rechazar</button>
+                </form>";
+                $idReceta = $db->getIdReceta($resultado["receta"]);
+                $_SESSION["idReceta"] = $idReceta;
+                if(isset($_POST["aceptar"])){
+                    echo "Aceptar receta";
+                    $resultado = $db->aceptarReceta($idReceta);
+                } elseif(isset($_POST["rechazar"])){
+                    echo "Rechazar receta";
+                    $resultado = $db->rechazarReceta($idReceta);
+                }
             } else{
                 $_SESSION['mensajeError']='No hay recetas para gestionar';
                 throw new Exception("No hay recetas para gestionar");
+              
             }
 
         }catch (Exception $e) {
@@ -334,6 +529,7 @@ class Controller
             error_log($e->getMessage() . microtime() . PHP_EOL, 3, "logError.txt");
             header('Location: index.php?ctl=error');
         }
+        require __DIR__ . '/../vista/paginas/gestion.php';
     }
     public function guardados()
     {
@@ -341,14 +537,15 @@ class Controller
     }
     public function perfil()
     {
-        ob_start();
-        echo "<h1> ".$_SESSION["user"]."</h1>"; 
-        require __DIR__ . '/../vista/paginas/perfil.php';
+        
+        
         try{
             $db = new Model();
             $idUser = $_SESSION["idUser"];
             $resultado = $db->getPerfil($idUser);
             if($resultado){
+                ob_start();
+                echo "<h1> ".$_SESSION["user"]."</h1>"; 
                 echo "Nombre: ".$resultado["nomUser"]." ";
                 echo $resultado ["apUser"]."<br>";
                 echo "Email: ".$resultado["email"]."<br>";
@@ -430,6 +627,7 @@ class Controller
             error_log($e->getMessage() . microtime() . PHP_EOL, 3, "logError.txt");
             header('Location: index.php?ctl=error');
         }
+        require __DIR__ . '/../vista/paginas/perfil.php';
     }
     public function recetas()
     {
