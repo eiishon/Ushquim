@@ -341,6 +341,8 @@ class Controller
     }
     public function perfil()
     {
+        ob_start();
+        echo "<h1> ".$_SESSION["user"]."</h1>"; 
         require __DIR__ . '/../vista/paginas/perfil.php';
         try{
             $db = new Model();
