@@ -72,9 +72,7 @@ class Controller
                 } else {
                     $errores[] = "* El campo email es obligatorio.<br>";
                 }
-                if (!empty($bio)) {
-                    cText($bio, $errores);
-                }
+                
 
                 //ALERGENOS
                 if (isset($_POST['gluten'])) {
@@ -171,6 +169,7 @@ class Controller
                     $idUser = $db->getIdUser($user);
                     $_SESSION['idUser'] = $idUser;
                     $idUser = $_SESSION["idUser"];
+                    header('Location: index.php?ctl=login');
                     
                 }else{
                     $_SESSION['mensajeError'] = "Ha habido un fallo a la hora de registrarse";
@@ -248,7 +247,9 @@ class Controller
             $apellidos = "";
             $user = "";
             $pwd = "";
+            $reppwd="";
             $email = "";
+            $repemail = "";
             $bio = "";
             $gluten = 0;
             $crustaceos = 0;
@@ -267,45 +268,50 @@ class Controller
             $vegan = 0;
             $vegetarian = 0;
             $cont = 0;
-            $errores = [];
             $pattern = "/^[a-zÃ±0-9*_+\-\$&\/\\\]+$/i";
+            $errores[] ="";
             if (isset($_POST['enviar'])) {
                 $name = recoge('name');
                 $apellidos = recoge('apellidos');
                 $user = recoge('user');
                 $pwd = recoge('pwd');
+                $reppwd = recoge('reppwd');
                 $email = recoge('email');
+                $repemail = recoge('repemail');
                 $bio = recoge('bio');
                 //COMPROBAR QUE CAMPOS NO VACIOS Y VALIDAR DATOS
                 if (!empty($name)) {
                     cName($name, $errores);
-                } else {
-                    $errores[] = "* El campo nombre es obligatorio. <br>";
-                }
+                } 
 
                 if (!empty($apellidos)) {
                     cText($apellidos, $errores);
-                } else {
-                    $errores[] = "* El campo apellidos es obligatorio.<br>";
-                }
+                } 
                 if (!empty($user)) {
                     validoPatron($pattern, $user, $errores);
-                } else {
-                    $errores[] = "* El campo usuario es obligatorio.<br>";
-                }
-                if (!empty($pwd)) {
+                } 
+                if (!empty($pwd) && !empty($reppwd)) {
                     validoPatron($pattern, $pwd, $errores);
-                } else {
-                    $errores[] = "* El campo contraseña es obligatorio.<br>";
+                    validoPatron($pattern, $reppwd, $errores);
+                } elseif((!empty($pwd) && empty($reppwd))|| (empty($pwd) && !empty($reppwd)) ){
+                    $errores[] = " Debes repetir la contraseña. <br>";
                 }
-                if (!empty($email)) {
+
+                if($pwd != $reppwd){
+                    $errores[] = "La contraseñas deben coincidir. <br>";
+                }
+
+                if (!empty($email) && !empty($repemail)) {
                     validoEmail($email, $errores);
-                } else {
-                    $errores[] = "* El campo email es obligatorio.<br>";
+                    validoEmail($repemail, $errores);
+                } elseif((!empty($email) && empty($repemail))|| (empty($email) && !empty($repemail)) ) {
+                    $errores[] = "Debes repetir el email.<br>";
                 }
-                if (!empty($bio)) {
-                    cText($bio, $errores);
+
+                if($email != $repemail){
+                    $errores[] = "Los emails deben coincidir. <br>";
                 }
+
 
                 //ALERGENOS
                 if (isset($_POST['gluten'])) {
@@ -391,21 +397,98 @@ class Controller
 
                 if(empty($errores)){
                 //LO PASAMOS A EJECUTAR AL MODELO
+                
                 $db = new Model();
-                $resultado = $db->setRegistro($name, $apellidos, $email, $user, $pwd, $bio, $destino,
+                $idUser = $_SESSION["idUser"];
+                if(isset($_POST["borrarperfil"])){
+                    $resultado=$db->borrarPerfil($idUser);
+                }
+                //CARGAMOS PERFIL Y ASIGNAMOS INFO
+                $resultado = $db->getPerfil($idUser);
+                if($name == ""){
+                    $name =$resultado["name"];
+                }
+                if($apellidos == ""){
+                    $apellidos = $resultado["apellidos"];
+                }
+                if($email == ""){
+                    $email = $resultado["email"];
+                }
+                if($user == ""){
+                    $user = $resultado["user"] ;
+                }
+                if($pwd ==""){
+                    $pwd = $resultado["pwd"];
+                }
+
+                if($bio == ""){
+                    $bio = $resultado["bio"];
+                }
+
+                if($destino ==""){
+                    $destino = $resultado["pfp"];
+                }
+
+                if($gluten == 0){
+                    $gluten =$resultado["gluten"];
+                }
+                if($crustaceos == 0){
+                    $crustaceos =$resultado["crustaceos"];
+                }
+                if($huevos == 0){
+                    $huevos =$resultado["huevos"];
+                }
+                if($pescado == 0){
+                    $pescado =$resultado["pescado"];
+                }
+                if($cacahuetes == 0){
+                    $cacahuetes =$resultado["cacahuetes"];
+                }
+                if($soja == 0){
+                    $soja =$resultado["soja"];
+                }
+                if($lactosa == 0){
+                    $lactosa =$resultado["lactosa"];
+                }
+                if($frutosdecascara == 0){
+                    $frutosdecascara =$resultado["frutosdecascara"];
+                }
+                if($apio == 0){
+                    $apio =$resultado["apio"];
+                }
+                if($mostaza == 0){
+                    $mostaza =$resultado["mostaza"];
+                }
+                if($sesamo == 0){
+                    $sesamo =$resultado["sesamo"];
+                }
+                if($sulfitos == 0){
+                    $sulfitos =$resultado["sulfitos"];
+                }
+                if($moluscos == 0){
+                    $name =$resultado["moluscos"];
+                }
+                if($altramuces == 0){
+                    $altramuces =$resultado["altramuces"];
+                }
+                if($vegan == 0){
+                    $vegan =$resultado["vegan"];
+                }
+                if($vegetarian == 0){
+                    $vegetarian =$resultado["vegetarian"];
+                }
+                
+                $resultado = $db->editarPerfil($name, $apellidos, $email, $user, $pwd, $bio, $destino,
                 $gluten, $crustaceos, $huevos, $pescado, $cacahuetes, $soja, $lactosa, $frutosdecascara, 
                 $apio, $mostaza, $sesamo, $sulfitos, $moluscos, $altramuces, $vegan, $vegetarian);
                 
                 if ($resultado) {
-                
                     $_SESSION['user'] = $user;
-                    $idUser = $db->getIdUser($user);
-                    $_SESSION['idUser'] = $idUser;
-                    $idUser = $_SESSION["idUser"];
+                    header('Location: index.php?ctl=perfil');
                     
                 }else{
-                    $_SESSION['mensajeError'] = "Ha habido un fallo a la hora de registrarse";
-                    throw new Exception("Ha habido un fallo a la hora de registrarse");
+                    $_SESSION['mensajeError'] = "Ha habido un fallo a la hora de editar el perfil.";
+                    throw new Exception("Ha habido un fallo a la hora de editar el perfil.");
                 }
             }else{
                 foreach($errores as $error){

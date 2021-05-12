@@ -69,6 +69,7 @@
                         </div>
                         <div class="button">
                             <input type="submit" name="editar" value="Editar">
+                            <input type="button" name = "borrarperfil" value="Borrar perfil">
                         </div>
                 </fieldset>
             </form>

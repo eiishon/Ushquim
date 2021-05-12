@@ -176,4 +176,53 @@ class Model extends PDO
         $row = $result->fetch();
         return $row;
     }
+
+    public function editarPerfil($nomUser, $apUser, $email, $user, $pwd, $bio, $pfp,
+    $gluten, $crustaceos, $huevos, $pescado, $cacahuetes,
+    $soja, $lactosa, $frutosdecascara, $apio, $mostaza, $sesamo, $sulfitos,
+    $moluscos, $altramuces, $vegan, $vegetarian)
+    {
+        $consultaUsu = "update users set nomUser=:nomUser, apUser=:apUser, email=:email,
+        user =:user, pwd=:pwd, bio=:bio, pfp=:pfp, gluten=:gluten, crustaceos=:crustaceos,
+        huevos=:huevos, pescado=:pescado, cacahuetes=:cacahuetes, soja=:soja, lactosa=:lactosa,
+        frutosdecascara=:frutosdecascara, apio=:apio, mostaza=:mostaza, sesamo=:sesamo,
+        sulfitos=:sulfitos, moluscos=:moluscos, altramuces=:altramuces, vegan=:vegan,
+        vegetarian=:vegetarian";
+        $result = $this->conexion->prepare($consultaUsu);
+        $result->bindParam(':nomUser', $nomUser);
+        $result->bindParam(':apUser', $apUser);
+        $result->bindParam(':email', $email);
+        $result->bindParam(':user', $user);
+        $result->bindParam(':pwd', $pwd);
+        $result->bindParam(':bio', $bio);
+        $result->bindParam(':pfp', $pfp);
+        $result->bindParam(':gluten', $gluten);
+        $result->bindParam(':crustaceos', $crustaceos);
+        $result->bindParam(':huevos', $huevos);
+        $result->bindParam(':pescado', $pescado);
+        $result->bindParam(':cacahuetes', $cacahuetes);
+        $result->bindParam(':soja', $soja);
+        $result->bindParam(':lactosa', $lactosa);
+        $result->bindParam(':frutosdecascara', $frutosdecascara);
+        $result->bindParam(':apio', $apio);
+        $result->bindParam(':mostaza', $mostaza);
+        $result->bindParam(':sesamo', $sesamo);
+        $result->bindParam(':sulfitos', $sulfitos);
+        $result->bindParam(':moluscos', $moluscos);
+        $result->bindParam(':altramuces', $altramuces);
+        $result->bindParam(':vegan', $vegan);
+        $result->bindParam(':vegetarian', $vegetarian);        
+        $result->execute();
+        $result->fetch();
+        return $result;
+    }
+
+    public function borrarPerfil($idUser){
+        $consulta = "delete from users where idUser=:idUser";
+        $result=$this->conexion->prepare($consulta);
+        $result->bindParam(':idUser', $idUser);
+        $result->execute();
+        $result->fetch();
+        return $result;
+    }
 }
