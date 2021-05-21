@@ -28,17 +28,17 @@ class Model extends PDO
     }
     
     
-    public function setRegistro($nomUser, $apUser, $email, $user, $pwd, $bio = NULL, $pfp = NULL,
+    public function setRegistro($nomUser, $apUser, $email, $user, $pwd, $bio = NULL,
     $gluten = 0, $crustaceos = 0, $huevos = 0, $pescado = 0, $cacahuetes = 0,
     $soja = 0, $lactosa = 0, $frutosdecascara = 0, $apio = 0, $mostaza = 0, $sesamo = 0, $sulfitos = 0,
     $moluscos = 0, $altramuces = 0, $vegan = 0, $vegetarian=0)
     {
         $consultaUsu = "insert into users (
-        nomUser, apUser, email, user, pwd, bio, pfp,
+        nomUser, apUser, email, user, pwd, bio,
         gluten, crustaceos, huevos, pescado, cacahuetes, soja, lactosa, frutosdecascara, 
         apio, mostaza, sesamo, sulfitos, moluscos, altramuces, vegan, vegetarian
         ) values (
-        :nomUser, :apUser, :email, :user, :pwd, :bio, :pfp, 
+        :nomUser, :apUser, :email, :user, :pwd, :bio,
         :gluten, :crustaceos, :huevos, :pescado, :cacahuetes, :soja, :lactosa, :frutosdecascara, 
         :apio, :mostaza, :sesamo, :sulfitos, :moluscos, :altramuces, :vegan, :vegetarian
         )";
@@ -49,7 +49,6 @@ class Model extends PDO
         $result->bindParam(':user', $user);
         $result->bindParam(':pwd', $pwd);
         $result->bindParam(':bio', $bio);
-        $result->bindParam(':pfp', $pfp);
         $result->bindParam(':gluten', $gluten);
         $result->bindParam(':crustaceos', $crustaceos);
         $result->bindParam(':huevos', $huevos);
@@ -177,13 +176,13 @@ class Model extends PDO
         return $row;
     }
 
-    public function editarPerfil($nomUser, $apUser, $email, $user, $pwd, $bio, $pfp,
+    public function editarPerfil($nomUser, $apUser, $email, $user, $pwd, $bio,
     $gluten, $crustaceos, $huevos, $pescado, $cacahuetes,
     $soja, $lactosa, $frutosdecascara, $apio, $mostaza, $sesamo, $sulfitos,
     $moluscos, $altramuces, $vegan, $vegetarian)
     {
         $consultaUsu = "update users set nomUser=:nomUser, apUser=:apUser, email=:email,
-        user =:user, pwd=:pwd, bio=:bio, pfp=:pfp, gluten=:gluten, crustaceos=:crustaceos,
+        user =:user, pwd=:pwd, bio=:bio, gluten=:gluten, crustaceos=:crustaceos,
         huevos=:huevos, pescado=:pescado, cacahuetes=:cacahuetes, soja=:soja, lactosa=:lactosa,
         frutosdecascara=:frutosdecascara, apio=:apio, mostaza=:mostaza, sesamo=:sesamo,
         sulfitos=:sulfitos, moluscos=:moluscos, altramuces=:altramuces, vegan=:vegan,
@@ -195,7 +194,6 @@ class Model extends PDO
         $result->bindParam(':user', $user);
         $result->bindParam(':pwd', $pwd);
         $result->bindParam(':bio', $bio);
-        $result->bindParam(':pfp', $pfp);
         $result->bindParam(':gluten', $gluten);
         $result->bindParam(':crustaceos', $crustaceos);
         $result->bindParam(':huevos', $huevos);

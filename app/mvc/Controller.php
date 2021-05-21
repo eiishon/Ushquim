@@ -143,23 +143,11 @@ class Controller
                     $errores[] = "* Al menos debes marcar una alergia o preferencia alimenticia.";
                 }
 
-                //FOTO DE PERFIL RECOGER Y MOVER
-                $rutaPFP = __DIR__ . "/app/vista/paginas/img/pfp/";
-                $extensionesValidas = ["image/jpeg", "image/gif"];
-                $destino = "";
-                
-                if ( (isset($_POST["pfp"])) && (!empty($_POST["pfp"])) ) {
-                    $file = cfile("pfp", $rutaPFP, $extensionesValidas, $errores);
-                    $_FILES["pfp"]["name"] =  $user . ".jpg";
-                    $origen = $_FILES["pfp"]['tmp_name'];
-                    $destino = $rutaPFP . $_FILES["pfp"]["name"];
-                    move_uploaded_file($origen, $destino);
-                }
 
                 if(empty($errores)){
                 //LO PASAMOS A EJECUTAR AL MODELO
                 $db = new Model();
-                $resultado = $db->setRegistro($name, $apellidos, $email, $user, $pwd, $bio, $destino,
+                $resultado = $db->setRegistro($name, $apellidos, $email, $user, $pwd, $bio,
                 $gluten, $crustaceos, $huevos, $pescado, $cacahuetes, $soja, $lactosa, $frutosdecascara, 
                 $apio, $mostaza, $sesamo, $sulfitos, $moluscos, $altramuces, $vegan, $vegetarian);
                 
@@ -382,18 +370,7 @@ class Controller
                     $errores[] = "* Al menos debes marcar una alergia o preferencia alimenticia.";
                 }
 
-                //FOTO DE PERFIL RECOGER Y MOVER
-                $rutaPFP = __DIR__ . "/app/vista/paginas/img/pfp/";
-                $extensionesValidas = ["image/jpeg", "image/gif"];
-                $destino = "";
-                
-                if ( (isset($_POST["pfp"])) && (!empty($_POST["pfp"])) ) {
-                    $file = cfile("pfp", $rutaPFP, $extensionesValidas, $errores);
-                    $_FILES["pfp"]["name"] =  $user . ".jpg";
-                    $origen = $_FILES["pfp"]['tmp_name'];
-                    $destino = $rutaPFP . $_FILES["pfp"]["name"];
-                    move_uploaded_file($origen, $destino);
-                }
+               
 
                 if(empty($errores)){
                 //LO PASAMOS A EJECUTAR AL MODELO
@@ -423,10 +400,6 @@ class Controller
 
                 if($bio == ""){
                     $bio = $resultado["bio"];
-                }
-
-                if($destino ==""){
-                    $destino = $resultado["pfp"];
                 }
 
                 if($gluten == 0){
@@ -478,7 +451,7 @@ class Controller
                     $vegetarian =$resultado["vegetarian"];
                 }
                 
-                $resultado = $db->editarPerfil($name, $apellidos, $email, $user, $pwd, $bio, $destino,
+                $resultado = $db->editarPerfil($name, $apellidos, $email, $user, $pwd, $bio,
                 $gluten, $crustaceos, $huevos, $pescado, $cacahuetes, $soja, $lactosa, $frutosdecascara, 
                 $apio, $mostaza, $sesamo, $sulfitos, $moluscos, $altramuces, $vegan, $vegetarian);
                 
