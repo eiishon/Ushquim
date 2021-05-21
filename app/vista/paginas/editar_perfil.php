@@ -25,8 +25,6 @@
                             <input type="email" name="repemail" id="repemail">
                             <label for="bio">Cuéntanos un poco sobre ti:</label>
                             <textarea id="bio" name="bio" rows="4" cols="40"></textarea>
-                        <label for="pfp">Sube una foto de perfil:</label>
-                        <input type="file" id="pfp" name="pfp"> <br>
                         </div>
                         <label for="alergias">Alergias: </label>
                         <div class="al">
