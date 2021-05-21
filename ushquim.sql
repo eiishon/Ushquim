@@ -16,7 +16,6 @@ CREATE TABLE `users` (
   `user` varchar(15) NOT NULL UNIQUE,
   `pwd` varchar(15) NOT NULL,
   `bio` varchar(240),
-  `pfp` varchar(255),
   `admin` tinyint(1) NOT NULL DEFAULT 0,
   `gluten` tinyint(1) NOT NULL DEFAULT 0,
   `crustaceos` tinyint(1) NOT NULL DEFAULT 0,
