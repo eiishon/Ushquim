@@ -4,7 +4,91 @@ class Controller
 {
     public function inicio()
     {
-        require __DIR__ . '/../vista/paginas/inicio.php';
+        ob_start();
+        echo "<h1>Bienvenido a Ushquim </h1>";
+        try{
+            $db= new Model();
+            $resultado=$db->getRecetas();
+            if($resultado){
+                echo "<h2>".$resultado["nomReceta"]."</h2><br>";
+                echo $resultado["tPrep"]."<br>";
+                echo "Fecha subida: ".$resultado["fecha_subida"]."<br>";
+                if($resultado["gluten"] == 1 || $resultado["crustaceos"] == 1 || 
+                $resultado["huevos"] == 1 || $resultado["pescado"] == 1 ||
+                $resultado["cacahuetes"] == 1 || $resultado["soja"] == 1 ||
+                $resultado["lactosa"] == 1 || $resultado["frutosdecascara"] == 1 ||
+                $resultado["apio"] == 1 || $resultado["mostaza"] == 1 || 
+                $resultado["sesamo"] == 1 || $resultado["sulfitos"] == 1 || 
+                $resultado["moluscos"] == 1 || $resultado["altramuces"] == 1){
+                echo "<h4>Alérgenos:</h4>";
+                if($resultado["gluten"] == 1){
+                    echo "Gluten <br>";
+                }
+                if($resultado["crustaceos"] == 1){
+                    echo "Crustáceos <br>";
+                }if($resultado["huevos"] == 1){
+                    echo "Huevos<br>";
+                }
+                if($resultado["pescado"] == 1){
+                    echo "Pescado<br>";
+                }
+                if($resultado["cacahuetes"] == 1){
+                    echo "Cacahuetes<br>";
+                }
+                if($resultado["soja"] == 1){
+                    echo "Soja<br>";
+                }
+                if($resultado["lactosa"] == 1){
+                    echo "Lactosa <br>";
+                }
+                if($resultado["frutosdecascara"] == 1){
+                    echo "Frutos de cáscara<br>";
+                }
+                if($resultado["apio"] == 1){
+                    echo "Apio<br>";
+                }
+                if($resultado["mostaza"] == 1){
+                    echo "Mostaza<br>";
+                }
+                if($resultado["sesamo"] == 1){
+                    echo "Sésamo<br>";
+                }
+                if($resultado["sulfitos"] == 1){
+                    echo "Sulfitos<br>";
+                }
+                if($resultado["moluscos"] == 1){
+                    echo "Moluscos<br>";
+                }
+                if($resultado["altramuces"] == 1){
+                    echo "Altramuces<br>";
+                }
+                
+            }
+                if($resultado["vegan"] == 1 || $resultado["vegetarian"] == 1){
+                    
+                    echo "<h4>Preferencias alimenticias:</h4>";
+
+                    if($resultado["vegan"] == 1){
+                        echo "Vegan<br>";
+                    }
+                    if($resultado["vegetarian"] == 1){
+                        echo "Vegetarian<br>";
+                    }    
+                }
+                echo "<h4>Ingredientes</h4>";
+                echo $resultado["ingredientes"]."<br>";
+                echo "<h4>Preparación</h4>";
+                echo $resultado["receta"]."<br>";
+            
+        }
+    }catch (Exception $e) {
+        error_log($e->getMessage() . microtime() . PHP_EOL, 3, "logException.txt");
+        header('Location: index.php?ctl=error');
+    } catch (Error $e) {
+        error_log($e->getMessage() . microtime() . PHP_EOL, 3, "logError.txt");
+        header('Location: index.php?ctl=error');
+    }
+    require __DIR__ . '/../vista/paginas/inicio.php';
     }
     public function error()
     {
@@ -821,8 +905,7 @@ class Controller
                 $apio, $mostaza, $sesamo, $sulfitos, $moluscos, $altramuces, $vegan, $vegetarian);
                 
                 if ($resultado) {
-                	$contenido = 'Se ha registrado correctamente la receta. <a href="index.php?ctl=inicio">Volver al inicio.</a>';
-                	echo $contenido;
+                	header('Location: index.php?ctl=inicio');
                 }
                 
             }
