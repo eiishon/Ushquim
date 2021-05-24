@@ -8,8 +8,9 @@ class Controller
         echo "<h1>Bienvenido a Ushquim </h1>";
         try{
             $db= new Model();
-            $resultado=$db->getRecetas();
-            if($resultado){
+            $resultados=$db->getRecetas();
+            if($resultados){
+                foreach($resultados as $resultado){
                 echo "<h2>".$resultado["nomReceta"]."</h2><br>";
                 echo $resultado["tPrep"]."<br>";
                 echo "Fecha subida: ".$resultado["fecha_subida"]."<br>";
@@ -81,6 +82,7 @@ class Controller
                 echo $resultado["receta"]."<br>";
             
         }
+    }
     }catch (Exception $e) {
         error_log($e->getMessage() . microtime() . PHP_EOL, 3, "logException.txt");
         header('Location: index.php?ctl=error');
@@ -682,8 +684,9 @@ class Controller
         try{
             $db = new Model();
             $idUser = $_SESSION["idUser"];
-            $resultado = $db->getPerfil($idUser);
-            if($resultado){
+            $resultados = $db->getPerfil($idUser);
+            if($resultados){
+                foreach($resultados as $resultado){
                 ob_start();
                 echo "<h1> ".$_SESSION["user"]."</h1>"; 
                 echo "Nombre: ".$resultado["nomUser"]." ";
@@ -754,6 +757,7 @@ class Controller
                     if($resultado["vegetarian"] == 1){
                         echo "Vegetarian<br>";
                     }    
+                }
                 }
                 
             }else{
