@@ -7,8 +7,8 @@
                     <legend>¡Sube tu receta aquí!</legend>
                     <label for="nomReceta">Título de la receta</label>
                     <input type="text" name="nomReceta" id="nomReceta" required>
-                    <label for="tPrep">Tiempo preparación</label>
-                    <input type="datetime" name="tPrep" id="tPrep" required>
+                    <label for="tPrep">Tiempo preparación (en minutos)</label>
+                    <input type="number" name="tPrep" id="tPrep" required>
                     <label for="ingredientes">Ingredientes</label>
                    <textarea name="ingredientes" id="" cols="30" rows="10" required></textarea>
                     <label for="alergias">Alergias: </label>

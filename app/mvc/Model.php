@@ -135,14 +135,14 @@ class Model extends PDO
         $consulta = "SELECT `nomReceta`, `receta`, `tPrep`, `fecha_subida`, `ingredientes`, `aprobada`, `idUser`, `gluten`, `crustaceos`, `huevos`, `pescado`, `cacahuetes`, `soja`, `lactosa`, `frutosdecascara`, `apio`, `mostaza`, `sesamo`, `sulfitos`, `moluscos`, `altramuces`, `vegan`, `vegetarian` FROM `recetas` WHERE aprobada = 0";
         $result = $this->conexion->prepare($consulta);
         $result->execute();
-        $row = $result->fetch();
+        $row = $result->fetchAll();
         return $row;
     }
     public function getRecetas(){
         $consulta = "SELECT `nomReceta`, `receta`, `tPrep`, `fecha_subida`, `ingredientes`, `aprobada`, `idUser`, `gluten`, `crustaceos`, `huevos`, `pescado`, `cacahuetes`, `soja`, `lactosa`, `frutosdecascara`, `apio`, `mostaza`, `sesamo`, `sulfitos`, `moluscos`, `altramuces`, `vegan`, `vegetarian` FROM `recetas` WHERE aprobada = 1";
         $result = $this->conexion->prepare($consulta);
         $result->execute();
-        $row = $result->fetch();
+        $row = $result->fetchAll();
         return $row;
     }
 

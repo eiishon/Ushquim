@@ -6,91 +6,93 @@ class Controller
     {
         ob_start();
         echo "<h1>Bienvenido a Ushquim </h1>";
-        try{
-            $db= new Model();
-            $resultados=$db->getRecetas();
-            if($resultados){
-                foreach($resultados as $resultado){
-                echo "<h2>".$resultado["nomReceta"]."</h2><br>";
-                echo $resultado["tPrep"]."<br>";
-                echo "Fecha subida: ".$resultado["fecha_subida"]."<br>";
-                if($resultado["gluten"] == 1 || $resultado["crustaceos"] == 1 || 
-                $resultado["huevos"] == 1 || $resultado["pescado"] == 1 ||
-                $resultado["cacahuetes"] == 1 || $resultado["soja"] == 1 ||
-                $resultado["lactosa"] == 1 || $resultado["frutosdecascara"] == 1 ||
-                $resultado["apio"] == 1 || $resultado["mostaza"] == 1 || 
-                $resultado["sesamo"] == 1 || $resultado["sulfitos"] == 1 || 
-                $resultado["moluscos"] == 1 || $resultado["altramuces"] == 1){
-                echo "<h4>Alérgenos:</h4>";
-                if($resultado["gluten"] == 1){
-                    echo "Gluten <br>";
-                }
-                if($resultado["crustaceos"] == 1){
-                    echo "Crustáceos <br>";
-                }if($resultado["huevos"] == 1){
-                    echo "Huevos<br>";
-                }
-                if($resultado["pescado"] == 1){
-                    echo "Pescado<br>";
-                }
-                if($resultado["cacahuetes"] == 1){
-                    echo "Cacahuetes<br>";
-                }
-                if($resultado["soja"] == 1){
-                    echo "Soja<br>";
-                }
-                if($resultado["lactosa"] == 1){
-                    echo "Lactosa <br>";
-                }
-                if($resultado["frutosdecascara"] == 1){
-                    echo "Frutos de cáscara<br>";
-                }
-                if($resultado["apio"] == 1){
-                    echo "Apio<br>";
-                }
-                if($resultado["mostaza"] == 1){
-                    echo "Mostaza<br>";
-                }
-                if($resultado["sesamo"] == 1){
-                    echo "Sésamo<br>";
-                }
-                if($resultado["sulfitos"] == 1){
-                    echo "Sulfitos<br>";
-                }
-                if($resultado["moluscos"] == 1){
-                    echo "Moluscos<br>";
-                }
-                if($resultado["altramuces"] == 1){
-                    echo "Altramuces<br>";
-                }
-                
-            }
-                if($resultado["vegan"] == 1 || $resultado["vegetarian"] == 1){
-                    
-                    echo "<h4>Preferencias alimenticias:</h4>";
-
-                    if($resultado["vegan"] == 1){
-                        echo "Vegan<br>";
+        try {
+            $db = new Model();
+            $resultados = $db->getRecetas();
+            if ($resultados) {
+                foreach ($resultados as $resultado) {
+                echo "<div class=\"gestion\">";
+                    echo "<h2>" . $resultado["nomReceta"] . "</h2><br>";
+                    echo $resultado["tPrep"] . "<br>";
+                    echo "Fecha subida: " . $resultado["fecha_subida"] . "<br>";
+                    if (
+                        $resultado["gluten"] == 1 || $resultado["crustaceos"] == 1 ||
+                        $resultado["huevos"] == 1 || $resultado["pescado"] == 1 ||
+                        $resultado["cacahuetes"] == 1 || $resultado["soja"] == 1 ||
+                        $resultado["lactosa"] == 1 || $resultado["frutosdecascara"] == 1 ||
+                        $resultado["apio"] == 1 || $resultado["mostaza"] == 1 ||
+                        $resultado["sesamo"] == 1 || $resultado["sulfitos"] == 1 ||
+                        $resultado["moluscos"] == 1 || $resultado["altramuces"] == 1
+                    ) {
+                        echo "<h4>Alérgenos:</h4>";
+                        if ($resultado["gluten"] == 1) {
+                            echo "Gluten <br>";
+                        }
+                        if ($resultado["crustaceos"] == 1) {
+                            echo "Crustáceos <br>";
+                        }
+                        if ($resultado["huevos"] == 1) {
+                            echo "Huevos<br>";
+                        }
+                        if ($resultado["pescado"] == 1) {
+                            echo "Pescado<br>";
+                        }
+                        if ($resultado["cacahuetes"] == 1) {
+                            echo "Cacahuetes<br>";
+                        }
+                        if ($resultado["soja"] == 1) {
+                            echo "Soja<br>";
+                        }
+                        if ($resultado["lactosa"] == 1) {
+                            echo "Lactosa <br>";
+                        }
+                        if ($resultado["frutosdecascara"] == 1) {
+                            echo "Frutos de cáscara<br>";
+                        }
+                        if ($resultado["apio"] == 1) {
+                            echo "Apio<br>";
+                        }
+                        if ($resultado["mostaza"] == 1) {
+                            echo "Mostaza<br>";
+                        }
+                        if ($resultado["sesamo"] == 1) {
+                            echo "Sésamo<br>";
+                        }
+                        if ($resultado["sulfitos"] == 1) {
+                            echo "Sulfitos<br>";
+                        }
+                        if ($resultado["moluscos"] == 1) {
+                            echo "Moluscos<br>";
+                        }
+                        if ($resultado["altramuces"] == 1) {
+                            echo "Altramuces<br>";
+                        }
                     }
-                    if($resultado["vegetarian"] == 1){
-                        echo "Vegetarian<br>";
-                    }    
+                    if ($resultado["vegan"] == 1 || $resultado["vegetarian"] == 1) {
+
+                        echo "<h4>Preferencias alimenticias:</h4>";
+
+                        if ($resultado["vegan"] == 1) {
+                            echo "Vegan<br>";
+                        }
+                        if ($resultado["vegetarian"] == 1) {
+                            echo "Vegetarian<br>";
+                        }
+                    }
+                    echo "<h4>Ingredientes</h4>";
+                    echo $resultado["ingredientes"] . "<br>";
+                    echo "<h4>Preparación</h4>";
+                    echo $resultado["receta"] . "<br> </div>";
                 }
-                echo "<h4>Ingredientes</h4>";
-                echo $resultado["ingredientes"]."<br>";
-                echo "<h4>Preparación</h4>";
-                echo $resultado["receta"]."<br>";
-            
+            }
+        } catch (Exception $e) {
+            error_log($e->getMessage() . microtime() . PHP_EOL, 3, "logException.txt");
+            header('Location: index.php?ctl=error');
+        } catch (Error $e) {
+            error_log($e->getMessage() . microtime() . PHP_EOL, 3, "logError.txt");
+            header('Location: index.php?ctl=error');
         }
-    }
-    }catch (Exception $e) {
-        error_log($e->getMessage() . microtime() . PHP_EOL, 3, "logException.txt");
-        header('Location: index.php?ctl=error');
-    } catch (Error $e) {
-        error_log($e->getMessage() . microtime() . PHP_EOL, 3, "logError.txt");
-        header('Location: index.php?ctl=error');
-    }
-    require __DIR__ . '/../vista/paginas/inicio.php';
+        require __DIR__ . '/../vista/paginas/inicio.php';
     }
     public function error()
     {
@@ -158,7 +160,7 @@ class Controller
                 } else {
                     $errores[] = "* El campo email es obligatorio.<br>";
                 }
-                
+
 
                 //ALERGENOS
                 if (isset($_POST['gluten'])) {
@@ -230,32 +232,51 @@ class Controller
                 }
 
 
-                if(empty($errores)){
-                //LO PASAMOS A EJECUTAR AL MODELO
-                $db = new Model();
-                $resultado = $db->setRegistro($name, $apellidos, $email, $user, $pwd, $bio,
-                $gluten, $crustaceos, $huevos, $pescado, $cacahuetes, $soja, $lactosa, $frutosdecascara, 
-                $apio, $mostaza, $sesamo, $sulfitos, $moluscos, $altramuces, $vegan, $vegetarian);
-                
-                if ($resultado) {
-                
-                    $_SESSION['user'] = $user;
-                    $idUser = $db->getIdUser($user);
-                    $_SESSION['idUser'] = $idUser;
-                    $idUser = $_SESSION["idUser"];
-                    header('Location: index.php?ctl=login');
-                    
-                }else{
-                    $_SESSION['mensajeError'] = "Ha habido un fallo a la hora de registrarse";
-                    throw new Exception("Ha habido un fallo a la hora de registrarse");
-                }
-            }else{
-                foreach($errores as $error){
-                    echo $error;
+                if (empty($errores)) {
+                    //LO PASAMOS A EJECUTAR AL MODELO
+                    $db = new Model();
+                    $resultado = $db->setRegistro(
+                        $name,
+                        $apellidos,
+                        $email,
+                        $user,
+                        $pwd,
+                        $bio,
+                        $gluten,
+                        $crustaceos,
+                        $huevos,
+                        $pescado,
+                        $cacahuetes,
+                        $soja,
+                        $lactosa,
+                        $frutosdecascara,
+                        $apio,
+                        $mostaza,
+                        $sesamo,
+                        $sulfitos,
+                        $moluscos,
+                        $altramuces,
+                        $vegan,
+                        $vegetarian
+                    );
+
+                    if ($resultado) {
+
+                        $_SESSION['user'] = $user;
+                        $idUser = $db->getIdUser($user);
+                        $_SESSION['idUser'] = $idUser;
+                        $idUser = $_SESSION["idUser"];
+                        header('Location: index.php?ctl=login');
+                    } else {
+                        $_SESSION['mensajeError'] = "Ha habido un fallo a la hora de registrarse";
+                        throw new Exception("Ha habido un fallo a la hora de registrarse");
+                    }
+                } else {
+                    foreach ($errores as $error) {
+                        echo $error;
+                    }
                 }
             }
-        }
-
         } catch (Exception $e) {
             $_SESSION['mensajeError'] = error_log($e->getMessage() . microtime() . PHP_EOL, 3, "logException.txt");
             header('Location: index.php?ctl=error');
@@ -285,9 +306,9 @@ class Controller
                 $resultado = $db->getLogin($user, $pwd);
                 if ($resultado === true) {
                     $esAdmin = $db->getAdmin($user);
-                    if($esAdmin == 1){
+                    if ($esAdmin == 1) {
                         $_SESSION['user_lvl'] = 2;
-                    } else{
+                    } else {
                         $_SESSION['user_lvl'] = 1;
                     }
                     $_SESSION['user'] = $user;
@@ -296,8 +317,8 @@ class Controller
                     session_regenerate_id(true);
                     header('Location: index.php?ctl=inicio');
                 } else {
-                    $_SESSION['mensajeError']='El usuario o contraseña no son correctos';
-                	throw new Exception("El usuario o contraseña no son correctos");
+                    $_SESSION['mensajeError'] = 'El usuario o contraseña no son correctos';
+                    throw new Exception("El usuario o contraseña no son correctos");
                 }
             }
         } catch (Exception $e) {
@@ -321,7 +342,7 @@ class Controller
             $apellidos = "";
             $user = "";
             $pwd = "";
-            $reppwd="";
+            $reppwd = "";
             $email = "";
             $repemail = "";
             $bio = "";
@@ -343,7 +364,7 @@ class Controller
             $vegetarian = 0;
             $cont = 0;
             $pattern = "/^[a-zÃ±0-9*_+\-\$&\/\\\]+$/i";
-            $errores[] ="";
+            $errores[] = "";
             if (isset($_POST['enviar'])) {
                 $name = recoge('name');
                 $apellidos = recoge('apellidos');
@@ -356,33 +377,33 @@ class Controller
                 //COMPROBAR QUE CAMPOS NO VACIOS Y VALIDAR DATOS
                 if (!empty($name)) {
                     cName($name, $errores);
-                } 
+                }
 
                 if (!empty($apellidos)) {
                     cText($apellidos, $errores);
-                } 
+                }
                 if (!empty($user)) {
                     validoPatron($pattern, $user, $errores);
-                } 
+                }
                 if (!empty($pwd) && !empty($reppwd)) {
                     validoPatron($pattern, $pwd, $errores);
                     validoPatron($pattern, $reppwd, $errores);
-                } elseif((!empty($pwd) && empty($reppwd))|| (empty($pwd) && !empty($reppwd)) ){
+                } elseif ((!empty($pwd) && empty($reppwd)) || (empty($pwd) && !empty($reppwd))) {
                     $errores[] = " Debes repetir la contraseña. <br>";
                 }
 
-                if($pwd != $reppwd){
+                if ($pwd != $reppwd) {
                     $errores[] = "La contraseñas deben coincidir. <br>";
                 }
 
                 if (!empty($email) && !empty($repemail)) {
                     validoEmail($email, $errores);
                     validoEmail($repemail, $errores);
-                } elseif((!empty($email) && empty($repemail))|| (empty($email) && !empty($repemail)) ) {
+                } elseif ((!empty($email) && empty($repemail)) || (empty($email) && !empty($repemail))) {
                     $errores[] = "Debes repetir el email.<br>";
                 }
 
-                if($email != $repemail){
+                if ($email != $repemail) {
                     $errores[] = "Los emails deben coincidir. <br>";
                 }
 
@@ -456,106 +477,125 @@ class Controller
                     $errores[] = "* Al menos debes marcar una alergia o preferencia alimenticia.";
                 }
 
-               
 
-                if(empty($errores)){
-                //LO PASAMOS A EJECUTAR AL MODELO
-                
-                $db = new Model();
-                $idUser = $_SESSION["idUser"];
-                if(isset($_POST["borrarperfil"])){
-                    $resultado=$db->borrarPerfil($idUser);
-                }
-                //CARGAMOS PERFIL Y ASIGNAMOS INFO
-                $resultado = $db->getPerfil($idUser);
-                if($name == ""){
-                    $name =$resultado["name"];
-                }
-                if($apellidos == ""){
-                    $apellidos = $resultado["apellidos"];
-                }
-                if($email == ""){
-                    $email = $resultado["email"];
-                }
-                if($user == ""){
-                    $user = $resultado["user"] ;
-                }
-                if($pwd ==""){
-                    $pwd = $resultado["pwd"];
-                }
 
-                if($bio == ""){
-                    $bio = $resultado["bio"];
-                }
+                if (empty($errores)) {
+                    //LO PASAMOS A EJECUTAR AL MODELO
 
-                if($gluten == 0){
-                    $gluten =$resultado["gluten"];
-                }
-                if($crustaceos == 0){
-                    $crustaceos =$resultado["crustaceos"];
-                }
-                if($huevos == 0){
-                    $huevos =$resultado["huevos"];
-                }
-                if($pescado == 0){
-                    $pescado =$resultado["pescado"];
-                }
-                if($cacahuetes == 0){
-                    $cacahuetes =$resultado["cacahuetes"];
-                }
-                if($soja == 0){
-                    $soja =$resultado["soja"];
-                }
-                if($lactosa == 0){
-                    $lactosa =$resultado["lactosa"];
-                }
-                if($frutosdecascara == 0){
-                    $frutosdecascara =$resultado["frutosdecascara"];
-                }
-                if($apio == 0){
-                    $apio =$resultado["apio"];
-                }
-                if($mostaza == 0){
-                    $mostaza =$resultado["mostaza"];
-                }
-                if($sesamo == 0){
-                    $sesamo =$resultado["sesamo"];
-                }
-                if($sulfitos == 0){
-                    $sulfitos =$resultado["sulfitos"];
-                }
-                if($moluscos == 0){
-                    $name =$resultado["moluscos"];
-                }
-                if($altramuces == 0){
-                    $altramuces =$resultado["altramuces"];
-                }
-                if($vegan == 0){
-                    $vegan =$resultado["vegan"];
-                }
-                if($vegetarian == 0){
-                    $vegetarian =$resultado["vegetarian"];
-                }
-                
-                $resultado = $db->editarPerfil($name, $apellidos, $email, $user, $pwd, $bio,
-                $gluten, $crustaceos, $huevos, $pescado, $cacahuetes, $soja, $lactosa, $frutosdecascara, 
-                $apio, $mostaza, $sesamo, $sulfitos, $moluscos, $altramuces, $vegan, $vegetarian);
-                
-                if ($resultado) {
-                    $_SESSION['user'] = $user;
-                    header('Location: index.php?ctl=perfil');
-                    
-                }else{
-                    $_SESSION['mensajeError'] = "Ha habido un fallo a la hora de editar el perfil.";
-                    throw new Exception("Ha habido un fallo a la hora de editar el perfil.");
-                }
-            }else{
-                foreach($errores as $error){
-                    echo $error;
+                    $db = new Model();
+                    $idUser = $_SESSION["idUser"];
+                    if (isset($_POST["borrarperfil"])) {
+                        $resultado = $db->borrarPerfil($idUser);
+                    }
+                    //CARGAMOS PERFIL Y ASIGNAMOS INFO
+                    $resultado = $db->getPerfil($idUser);
+                    if ($name == "") {
+                        $name = $resultado["name"];
+                    }
+                    if ($apellidos == "") {
+                        $apellidos = $resultado["apellidos"];
+                    }
+                    if ($email == "") {
+                        $email = $resultado["email"];
+                    }
+                    if ($user == "") {
+                        $user = $resultado["user"];
+                    }
+                    if ($pwd == "") {
+                        $pwd = $resultado["pwd"];
+                    }
+
+                    if ($bio == "") {
+                        $bio = $resultado["bio"];
+                    }
+
+                    if ($gluten == 0) {
+                        $gluten = $resultado["gluten"];
+                    }
+                    if ($crustaceos == 0) {
+                        $crustaceos = $resultado["crustaceos"];
+                    }
+                    if ($huevos == 0) {
+                        $huevos = $resultado["huevos"];
+                    }
+                    if ($pescado == 0) {
+                        $pescado = $resultado["pescado"];
+                    }
+                    if ($cacahuetes == 0) {
+                        $cacahuetes = $resultado["cacahuetes"];
+                    }
+                    if ($soja == 0) {
+                        $soja = $resultado["soja"];
+                    }
+                    if ($lactosa == 0) {
+                        $lactosa = $resultado["lactosa"];
+                    }
+                    if ($frutosdecascara == 0) {
+                        $frutosdecascara = $resultado["frutosdecascara"];
+                    }
+                    if ($apio == 0) {
+                        $apio = $resultado["apio"];
+                    }
+                    if ($mostaza == 0) {
+                        $mostaza = $resultado["mostaza"];
+                    }
+                    if ($sesamo == 0) {
+                        $sesamo = $resultado["sesamo"];
+                    }
+                    if ($sulfitos == 0) {
+                        $sulfitos = $resultado["sulfitos"];
+                    }
+                    if ($moluscos == 0) {
+                        $name = $resultado["moluscos"];
+                    }
+                    if ($altramuces == 0) {
+                        $altramuces = $resultado["altramuces"];
+                    }
+                    if ($vegan == 0) {
+                        $vegan = $resultado["vegan"];
+                    }
+                    if ($vegetarian == 0) {
+                        $vegetarian = $resultado["vegetarian"];
+                    }
+
+                    $resultado = $db->editarPerfil(
+                        $name,
+                        $apellidos,
+                        $email,
+                        $user,
+                        $pwd,
+                        $bio,
+                        $gluten,
+                        $crustaceos,
+                        $huevos,
+                        $pescado,
+                        $cacahuetes,
+                        $soja,
+                        $lactosa,
+                        $frutosdecascara,
+                        $apio,
+                        $mostaza,
+                        $sesamo,
+                        $sulfitos,
+                        $moluscos,
+                        $altramuces,
+                        $vegan,
+                        $vegetarian
+                    );
+
+                    if ($resultado) {
+                        $_SESSION['user'] = $user;
+                        header('Location: index.php?ctl=perfil');
+                    } else {
+                        $_SESSION['mensajeError'] = "Ha habido un fallo a la hora de editar el perfil.";
+                        throw new Exception("Ha habido un fallo a la hora de editar el perfil.");
+                    }
+                } else {
+                    foreach ($errores as $error) {
+                        echo $error;
+                    }
                 }
             }
-        }
-
         } catch (Exception $e) {
             $_SESSION['mensajeError'] = error_log($e->getMessage() . microtime() . PHP_EOL, 3, "logException.txt");
             header('Location: index.php?ctl=error');
@@ -571,100 +611,104 @@ class Controller
     {
         ob_start();
         echo "<h1>Gestión de Recetas </h1>";
-        try{
+        try {
 
             $db = new Model();
-            $resultado = $db->getRecetasNoAprobadas();
-            if($resultado){
-                echo "<h2>".$resultado["nomReceta"]."</h2><br>";
-                echo $resultado["tPrep"]."<br>";
-                echo "Fecha subida: ".$resultado["fecha_subida"]."<br>";
-                if($resultado["gluten"] == 1 || $resultado["crustaceos"] == 1 || 
-                $resultado["huevos"] == 1 || $resultado["pescado"] == 1 ||
-                $resultado["cacahuetes"] == 1 || $resultado["soja"] == 1 ||
-                $resultado["lactosa"] == 1 || $resultado["frutosdecascara"] == 1 ||
-                $resultado["apio"] == 1 || $resultado["mostaza"] == 1 || 
-                $resultado["sesamo"] == 1 || $resultado["sulfitos"] == 1 || 
-                $resultado["moluscos"] == 1 || $resultado["altramuces"] == 1){
-                echo "<h4>Alérgenos:</h4>";
-                if($resultado["gluten"] == 1){
-                    echo "Gluten <br>";
+            $resultados = $db->getRecetasNoAprobadas();
+            if ($resultados) {
+                foreach($resultados as $resultado){
+                echo "<div class=\"gestion\">";
+                echo "<h2>" . $resultado["nomReceta"] . "</h2><br>";
+                echo $resultado["tPrep"] . "<br>";
+                echo "Fecha subida: " . $resultado["fecha_subida"] . "<br>";
+                if (
+                    $resultado["gluten"] == 1 || $resultado["crustaceos"] == 1 ||
+                    $resultado["huevos"] == 1 || $resultado["pescado"] == 1 ||
+                    $resultado["cacahuetes"] == 1 || $resultado["soja"] == 1 ||
+                    $resultado["lactosa"] == 1 || $resultado["frutosdecascara"] == 1 ||
+                    $resultado["apio"] == 1 || $resultado["mostaza"] == 1 ||
+                    $resultado["sesamo"] == 1 || $resultado["sulfitos"] == 1 ||
+                    $resultado["moluscos"] == 1 || $resultado["altramuces"] == 1
+                ) {
+                    echo "<h4>Alérgenos:</h4>";
+                    if ($resultado["gluten"] == 1) {
+                        echo "Gluten <br>";
+                    }
+                    if ($resultado["crustaceos"] == 1) {
+                        echo "Crustáceos <br>";
+                    }
+                    if ($resultado["huevos"] == 1) {
+                        echo "Huevos<br>";
+                    }
+                    if ($resultado["pescado"] == 1) {
+                        echo "Pescado<br>";
+                    }
+                    if ($resultado["cacahuetes"] == 1) {
+                        echo "Cacahuetes<br>";
+                    }
+                    if ($resultado["soja"] == 1) {
+                        echo "Soja<br>";
+                    }
+                    if ($resultado["lactosa"] == 1) {
+                        echo "Lactosa <br>";
+                    }
+                    if ($resultado["frutosdecascara"] == 1) {
+                        echo "Frutos de cáscara<br>";
+                    }
+                    if ($resultado["apio"] == 1) {
+                        echo "Apio<br>";
+                    }
+                    if ($resultado["mostaza"] == 1) {
+                        echo "Mostaza<br>";
+                    }
+                    if ($resultado["sesamo"] == 1) {
+                        echo "Sésamo<br>";
+                    }
+                    if ($resultado["sulfitos"] == 1) {
+                        echo "Sulfitos<br>";
+                    }
+                    if ($resultado["moluscos"] == 1) {
+                        echo "Moluscos<br>";
+                    }
+                    if ($resultado["altramuces"] == 1) {
+                        echo "Altramuces<br>";
+                    }
                 }
-                if($resultado["crustaceos"] == 1){
-                    echo "Crustáceos <br>";
-                }if($resultado["huevos"] == 1){
-                    echo "Huevos<br>";
-                }
-                if($resultado["pescado"] == 1){
-                    echo "Pescado<br>";
-                }
-                if($resultado["cacahuetes"] == 1){
-                    echo "Cacahuetes<br>";
-                }
-                if($resultado["soja"] == 1){
-                    echo "Soja<br>";
-                }
-                if($resultado["lactosa"] == 1){
-                    echo "Lactosa <br>";
-                }
-                if($resultado["frutosdecascara"] == 1){
-                    echo "Frutos de cáscara<br>";
-                }
-                if($resultado["apio"] == 1){
-                    echo "Apio<br>";
-                }
-                if($resultado["mostaza"] == 1){
-                    echo "Mostaza<br>";
-                }
-                if($resultado["sesamo"] == 1){
-                    echo "Sésamo<br>";
-                }
-                if($resultado["sulfitos"] == 1){
-                    echo "Sulfitos<br>";
-                }
-                if($resultado["moluscos"] == 1){
-                    echo "Moluscos<br>";
-                }
-                if($resultado["altramuces"] == 1){
-                    echo "Altramuces<br>";
-                }
-                
-            }
-                if($resultado["vegan"] == 1 || $resultado["vegetarian"] == 1){
-                    
+                if ($resultado["vegan"] == 1 || $resultado["vegetarian"] == 1) {
+
                     echo "<h4>Preferencias alimenticias:</h4>";
 
-                    if($resultado["vegan"] == 1){
+                    if ($resultado["vegan"] == 1) {
                         echo "Vegan<br>";
                     }
-                    if($resultado["vegetarian"] == 1){
+                    if ($resultado["vegetarian"] == 1) {
                         echo "Vegetarian<br>";
-                    }    
+                    }
                 }
                 echo "<h4>Ingredientes</h4>";
-                echo $resultado["ingredientes"]."<br>";
+                echo $resultado["ingredientes"] . "<br>";
                 echo "<h4>Preparación</h4>";
-                echo $resultado["receta"]."<br>";
-                echo " <form method=\"POST\" action=\"".$_SERVER["PHP_SELF"]."\" name=\"gestion\" enctype=\"multipart/form-data\">
+                echo $resultado["receta"] . "<br> </div>";
+                echo " <form method=\"POST\" action=\"" . $_SERVER["PHP_SELF"] . "\" name=\"gestion\" enctype=\"multipart/form-data\">
                 <button type= \"button\" name= \"aceptar\">Aceptar</button> 
                 <button type = \"button\" name= \"rechazar\">Rechazar</button>
                 </form>";
                 $idReceta = $db->getIdReceta($resultado["receta"]);
                 $_SESSION["idReceta"] = $idReceta;
-                if(isset($_POST["aceptar"])){
+                if (isset($_POST["aceptar"])) {
                     echo "Aceptar receta";
                     $resultado = $db->aceptarReceta($idReceta);
-                } elseif(isset($_POST["rechazar"])){
+                } elseif (isset($_POST["rechazar"])) {
                     echo "Rechazar receta";
                     $resultado = $db->rechazarReceta($idReceta);
                 }
-            } else{
-                $_SESSION['mensajeError']='No hay recetas para gestionar';
-                throw new Exception("No hay recetas para gestionar");
-              
             }
-
-        }catch (Exception $e) {
+            } else {
+                $_SESSION['mensajeError'] = 'No hay recetas para gestionar';
+                throw new Exception("No hay recetas para gestionar");
+            }
+        
+        } catch (Exception $e) {
             error_log($e->getMessage() . microtime() . PHP_EOL, 3, "logException.txt");
             header('Location: index.php?ctl=error');
         } catch (Error $e) {
@@ -679,92 +723,93 @@ class Controller
     }
     public function perfil()
     {
-        
-        
-        try{
+
+
+        try {
             $db = new Model();
             $idUser = $_SESSION["idUser"];
             $resultados = $db->getPerfil($idUser);
-            if($resultados){
-                foreach($resultados as $resultado){
-                ob_start();
-                echo "<h1> ".$_SESSION["user"]."</h1>"; 
-                echo "Nombre: ".$resultado["nomUser"]." ";
-                echo $resultado ["apUser"]."<br>";
-                echo "Email: ".$resultado["email"]."<br>";
-                echo "Nombre de usuario: ".$resultado["user"]."<br>";
-                echo "Contraseña: ".$resultado["pwd"]."<br>";
-                echo "Biografía: ".$resultado["bio"]."<br>";
-                echo $resultado["pfp"]."<br>";
-                if($resultado["gluten"] == 1 || $resultado["crustaceos"] == 1 || 
-                $resultado["huevos"] == 1 || $resultado["pescado"] == 1 ||
-                $resultado["cacahuetes"] == 1 || $resultado["soja"] == 1 ||
-                $resultado["lactosa"] == 1 || $resultado["frutosdecascara"] == 1 ||
-                $resultado["apio"] == 1 || $resultado["mostaza"] == 1 || 
-                $resultado["sesamo"] == 1 || $resultado["sulfitos"] == 1 || 
-                $resultado["moluscos"] == 1 || $resultado["altramuces"] == 1){
-                echo "<h2>Alérgenos:</h2>";
-                if($resultado["gluten"] == 1){
-                    echo "Gluten <br>";
-                }
-                if($resultado["crustaceos"] == 1){
-                    echo "Crustáceos <br>";
-                }if($resultado["huevos"] == 1){
-                    echo "Huevos<br>";
-                }
-                if($resultado["pescado"] == 1){
-                    echo "Pescado<br>";
-                }
-                if($resultado["cacahuetes"] == 1){
-                    echo "Cacahuetes<br>";
-                }
-                if($resultado["soja"] == 1){
-                    echo "Soja<br>";
-                }
-                if($resultado["lactosa"] == 1){
-                    echo "Lactosa <br>";
-                }
-                if($resultado["frutosdecascara"] == 1){
-                    echo "Frutos de cáscara<br>";
-                }
-                if($resultado["apio"] == 1){
-                    echo "Apio<br>";
-                }
-                if($resultado["mostaza"] == 1){
-                    echo "Mostaza<br>";
-                }
-                if($resultado["sesamo"] == 1){
-                    echo "Sésamo<br>";
-                }
-                if($resultado["sulfitos"] == 1){
-                    echo "Sulfitos<br>";
-                }
-                if($resultado["moluscos"] == 1){
-                    echo "Moluscos<br>";
-                }
-                if($resultado["altramuces"] == 1){
-                    echo "Altramuces<br>";
-                }
-                
-            }
-                if($resultado["vegan"] == 1 || $resultado["vegetarian"] == 1){
-                    
-                    echo "<h2>Preferencias alimenticias:</h2>";
-
-                    if($resultado["vegan"] == 1){
-                        echo "Vegan<br>";
+            if ($resultados) {
+                foreach ($resultados as $resultado) {
+                    ob_start();
+                    echo "<h1> " . $_SESSION["user"] . "</h1>";
+                    echo "Nombre: " . $resultado["nomUser"] . " ";
+                    echo $resultado["apUser"] . "<br>";
+                    echo "Email: " . $resultado["email"] . "<br>";
+                    echo "Nombre de usuario: " . $resultado["user"] . "<br>";
+                    echo "Contraseña: " . $resultado["pwd"] . "<br>";
+                    echo "Biografía: " . $resultado["bio"] . "<br>";
+                    echo $resultado["pfp"] . "<br>";
+                    if (
+                        $resultado["gluten"] == 1 || $resultado["crustaceos"] == 1 ||
+                        $resultado["huevos"] == 1 || $resultado["pescado"] == 1 ||
+                        $resultado["cacahuetes"] == 1 || $resultado["soja"] == 1 ||
+                        $resultado["lactosa"] == 1 || $resultado["frutosdecascara"] == 1 ||
+                        $resultado["apio"] == 1 || $resultado["mostaza"] == 1 ||
+                        $resultado["sesamo"] == 1 || $resultado["sulfitos"] == 1 ||
+                        $resultado["moluscos"] == 1 || $resultado["altramuces"] == 1
+                    ) {
+                        echo "<h2>Alérgenos:</h2>";
+                        if ($resultado["gluten"] == 1) {
+                            echo "Gluten <br>";
+                        }
+                        if ($resultado["crustaceos"] == 1) {
+                            echo "Crustáceos <br>";
+                        }
+                        if ($resultado["huevos"] == 1) {
+                            echo "Huevos<br>";
+                        }
+                        if ($resultado["pescado"] == 1) {
+                            echo "Pescado<br>";
+                        }
+                        if ($resultado["cacahuetes"] == 1) {
+                            echo "Cacahuetes<br>";
+                        }
+                        if ($resultado["soja"] == 1) {
+                            echo "Soja<br>";
+                        }
+                        if ($resultado["lactosa"] == 1) {
+                            echo "Lactosa <br>";
+                        }
+                        if ($resultado["frutosdecascara"] == 1) {
+                            echo "Frutos de cáscara<br>";
+                        }
+                        if ($resultado["apio"] == 1) {
+                            echo "Apio<br>";
+                        }
+                        if ($resultado["mostaza"] == 1) {
+                            echo "Mostaza<br>";
+                        }
+                        if ($resultado["sesamo"] == 1) {
+                            echo "Sésamo<br>";
+                        }
+                        if ($resultado["sulfitos"] == 1) {
+                            echo "Sulfitos<br>";
+                        }
+                        if ($resultado["moluscos"] == 1) {
+                            echo "Moluscos<br>";
+                        }
+                        if ($resultado["altramuces"] == 1) {
+                            echo "Altramuces<br>";
+                        }
                     }
-                    if($resultado["vegetarian"] == 1){
-                        echo "Vegetarian<br>";
-                    }    
+                    if ($resultado["vegan"] == 1 || $resultado["vegetarian"] == 1) {
+
+                        echo "<h2>Preferencias alimenticias:</h2>";
+
+                        if ($resultado["vegan"] == 1) {
+                            echo "Vegan<br>";
+                        }
+                        if ($resultado["vegetarian"] == 1) {
+                            echo "Vegetarian<br>";
+                        }
+                    }
                 }
-                }
-                
-            }else{
-                $_SESSION['mensajeError']='Ha habido un error a la hora de visualizar el contenido';
+            } else {
+                $_SESSION['mensajeError'] = 'Ha habido un error a la hora de visualizar el contenido';
                 throw new Exception("Ha habido un error a la hora de visualizar el contenido");
             }
-        }catch (Exception $e) {
+        } catch (Exception $e) {
             error_log($e->getMessage() . microtime() . PHP_EOL, 3, "logException.txt");
             header('Location: index.php?ctl=error');
         } catch (Error $e) {
@@ -782,7 +827,7 @@ class Controller
         require __DIR__ . '/../vista/paginas/subir_recetas.php';
         try {
             $nomReceta = "";
-            $tPrep = "";
+            $tPrep = 0;
             $ingredientes = "";
             $receta = "";
             $gluten = 0;
@@ -806,13 +851,13 @@ class Controller
             $fecha_subida = date('Y-m-d H:i:s');
             $idUser = "";
             $errores = [];
-            
+
             if (isset($_POST['enviar'])) {
-            
+
                 $nomReceta = recoge('nomReceta');
                 $ingredientes = recoge('ingredientes');
                 $receta = recoge('receta');
-                
+
                 if (!empty($nomReceta)) {
                     cName($nomReceta, $errores);
                 } else {
@@ -825,10 +870,10 @@ class Controller
                 if (empty($receta)) {
                     $errores[] = "* El campo receta es obligatorio. <br>";
                 }
-                if(empty($tPrep)){
+                if (empty($tPrep)) {
                     $errores[] = "* El campo tiempo de preparación es obligatorio. <br>";
                 }
-                
+
                 //ALERGENOS
                 if (isset($_POST["gluten"])) {
                     $gluten = 1;
@@ -897,21 +942,42 @@ class Controller
                 if ($cont == 0) {
                     $errores[] = "* Al menos debes marcar una alergia o preferencia alimenticia.";
                 }
-                
+
                 //LO PASAMOS A EJECUTAR AL MODELO
-                                  
-                                
+
+
                 $db = new Model();
                 $idUser = $_SESSION["idUser"];
-                
-                $resultado = $db->setReceta($nomReceta, $receta, $tPrep, $fecha_subida, $ingredientes, $idUser, $aprobada, 
-                $gluten, $crustaceos, $huevos, $pescado, $cacahuetes, $soja, $lactosa, $frutosdecascara, 
-                $apio, $mostaza, $sesamo, $sulfitos, $moluscos, $altramuces, $vegan, $vegetarian);
-                
+
+                $resultado = $db->setReceta(
+                    $nomReceta,
+                    $receta,
+                    $tPrep,
+                    $fecha_subida,
+                    $ingredientes,
+                    $idUser,
+                    $aprobada,
+                    $gluten,
+                    $crustaceos,
+                    $huevos,
+                    $pescado,
+                    $cacahuetes,
+                    $soja,
+                    $lactosa,
+                    $frutosdecascara,
+                    $apio,
+                    $mostaza,
+                    $sesamo,
+                    $sulfitos,
+                    $moluscos,
+                    $altramuces,
+                    $vegan,
+                    $vegetarian
+                );
+
                 if ($resultado) {
-                	header('Location: index.php?ctl=inicio');
+                    header('Location: index.php?ctl=inicio');
                 }
-                
             }
         } catch (Exception $e) {
             error_log($e->getMessage() . microtime() . PHP_EOL, 3, "logException.txt");
