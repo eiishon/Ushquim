@@ -40,7 +40,7 @@ CREATE TABLE `recetas` (
   `idReceta` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `nomReceta` varchar(100) NOT NULL,
   `receta` text NOT NULL UNIQUE,
-  `tPrep` varchar(30) NOT NULL,
+  `tPrep` smallint(3) NOT NULL,
   `fecha_subida` datetime NOT NULL,
   `ingredientes` text NOT NULL,
   `aprobada` tinyint(1) NOT NULL,

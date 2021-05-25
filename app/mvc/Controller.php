@@ -13,7 +13,7 @@ class Controller
                 foreach ($resultados as $resultado) {
                 echo "<div class=\"gestion\">";
                     echo "<h2>" . $resultado["nomReceta"] . "</h2><br>";
-                    echo $resultado["tPrep"] . "<br>";
+                    echo $resultado["tPrep"] . " minutos. <br>";
                     echo "Fecha subida: " . $resultado["fecha_subida"] . "<br>";
                     if (
                         $resultado["gluten"] == 1 || $resultado["crustaceos"] == 1 ||
