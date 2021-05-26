@@ -175,7 +175,7 @@ class Model extends PDO
 
 
     public function getPerfil($idUser){
-        $consulta = "select `nomUser`, `apUser`, `email`, `user`, `pwd`, `bio`, `pfp`, `gluten`, `crustaceos`, `huevos`, `pescado`, `cacahuetes`, `soja`, `lactosa`, `frutosdecascara`, `apio`, `mostaza`, `sesamo`, `sulfitos`, `moluscos`, `altramuces`, `vegan`, `vegetarian` from `users` WHERE idUser=:idUser";
+        $consulta = "select `nomUser`, `apUser`, `email`, `user`, `pwd`, `bio`, `gluten`, `crustaceos`, `huevos`, `pescado`, `cacahuetes`, `soja`, `lactosa`, `frutosdecascara`, `apio`, `mostaza`, `sesamo`, `sulfitos`, `moluscos`, `altramuces`, `vegan`, `vegetarian` from `users` WHERE idUser=:idUser";
         $result = $this->conexion->prepare($consulta);
         $result->bindParam(':idUser', $idUser);
         $result->execute();

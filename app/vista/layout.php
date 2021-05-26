@@ -10,6 +10,7 @@
 </head>
 
 <body style="background-color: rgba(234, 240, 232, 0.3);">
+<!--<body>-->
 
   <!-- USO BOOTSTRAP  -->
   <header class="p-3" style="background-color: rgba(167, 195, 155, 0.8);">
@@ -48,7 +49,6 @@
                   ?>
                   <li><a class="dropdown-item" href="index.php?ctl=editar_perfil" style="color: #2C5919;">Editar perfil</a></li>
                   <li><a class="dropdown-item" href="index.php?ctl=subir_recetas" style="color: #2C5919;">Subir recetas</a></li>
-                  <li><a class="dropdown-item" href="index.php?ctl=guardados" style="color: #2C5919;">Recetas guardadas</a></li>
                   <li>
                     <hr class="dropdown-divider">
                   </li>

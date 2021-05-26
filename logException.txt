@@ -6,3 +6,5 @@ SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'idReceta' cannot b
 SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'pescado' cannot be null0.06569000 1619365296
 Ha habido un fallo a la hora de registrarse0.47493100 1619368938
 Ha habido un error a la hora de visualizar el contenido0.66607400 1620816347
+SQLSTATE[42S22]: Column not found: 1054 Unknown column 'pfp' in 'field list'0.48867600 1621938985
+El usuario o contraseña no son correctos0.22834300 1621940463

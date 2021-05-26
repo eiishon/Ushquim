@@ -1,3 +1,4 @@
+
 <?php
 include('validar/validate.php');
 class Controller
@@ -11,7 +12,7 @@ class Controller
             $resultados = $db->getRecetas();
             if ($resultados) {
                 foreach ($resultados as $resultado) {
-                echo "<div class=\"gestion\">";
+                echo "<div class=\"receta\">";
                     echo "<h2>" . $resultado["nomReceta"] . "</h2><br>";
                     echo $resultado["tPrep"] . " minutos. <br>";
                     echo "Fecha subida: " . $resultado["fecha_subida"] . "<br>";
@@ -728,9 +729,8 @@ class Controller
         try {
             $db = new Model();
             $idUser = $_SESSION["idUser"];
-            $resultados = $db->getPerfil($idUser);
-            if ($resultados) {
-                foreach ($resultados as $resultado) {
+            $resultado = $db->getPerfil($idUser);
+            if ($resultado) {
                     ob_start();
                     echo "<h1> " . $_SESSION["user"] . "</h1>";
                     echo "Nombre: " . $resultado["nomUser"] . " ";
@@ -739,7 +739,6 @@ class Controller
                     echo "Nombre de usuario: " . $resultado["user"] . "<br>";
                     echo "Contraseña: " . $resultado["pwd"] . "<br>";
                     echo "Biografía: " . $resultado["bio"] . "<br>";
-                    echo $resultado["pfp"] . "<br>";
                     if (
                         $resultado["gluten"] == 1 || $resultado["crustaceos"] == 1 ||
                         $resultado["huevos"] == 1 || $resultado["pescado"] == 1 ||
@@ -804,7 +803,7 @@ class Controller
                             echo "Vegetarian<br>";
                         }
                     }
-                }
+                
             } else {
                 $_SESSION['mensajeError'] = 'Ha habido un error a la hora de visualizar el contenido';
                 throw new Exception("Ha habido un error a la hora de visualizar el contenido");
@@ -988,3 +987,4 @@ class Controller
         }
     }
 }
+?>
