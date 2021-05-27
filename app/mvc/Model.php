@@ -8,8 +8,9 @@ class Model extends PDO
 
     public function __construct()
     {
-        $this->conexion = new PDO('mysql:host=' . Config::$mvc_bd_hostname . ';dbname=' . Config::$mvc_bd_nombre . '', Config::$mvc_bd_usuario, Config::$mvc_bd_clave);
-        // Realiza el enlace con la BD en utf-8
+        $this->conexion = new PDO('mysql:host=' . Config::$mvc_bd_hostname . 
+        ';dbname=' . Config::$mvc_bd_nombre . '', Config::$mvc_bd_usuario, 
+        Config::$mvc_bd_clave);
         $this->conexion->exec("set names utf8");
         $this->conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
@@ -139,7 +140,10 @@ class Model extends PDO
         return $row;
     }
     public function getRecetas(){
-        $consulta = "SELECT `nomReceta`, `receta`, `tPrep`, `fecha_subida`, `ingredientes`, `aprobada`, `idUser`, `gluten`, `crustaceos`, `huevos`, `pescado`, `cacahuetes`, `soja`, `lactosa`, `frutosdecascara`, `apio`, `mostaza`, `sesamo`, `sulfitos`, `moluscos`, `altramuces`, `vegan`, `vegetarian` FROM `recetas` WHERE aprobada = 1";
+        $consulta = "SELECT `nomReceta`, `receta`, `tPrep`, `fecha_subida`, `ingredientes`, 
+        `aprobada`, `idUser`, `gluten`, `crustaceos`, `huevos`, `pescado`, `cacahuetes`, `soja`, 
+        `lactosa`, `frutosdecascara`, `apio`, `mostaza`, `sesamo`, `sulfitos`, `moluscos`, `altramuces`, 
+        `vegan`, `vegetarian` FROM `recetas` WHERE aprobada = 1";
         $result = $this->conexion->prepare($consulta);
         $result->execute();
         $row = $result->fetchAll();

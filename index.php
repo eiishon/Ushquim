@@ -14,7 +14,6 @@ $map = array(
       'login' => array('controller' => 'Controller', 'action' => 'login', 'user_lvl' => 0),
       'perfil' => array('controller' => 'Controller', 'action' => 'perfil', 'user_lvl' => 1),
       'editar_perfil' => array('controller' => 'Controller', 'action' => 'editar_perfil', 'user_lvl' => 1),
-      'guardados' => array('controller' => 'Controller', 'action' => 'guardados', 'user_lvl' => 1),
       'cerrarsesion' => array('controller' => 'Controller', 'action' => 'cerrarsesion', 'user_lvl' => 1),
       'error' => array('controller' => 'Controller', 'action' => 'error', 'user_lvl' => 0),
       'gestion' => array('controller' => 'Controller', 'action' => 'gestion', 'user_lvl' => 2)
@@ -34,6 +33,7 @@ if(isset($_GET['ctl'])){
     $ruta = 'inicio';
 }
 $controlador = $map[$ruta];
+
 
 if (method_exists($controlador['controller'],$controlador['action'])) {
     call_user_func(array(new $controlador['controller'],

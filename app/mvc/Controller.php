@@ -161,9 +161,7 @@ class Controller
                 } else {
                     $errores[] = "* El campo email es obligatorio.<br>";
                 }
-
-
-                //ALERGENOS
+                  //ALERGENOS
                 if (isset($_POST['gluten'])) {
                     $gluten = 1;
                     $cont++;
@@ -718,10 +716,7 @@ class Controller
         }
         require __DIR__ . '/../vista/paginas/gestion.php';
     }
-    public function guardados()
-    {
-        require __DIR__ . '/../vista/paginas/guardados.php';
-    }
+
     public function perfil()
     {
 

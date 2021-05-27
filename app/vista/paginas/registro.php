@@ -1,9 +1,78 @@
 <?php ob_start() ?>
+
+<head>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+    .Error {
+    border-color : red;
+    background-color: rgba(255, 0, 0, 0.1);
+    border-width : 2px;
+}
+    </style>
+    <script>
+        window.onload = function(elEvento) {
+            var evento = elEvento || window.event;
+            document.forms["registro"].onsubmit = comprobarDatos;
+        }
+
+        function comprobarDatos(elEvento) {
+
+            var evento = elEvento || window.event;
+
+            var valorNombre = document.forms["registro"].elements["name"].value.trim();
+            var valorApellidos = document.forms["registro"].elements["apellidos"].value.trim();
+            var valorUser = document.forms["registro"].elements["user"].value.trim();
+            var valorPwd = document.forms["registro"].elements["pwd"].value.trim();
+            var valorEmail = document.forms["registro"].elements["email"].value.trim().toLowerCase();
+
+            var error = false;
+            var cadenaError = "";
+
+            if (evento.type == "submit") {
+                if (valorNombre == "") {
+                    cadenaError += "<li> El campo Nombre es obligatorio</li>";
+                    document.forms["registro"].elements["nombre"].className = "Error";
+                }
+                if (valorApellidos == "") {
+                    cadenaError += "<li> El campo Apellidos es obligatorio</li>";
+                    document.forms["registro"].elements["apellidos"].className = "Error";
+                }
+                if (valorUser == "") {
+                    cadenaError += "<li> El campo Nombre de usuario es obligatorio</li>";
+                    document.forms["registro"].elements["user"].className = "Error";
+                }
+                if (valorPwd == "") {
+                    cadenaError += "<li> El campo Contraseña es obligatorio</li>";
+                    document.forms["registro"].elements["pwd"].className = "Error";
+                }
+                if (valorEmail == "") {
+                    cadenaError += "<li> El campo Email es obligatorio</li>";
+                    document.forms["registro"].elements["email"].className = "Error";
+                }
+                
+
+                if(cadenaError == "") error = false;
+                else error = true;
+
+                if (error == true) {
+                    evento.preventDefault();
+                    document.getElementById("errores").innerHTML =
+                        "<br><br><span><strong>Errores en el formulario</strong></span><ul>" + cadenaError + "</ul>";
+                } else {
+                    document.getElementById("errores").innerHTML = "";
+                    elementoError = null;
+                }
+            }
+        }
+    </script>
+</head>
+
 <body>
+
     <main>
         <div class="container">
             <form method="POST" action="index.php?ctl=registro" name="registro" enctype="multipart/form-data">
-                <fieldset>
+                <fieldset id="campoFieldset">
                     <legend>¡Regístrate!</legend>
                     <div class="uno">
                         <label for="name"> Nombre: *</label>
@@ -57,16 +126,19 @@
                         </div>
                         <label for="alergias">Preferencias alimenticias: </label>
                         <input type="checkbox" id="vegan" name="vegan" value="vegan">
-                            <label for="vegan">Vegano</label>
-                            <input type="checkbox" id="vegetarian" name="vegetarian" value="vegetarian">
-                            <label for="vegetarian">Vegetariano</label>
-                        </div>
-                        <div class="button">
-                            <input type="submit" name="enviar" value="Enviar">
-                        </div>
-                        <p>¿Ya tienes una cuenta? Inicia sesión <a href="index.php?ctl=login">aquí.</a></p>
+                        <label for="vegan">Vegano</label>
+                        <input type="checkbox" id="vegetarian" name="vegetarian" value="vegetarian">
+                        <label for="vegetarian">Vegetariano</label>
+                    </div>
+                    <div class="button">
+                        <input type="submit" name="enviar" value="Enviar">
+                    </div>
+                    <p>¿Ya tienes una cuenta? Inicia sesión <a href="index.php?ctl=login">aquí.</a></p>
                 </fieldset>
+                <div id="errores"></div>
+
             </form>
+
         </div>
     </main>
 </body>
