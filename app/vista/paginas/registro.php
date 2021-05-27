@@ -52,7 +52,9 @@
                 
 
                 if(cadenaError == "") error = false;
-                else error = true;
+                else{
+                    error = true;
+                } 
 
                 if (error == true) {
                     evento.preventDefault();
