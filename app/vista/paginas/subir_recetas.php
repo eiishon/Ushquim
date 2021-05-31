@@ -1,4 +1,56 @@
 <?php ob_start() ?>
+<style>
+  .Error {
+    border-color: red;
+    background-color: rgba(255, 0, 0, 0.1);
+    border-width: 2px;
+  }
+</style>
+<script>
+  window.onload = function(elEvento) {
+    var evento = elEvento || window.event;
+    document.forms["subir_recetas"].onsubmit = comprobarDatos;
+  }
+
+  function comprobarDatos(elEvento) {
+
+    var evento = elEvento || window.event;
+
+    var valorNomReceta = document.forms["subir_recetas"].elements["nomReceta"].value.trim();
+    var valorTPrep = document.forms["subir_recetas"].elements["tPrep"].value.trim();
+    var valorIngredientes = document.forms["subir_recetas"].elements["ingredientes"].value.trim();
+    var valorReceta = document.forms["subir_recetas"].elements["receta"].value.trim();
+
+    var error = false;
+    var cadenaError = "";
+    if (valorNomReceta == "") {
+      cadenaError += "<li> El campo Título de la receta es obligatorio</li>";
+      document.forms["subir_recetas"].elements["nomReceta"].className = "Error";
+    }
+    if (valorTPrep == "") {
+      cadenaError += "<li> El campo Tiempo de preparación es obligatorio</li>";
+      document.forms["subir_recetas"].elements["tPrep"].className = "Error";
+    }
+    if (valorIngredientes == "") {
+      cadenaError += "<li> El campo Ingredientes es obligatorio</li>";
+      document.forms["subir_recetas"].elements["ingredientes"].className = "Error";
+    }
+    if (valorReceta == "") {
+      cadenaError += "<li> El campo Cuerpo de la receta es obligatorio</li>";
+      document.forms["subir_recetas"].elements["receta"].className = "Error";
+    }
+    if (cadenaError == "") error = false;
+    else {
+      error = true;
+    }
+
+    if (error == true) {
+      evento.preventDefault();
+      document.getElementById("errores").innerHTML =
+        "<br><br><span><strong>Errores en el formulario</strong></span><ul>" + cadenaError + "</ul>";
+    }
+  }
+</script>
 <body>
     <main>
         <div class="container">
@@ -56,6 +108,7 @@
                 <input type="file" name="fotosreceta" id="fotosreceta" multiple>
                 <input type="submit" name="enviar" value="Enviar">
                </fieldset>
+               <div id="errores"></div>
             </form>
         </div>
     </main>
