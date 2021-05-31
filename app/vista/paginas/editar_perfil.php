@@ -1,4 +1,75 @@
 <?php ob_start() ?>
+<style>
+    .Error {
+        border-color: red;
+        background-color: rgba(255, 0, 0, 0.1);
+        border-width: 2px;
+    }
+</style>
+<script>
+    window.onload = function(elEvento) {
+        var evento = elEvento || window.event;
+        document.forms["editar_perfil"].onsubmit = comprobarDatos;
+    }
+
+    function comprobarDatos(elEvento) {
+
+        var evento = elEvento || window.event;
+
+        var valorPwd = document.forms["editar_perfil"].elements["pwd"].value.trim();
+        var valorEmail = document.forms["editar_perfil"].elements["email"].value.trim().toLowerCase();
+        var valorRepPwd = document.forms["editar_perfil"].elements["reppwd"].value.trim();
+        var valorRepEmail = document.forms["editar_perfil"].elements["repemail"].value.trim().toLowerCase();
+
+        var error = false;
+        var cadenaError = "";
+
+        if (evento.type == "submit") {
+            if ((valorPwd != "" && valorRepPwd == "") || (valorPwd == "" && valorRepPwd != "")) {
+                if (valorPwd == "") {
+                    cadenaError += "<li> El campo Contraseña es obligatorio</li>";
+                    document.forms["registro"].elements["pwd"].className = "Error";
+                }
+                if (valorRepPwd == "") {
+                    cadenaError += "<li> El campo Repetir Contraseña es obligatorio</li>";
+                    document.forms["registro"].elements["pwd"].className = "Error";
+                }
+            } else if(valorPwd != valorRepPwd){
+                cadenaError += "<li>Los campos Contraseña y Repetir Contraseña no coinciden.</li>"
+            }
+            if((valorEmail != "" && valorRepEmail == "") || (valorEmail == "" && valorRepEmail != "")){
+                if (valorEmail == "") {
+                cadenaError += "<li> El campo Email es obligatorio</li>";
+                document.forms["registro"].elements["email"].className = "Error";
+            }
+
+            if (valorRepEmail == "") {
+                cadenaError += "<li> El campo Repetir Email es obligatorio</li>";
+                document.forms["registro"].elements["email"].className = "Error";
+            }
+            }else if(valorEmail != valorRepEmail){
+                cadenaError += "<li>Los campos Email y Repetir Email no coinciden.</li>";
+            }
+            
+
+
+            if (cadenaError == "") error = false;
+            else {
+                error = true;
+            }
+
+            if (error == true) {
+                evento.preventDefault();
+                document.getElementById("errores").innerHTML =
+                    "<br><br><span><strong>Errores en el formulario</strong></span><ul>" + cadenaError + "</ul>";
+            } else {
+                document.getElementById("errores").innerHTML = "";
+                elementoError = null;
+            }
+        }
+    }
+</script>
+
 <body>
     <main>
         <div class="container">
@@ -61,19 +132,20 @@
                         </div>
                         <label for="alergias">Preferencias alimenticias: </label>
                         <input type="checkbox" id="vegan" name="vegan" value="vegan">
-                            <label for="vegan">Vegano</label>
-                            <input type="checkbox" id="vegetarian" name="vegetarian" value="vegetarian">
-                            <label for="vegetarian">Vegetariano</label>
-                        </div>
-                        <div class="button">
-                            <input type="submit" name="editar" value="Editar">
-                            <input type="button" name = "borrarperfil" value="Borrar perfil">
-                        </div>
+                        <label for="vegan">Vegano</label>
+                        <input type="checkbox" id="vegetarian" name="vegetarian" value="vegetarian">
+                        <label for="vegetarian">Vegetariano</label>
+                    </div>
+                    <div class="button">
+                        <input type="submit" name="editar" value="Editar" id="editar">
+                        <input type="button" name="borrarperfil" value="Borrar perfil" id="borrar_perfil">
+                    </div>
                 </fieldset>
+                <div id="errores"></div>
             </form>
         </div>
     </main>
 </body>
 
 <?php $contenido = ob_get_clean() ?>
-<?php include __DIR__.'/../layout.php' ?>
+<?php include __DIR__ . '/../layout.php' ?>
