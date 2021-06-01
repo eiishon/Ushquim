@@ -814,6 +814,1283 @@ class Controller
     }
     public function recetas()
     {
+        ob_start();
+        echo "<h1>Bienvenido a Ushquim </h1>";
+        try {
+            $db = new Model();
+            $resultadoGluten = $db->getRecetasGluten();
+            $resultadoCrustaceos = $db->getRecetasCrustaceos();
+            $resultadoHuevos = $db->getRecetasHuevos();
+            $resultadoPescado = $db->getRecetasPescado();
+            $resultadoCacahuetes = $db->getRecetasCacahuetes();
+            $resultadoSoja = $db->getRecetasSoja();
+            $resultadoLactosa = $db->getRecetasLactosa();
+            $resultadoFrutosCascara = $db->getRecetasFrutosCascara();
+            $resultadoApio = $db->getRecetasApio();
+            $resultadoMostaza = $db->getRecetasMostaza();
+            $resultadoSesamo = $db->getRecetasSesamo();
+            $resultadoSulfitos = $db->getRecetasSulfitos();
+            $resultadoMoluscos = $db->getRecetasMoluscos();
+            $resultadoAltramuces = $db->getRecetasAltramuces();
+            $resultadoVegano = $db->getRecetasVegan();
+            $resultadoVegetariano = $db->getRecetasVegetarian();
+
+            if ($resultadoGluten) {
+                echo "<h1>Recetas con gluten:</h1><br/>";
+
+                foreach ($resultadoGluten as $resultado) {
+                    echo "<div class=\"receta\">";
+                    echo "<h2>" . $resultado["nomReceta"] . "</h2><br>";
+                    echo $resultado["tPrep"] . " minutos. <br>";
+                    echo "Fecha subida: " . $resultado["fecha_subida"] . "<br>";
+                    if (
+                        $resultado["gluten"] == 1 || $resultado["crustaceos"] == 1 ||
+                        $resultado["huevos"] == 1 || $resultado["pescado"] == 1 ||
+                        $resultado["cacahuetes"] == 1 || $resultado["soja"] == 1 ||
+                        $resultado["lactosa"] == 1 || $resultado["frutosdecascara"] == 1 ||
+                        $resultado["apio"] == 1 || $resultado["mostaza"] == 1 ||
+                        $resultado["sesamo"] == 1 || $resultado["sulfitos"] == 1 ||
+                        $resultado["moluscos"] == 1 || $resultado["altramuces"] == 1
+                    ) {
+                        echo "<h4>Alérgenos:</h4>";
+                        if ($resultado["gluten"] == 1) {
+                            echo "Gluten <br>";
+                        }
+                        if ($resultado["crustaceos"] == 1) {
+                            echo "Crustáceos <br>";
+                        }
+                        if ($resultado["huevos"] == 1) {
+                            echo "Huevos<br>";
+                        }
+                        if ($resultado["pescado"] == 1) {
+                            echo "Pescado<br>";
+                        }
+                        if ($resultado["cacahuetes"] == 1) {
+                            echo "Cacahuetes<br>";
+                        }
+                        if ($resultado["soja"] == 1) {
+                            echo "Soja<br>";
+                        }
+                        if ($resultado["lactosa"] == 1) {
+                            echo "Lactosa <br>";
+                        }
+                        if ($resultado["frutosdecascara"] == 1) {
+                            echo "Frutos de cáscara<br>";
+                        }
+                        if ($resultado["apio"] == 1) {
+                            echo "Apio<br>";
+                        }
+                        if ($resultado["mostaza"] == 1) {
+                            echo "Mostaza<br>";
+                        }
+                        if ($resultado["sesamo"] == 1) {
+                            echo "Sésamo<br>";
+                        }
+                        if ($resultado["sulfitos"] == 1) {
+                            echo "Sulfitos<br>";
+                        }
+                        if ($resultado["moluscos"] == 1) {
+                            echo "Moluscos<br>";
+                        }
+                        if ($resultado["altramuces"] == 1) {
+                            echo "Altramuces<br>";
+                        }
+                    }
+                    if ($resultado["vegan"] == 1 || $resultado["vegetarian"] == 1) {
+
+                        echo "<h4>Preferencias alimenticias:</h4>";
+
+                        if ($resultado["vegan"] == 1) {
+                            echo "Vegan<br>";
+                        }
+                        if ($resultado["vegetarian"] == 1) {
+                            echo "Vegetarian<br>";
+                        }
+                    }
+                    echo "<h4>Ingredientes</h4>";
+                    echo $resultado["ingredientes"] . "<br>";
+                    echo "<h4>Preparación</h4>";
+                    echo $resultado["receta"] . "<br> </div>";
+                }
+            }
+
+            if ($resultadoCrustaceos) {
+                echo "<h1>Recetas con crustáceos:</h1><br/>";
+
+                foreach ($resultadoCrustaceos as $resultado) {
+                    echo "<div class=\"receta\">";
+                    echo "<h2>" . $resultado["nomReceta"] . "</h2><br>";
+                    echo $resultado["tPrep"] . " minutos. <br>";
+                    echo "Fecha subida: " . $resultado["fecha_subida"] . "<br>";
+                    if (
+                        $resultado["gluten"] == 1 || $resultado["crustaceos"] == 1 ||
+                        $resultado["huevos"] == 1 || $resultado["pescado"] == 1 ||
+                        $resultado["cacahuetes"] == 1 || $resultado["soja"] == 1 ||
+                        $resultado["lactosa"] == 1 || $resultado["frutosdecascara"] == 1 ||
+                        $resultado["apio"] == 1 || $resultado["mostaza"] == 1 ||
+                        $resultado["sesamo"] == 1 || $resultado["sulfitos"] == 1 ||
+                        $resultado["moluscos"] == 1 || $resultado["altramuces"] == 1
+                    ) {
+                        echo "<h4>Alérgenos:</h4>";
+                        if ($resultado["gluten"] == 1) {
+                            echo "Gluten <br>";
+                        }
+                        if ($resultado["crustaceos"] == 1) {
+                            echo "Crustáceos <br>";
+                        }
+                        if ($resultado["huevos"] == 1) {
+                            echo "Huevos<br>";
+                        }
+                        if ($resultado["pescado"] == 1) {
+                            echo "Pescado<br>";
+                        }
+                        if ($resultado["cacahuetes"] == 1) {
+                            echo "Cacahuetes<br>";
+                        }
+                        if ($resultado["soja"] == 1) {
+                            echo "Soja<br>";
+                        }
+                        if ($resultado["lactosa"] == 1) {
+                            echo "Lactosa <br>";
+                        }
+                        if ($resultado["frutosdecascara"] == 1) {
+                            echo "Frutos de cáscara<br>";
+                        }
+                        if ($resultado["apio"] == 1) {
+                            echo "Apio<br>";
+                        }
+                        if ($resultado["mostaza"] == 1) {
+                            echo "Mostaza<br>";
+                        }
+                        if ($resultado["sesamo"] == 1) {
+                            echo "Sésamo<br>";
+                        }
+                        if ($resultado["sulfitos"] == 1) {
+                            echo "Sulfitos<br>";
+                        }
+                        if ($resultado["moluscos"] == 1) {
+                            echo "Moluscos<br>";
+                        }
+                        if ($resultado["altramuces"] == 1) {
+                            echo "Altramuces<br>";
+                        }
+                    }
+                    if ($resultado["vegan"] == 1 || $resultado["vegetarian"] == 1) {
+
+                        echo "<h4>Preferencias alimenticias:</h4>";
+
+                        if ($resultado["vegan"] == 1) {
+                            echo "Vegan<br>";
+                        }
+                        if ($resultado["vegetarian"] == 1) {
+                            echo "Vegetarian<br>";
+                        }
+                    }
+                    echo "<h4>Ingredientes</h4>";
+                    echo $resultado["ingredientes"] . "<br>";
+                    echo "<h4>Preparación</h4>";
+                    echo $resultado["receta"] . "<br> </div>";
+                }
+            }
+            if ($resultadoHuevos) {
+                echo "<h1>Recetas con huevo:</h1><br/>";
+
+                foreach ($resultadoHuevos as $resultado) {
+                    echo "<div class=\"receta\">";
+                    echo "<h2>" . $resultado["nomReceta"] . "</h2><br>";
+                    echo $resultado["tPrep"] . " minutos. <br>";
+                    echo "Fecha subida: " . $resultado["fecha_subida"] . "<br>";
+                    if (
+                        $resultado["gluten"] == 1 || $resultado["crustaceos"] == 1 ||
+                        $resultado["huevos"] == 1 || $resultado["pescado"] == 1 ||
+                        $resultado["cacahuetes"] == 1 || $resultado["soja"] == 1 ||
+                        $resultado["lactosa"] == 1 || $resultado["frutosdecascara"] == 1 ||
+                        $resultado["apio"] == 1 || $resultado["mostaza"] == 1 ||
+                        $resultado["sesamo"] == 1 || $resultado["sulfitos"] == 1 ||
+                        $resultado["moluscos"] == 1 || $resultado["altramuces"] == 1
+                    ) {
+                        echo "<h4>Alérgenos:</h4>";
+                        if ($resultado["gluten"] == 1) {
+                            echo "Gluten <br>";
+                        }
+                        if ($resultado["crustaceos"] == 1) {
+                            echo "Crustáceos <br>";
+                        }
+                        if ($resultado["huevos"] == 1) {
+                            echo "Huevos<br>";
+                        }
+                        if ($resultado["pescado"] == 1) {
+                            echo "Pescado<br>";
+                        }
+                        if ($resultado["cacahuetes"] == 1) {
+                            echo "Cacahuetes<br>";
+                        }
+                        if ($resultado["soja"] == 1) {
+                            echo "Soja<br>";
+                        }
+                        if ($resultado["lactosa"] == 1) {
+                            echo "Lactosa <br>";
+                        }
+                        if ($resultado["frutosdecascara"] == 1) {
+                            echo "Frutos de cáscara<br>";
+                        }
+                        if ($resultado["apio"] == 1) {
+                            echo "Apio<br>";
+                        }
+                        if ($resultado["mostaza"] == 1) {
+                            echo "Mostaza<br>";
+                        }
+                        if ($resultado["sesamo"] == 1) {
+                            echo "Sésamo<br>";
+                        }
+                        if ($resultado["sulfitos"] == 1) {
+                            echo "Sulfitos<br>";
+                        }
+                        if ($resultado["moluscos"] == 1) {
+                            echo "Moluscos<br>";
+                        }
+                        if ($resultado["altramuces"] == 1) {
+                            echo "Altramuces<br>";
+                        }
+                    }
+                    if ($resultado["vegan"] == 1 || $resultado["vegetarian"] == 1) {
+
+                        echo "<h4>Preferencias alimenticias:</h4>";
+
+                        if ($resultado["vegan"] == 1) {
+                            echo "Vegan<br>";
+                        }
+                        if ($resultado["vegetarian"] == 1) {
+                            echo "Vegetarian<br>";
+                        }
+                    }
+                    echo "<h4>Ingredientes</h4>";
+                    echo $resultado["ingredientes"] . "<br>";
+                    echo "<h4>Preparación</h4>";
+                    echo $resultado["receta"] . "<br> </div>";
+                }
+            }
+            if ($resultadoPescado) {
+                echo "<h1>Recetas con pescado:</h1><br/>";
+
+                foreach ($resultadoPescado as $resultado) {
+                    echo "<div class=\"receta\">";
+                    echo "<h2>" . $resultado["nomReceta"] . "</h2><br>";
+                    echo $resultado["tPrep"] . " minutos. <br>";
+                    echo "Fecha subida: " . $resultado["fecha_subida"] . "<br>";
+                    if (
+                        $resultado["gluten"] == 1 || $resultado["crustaceos"] == 1 ||
+                        $resultado["huevos"] == 1 || $resultado["pescado"] == 1 ||
+                        $resultado["cacahuetes"] == 1 || $resultado["soja"] == 1 ||
+                        $resultado["lactosa"] == 1 || $resultado["frutosdecascara"] == 1 ||
+                        $resultado["apio"] == 1 || $resultado["mostaza"] == 1 ||
+                        $resultado["sesamo"] == 1 || $resultado["sulfitos"] == 1 ||
+                        $resultado["moluscos"] == 1 || $resultado["altramuces"] == 1
+                    ) {
+                        echo "<h4>Alérgenos:</h4>";
+                        if ($resultado["gluten"] == 1) {
+                            echo "Gluten <br>";
+                        }
+                        if ($resultado["crustaceos"] == 1) {
+                            echo "Crustáceos <br>";
+                        }
+                        if ($resultado["huevos"] == 1) {
+                            echo "Huevos<br>";
+                        }
+                        if ($resultado["pescado"] == 1) {
+                            echo "Pescado<br>";
+                        }
+                        if ($resultado["cacahuetes"] == 1) {
+                            echo "Cacahuetes<br>";
+                        }
+                        if ($resultado["soja"] == 1) {
+                            echo "Soja<br>";
+                        }
+                        if ($resultado["lactosa"] == 1) {
+                            echo "Lactosa <br>";
+                        }
+                        if ($resultado["frutosdecascara"] == 1) {
+                            echo "Frutos de cáscara<br>";
+                        }
+                        if ($resultado["apio"] == 1) {
+                            echo "Apio<br>";
+                        }
+                        if ($resultado["mostaza"] == 1) {
+                            echo "Mostaza<br>";
+                        }
+                        if ($resultado["sesamo"] == 1) {
+                            echo "Sésamo<br>";
+                        }
+                        if ($resultado["sulfitos"] == 1) {
+                            echo "Sulfitos<br>";
+                        }
+                        if ($resultado["moluscos"] == 1) {
+                            echo "Moluscos<br>";
+                        }
+                        if ($resultado["altramuces"] == 1) {
+                            echo "Altramuces<br>";
+                        }
+                    }
+                    if ($resultado["vegan"] == 1 || $resultado["vegetarian"] == 1) {
+
+                        echo "<h4>Preferencias alimenticias:</h4>";
+
+                        if ($resultado["vegan"] == 1) {
+                            echo "Vegan<br>";
+                        }
+                        if ($resultado["vegetarian"] == 1) {
+                            echo "Vegetarian<br>";
+                        }
+                    }
+                    echo "<h4>Ingredientes</h4>";
+                    echo $resultado["ingredientes"] . "<br>";
+                    echo "<h4>Preparación</h4>";
+                    echo $resultado["receta"] . "<br> </div>";
+                }
+            }
+            if ($resultadoCacahuetes) {
+                echo "<h1>Recetas con cacahuetes:</h1><br/>";
+
+                foreach ($resultadoCacahuetes as $resultado) {
+                    echo "<div class=\"receta\">";
+                    echo "<h2>" . $resultado["nomReceta"] . "</h2><br>";
+                    echo $resultado["tPrep"] . " minutos. <br>";
+                    echo "Fecha subida: " . $resultado["fecha_subida"] . "<br>";
+                    if (
+                        $resultado["gluten"] == 1 || $resultado["crustaceos"] == 1 ||
+                        $resultado["huevos"] == 1 || $resultado["pescado"] == 1 ||
+                        $resultado["cacahuetes"] == 1 || $resultado["soja"] == 1 ||
+                        $resultado["lactosa"] == 1 || $resultado["frutosdecascara"] == 1 ||
+                        $resultado["apio"] == 1 || $resultado["mostaza"] == 1 ||
+                        $resultado["sesamo"] == 1 || $resultado["sulfitos"] == 1 ||
+                        $resultado["moluscos"] == 1 || $resultado["altramuces"] == 1
+                    ) {
+                        echo "<h4>Alérgenos:</h4>";
+                        if ($resultado["gluten"] == 1) {
+                            echo "Gluten <br>";
+                        }
+                        if ($resultado["crustaceos"] == 1) {
+                            echo "Crustáceos <br>";
+                        }
+                        if ($resultado["huevos"] == 1) {
+                            echo "Huevos<br>";
+                        }
+                        if ($resultado["pescado"] == 1) {
+                            echo "Pescado<br>";
+                        }
+                        if ($resultado["cacahuetes"] == 1) {
+                            echo "Cacahuetes<br>";
+                        }
+                        if ($resultado["soja"] == 1) {
+                            echo "Soja<br>";
+                        }
+                        if ($resultado["lactosa"] == 1) {
+                            echo "Lactosa <br>";
+                        }
+                        if ($resultado["frutosdecascara"] == 1) {
+                            echo "Frutos de cáscara<br>";
+                        }
+                        if ($resultado["apio"] == 1) {
+                            echo "Apio<br>";
+                        }
+                        if ($resultado["mostaza"] == 1) {
+                            echo "Mostaza<br>";
+                        }
+                        if ($resultado["sesamo"] == 1) {
+                            echo "Sésamo<br>";
+                        }
+                        if ($resultado["sulfitos"] == 1) {
+                            echo "Sulfitos<br>";
+                        }
+                        if ($resultado["moluscos"] == 1) {
+                            echo "Moluscos<br>";
+                        }
+                        if ($resultado["altramuces"] == 1) {
+                            echo "Altramuces<br>";
+                        }
+                    }
+                    if ($resultado["vegan"] == 1 || $resultado["vegetarian"] == 1) {
+
+                        echo "<h4>Preferencias alimenticias:</h4>";
+
+                        if ($resultado["vegan"] == 1) {
+                            echo "Vegan<br>";
+                        }
+                        if ($resultado["vegetarian"] == 1) {
+                            echo "Vegetarian<br>";
+                        }
+                    }
+                    echo "<h4>Ingredientes</h4>";
+                    echo $resultado["ingredientes"] . "<br>";
+                    echo "<h4>Preparación</h4>";
+                    echo $resultado["receta"] . "<br> </div>";
+                }
+            }
+            if ($resultadoSoja) {
+                echo "<h1>Recetas con soja:</h1><br/>";
+
+                foreach ($resultadoSoja as $resultado) {
+                    echo "<div class=\"receta\">";
+                    echo "<h2>" . $resultado["nomReceta"] . "</h2><br>";
+                    echo $resultado["tPrep"] . " minutos. <br>";
+                    echo "Fecha subida: " . $resultado["fecha_subida"] . "<br>";
+                    if (
+                        $resultado["gluten"] == 1 || $resultado["crustaceos"] == 1 ||
+                        $resultado["huevos"] == 1 || $resultado["pescado"] == 1 ||
+                        $resultado["cacahuetes"] == 1 || $resultado["soja"] == 1 ||
+                        $resultado["lactosa"] == 1 || $resultado["frutosdecascara"] == 1 ||
+                        $resultado["apio"] == 1 || $resultado["mostaza"] == 1 ||
+                        $resultado["sesamo"] == 1 || $resultado["sulfitos"] == 1 ||
+                        $resultado["moluscos"] == 1 || $resultado["altramuces"] == 1
+                    ) {
+                        echo "<h4>Alérgenos:</h4>";
+                        if ($resultado["gluten"] == 1) {
+                            echo "Gluten <br>";
+                        }
+                        if ($resultado["crustaceos"] == 1) {
+                            echo "Crustáceos <br>";
+                        }
+                        if ($resultado["huevos"] == 1) {
+                            echo "Huevos<br>";
+                        }
+                        if ($resultado["pescado"] == 1) {
+                            echo "Pescado<br>";
+                        }
+                        if ($resultado["cacahuetes"] == 1) {
+                            echo "Cacahuetes<br>";
+                        }
+                        if ($resultado["soja"] == 1) {
+                            echo "Soja<br>";
+                        }
+                        if ($resultado["lactosa"] == 1) {
+                            echo "Lactosa <br>";
+                        }
+                        if ($resultado["frutosdecascara"] == 1) {
+                            echo "Frutos de cáscara<br>";
+                        }
+                        if ($resultado["apio"] == 1) {
+                            echo "Apio<br>";
+                        }
+                        if ($resultado["mostaza"] == 1) {
+                            echo "Mostaza<br>";
+                        }
+                        if ($resultado["sesamo"] == 1) {
+                            echo "Sésamo<br>";
+                        }
+                        if ($resultado["sulfitos"] == 1) {
+                            echo "Sulfitos<br>";
+                        }
+                        if ($resultado["moluscos"] == 1) {
+                            echo "Moluscos<br>";
+                        }
+                        if ($resultado["altramuces"] == 1) {
+                            echo "Altramuces<br>";
+                        }
+                    }
+                    if ($resultado["vegan"] == 1 || $resultado["vegetarian"] == 1) {
+
+                        echo "<h4>Preferencias alimenticias:</h4>";
+
+                        if ($resultado["vegan"] == 1) {
+                            echo "Vegan<br>";
+                        }
+                        if ($resultado["vegetarian"] == 1) {
+                            echo "Vegetarian<br>";
+                        }
+                    }
+                    echo "<h4>Ingredientes</h4>";
+                    echo $resultado["ingredientes"] . "<br>";
+                    echo "<h4>Preparación</h4>";
+                    echo $resultado["receta"] . "<br> </div>";
+                }
+            }
+            if ($resultadoLactosa) {
+                echo "<h1>Recetas con lactosa:</h1><br/>";
+
+                foreach ($resultadoLactosa as $resultado) {
+                    echo "<div class=\"receta\">";
+                    echo "<h2>" . $resultado["nomReceta"] . "</h2><br>";
+                    echo $resultado["tPrep"] . " minutos. <br>";
+                    echo "Fecha subida: " . $resultado["fecha_subida"] . "<br>";
+                    if (
+                        $resultado["gluten"] == 1 || $resultado["crustaceos"] == 1 ||
+                        $resultado["huevos"] == 1 || $resultado["pescado"] == 1 ||
+                        $resultado["cacahuetes"] == 1 || $resultado["soja"] == 1 ||
+                        $resultado["lactosa"] == 1 || $resultado["frutosdecascara"] == 1 ||
+                        $resultado["apio"] == 1 || $resultado["mostaza"] == 1 ||
+                        $resultado["sesamo"] == 1 || $resultado["sulfitos"] == 1 ||
+                        $resultado["moluscos"] == 1 || $resultado["altramuces"] == 1
+                    ) {
+                        echo "<h4>Alérgenos:</h4>";
+                        if ($resultado["gluten"] == 1) {
+                            echo "Gluten <br>";
+                        }
+                        if ($resultado["crustaceos"] == 1) {
+                            echo "Crustáceos <br>";
+                        }
+                        if ($resultado["huevos"] == 1) {
+                            echo "Huevos<br>";
+                        }
+                        if ($resultado["pescado"] == 1) {
+                            echo "Pescado<br>";
+                        }
+                        if ($resultado["cacahuetes"] == 1) {
+                            echo "Cacahuetes<br>";
+                        }
+                        if ($resultado["soja"] == 1) {
+                            echo "Soja<br>";
+                        }
+                        if ($resultado["lactosa"] == 1) {
+                            echo "Lactosa <br>";
+                        }
+                        if ($resultado["frutosdecascara"] == 1) {
+                            echo "Frutos de cáscara<br>";
+                        }
+                        if ($resultado["apio"] == 1) {
+                            echo "Apio<br>";
+                        }
+                        if ($resultado["mostaza"] == 1) {
+                            echo "Mostaza<br>";
+                        }
+                        if ($resultado["sesamo"] == 1) {
+                            echo "Sésamo<br>";
+                        }
+                        if ($resultado["sulfitos"] == 1) {
+                            echo "Sulfitos<br>";
+                        }
+                        if ($resultado["moluscos"] == 1) {
+                            echo "Moluscos<br>";
+                        }
+                        if ($resultado["altramuces"] == 1) {
+                            echo "Altramuces<br>";
+                        }
+                    }
+                    if ($resultado["vegan"] == 1 || $resultado["vegetarian"] == 1) {
+
+                        echo "<h4>Preferencias alimenticias:</h4>";
+
+                        if ($resultado["vegan"] == 1) {
+                            echo "Vegan<br>";
+                        }
+                        if ($resultado["vegetarian"] == 1) {
+                            echo "Vegetarian<br>";
+                        }
+                    }
+                    echo "<h4>Ingredientes</h4>";
+                    echo $resultado["ingredientes"] . "<br>";
+                    echo "<h4>Preparación</h4>";
+                    echo $resultado["receta"] . "<br> </div>";
+                }
+            }
+            if ($resultadoFrutosCascara) {
+                echo "<h1>Recetas con frutos de cáscara:</h1><br/>";
+
+                foreach ($resultadoFrutosCascara as $resultado) {
+                    echo "<div class=\"receta\">";
+                    echo "<h2>" . $resultado["nomReceta"] . "</h2><br>";
+                    echo $resultado["tPrep"] . " minutos. <br>";
+                    echo "Fecha subida: " . $resultado["fecha_subida"] . "<br>";
+                    if (
+                        $resultado["gluten"] == 1 || $resultado["crustaceos"] == 1 ||
+                        $resultado["huevos"] == 1 || $resultado["pescado"] == 1 ||
+                        $resultado["cacahuetes"] == 1 || $resultado["soja"] == 1 ||
+                        $resultado["lactosa"] == 1 || $resultado["frutosdecascara"] == 1 ||
+                        $resultado["apio"] == 1 || $resultado["mostaza"] == 1 ||
+                        $resultado["sesamo"] == 1 || $resultado["sulfitos"] == 1 ||
+                        $resultado["moluscos"] == 1 || $resultado["altramuces"] == 1
+                    ) {
+                        echo "<h4>Alérgenos:</h4>";
+                        if ($resultado["gluten"] == 1) {
+                            echo "Gluten <br>";
+                        }
+                        if ($resultado["crustaceos"] == 1) {
+                            echo "Crustáceos <br>";
+                        }
+                        if ($resultado["huevos"] == 1) {
+                            echo "Huevos<br>";
+                        }
+                        if ($resultado["pescado"] == 1) {
+                            echo "Pescado<br>";
+                        }
+                        if ($resultado["cacahuetes"] == 1) {
+                            echo "Cacahuetes<br>";
+                        }
+                        if ($resultado["soja"] == 1) {
+                            echo "Soja<br>";
+                        }
+                        if ($resultado["lactosa"] == 1) {
+                            echo "Lactosa <br>";
+                        }
+                        if ($resultado["frutosdecascara"] == 1) {
+                            echo "Frutos de cáscara<br>";
+                        }
+                        if ($resultado["apio"] == 1) {
+                            echo "Apio<br>";
+                        }
+                        if ($resultado["mostaza"] == 1) {
+                            echo "Mostaza<br>";
+                        }
+                        if ($resultado["sesamo"] == 1) {
+                            echo "Sésamo<br>";
+                        }
+                        if ($resultado["sulfitos"] == 1) {
+                            echo "Sulfitos<br>";
+                        }
+                        if ($resultado["moluscos"] == 1) {
+                            echo "Moluscos<br>";
+                        }
+                        if ($resultado["altramuces"] == 1) {
+                            echo "Altramuces<br>";
+                        }
+                    }
+                    if ($resultado["vegan"] == 1 || $resultado["vegetarian"] == 1) {
+
+                        echo "<h4>Preferencias alimenticias:</h4>";
+
+                        if ($resultado["vegan"] == 1) {
+                            echo "Vegan<br>";
+                        }
+                        if ($resultado["vegetarian"] == 1) {
+                            echo "Vegetarian<br>";
+                        }
+                    }
+                    echo "<h4>Ingredientes</h4>";
+                    echo $resultado["ingredientes"] . "<br>";
+                    echo "<h4>Preparación</h4>";
+                    echo $resultado["receta"] . "<br> </div>";
+                }
+            }
+            if ($resultadoApio) {
+                echo "<h1>Recetas con apio:</h1><br/>";
+
+                foreach ($resultadoApio as $resultado) {
+                    echo "<div class=\"receta\">";
+                    echo "<h2>" . $resultado["nomReceta"] . "</h2><br>";
+                    echo $resultado["tPrep"] . " minutos. <br>";
+                    echo "Fecha subida: " . $resultado["fecha_subida"] . "<br>";
+                    if (
+                        $resultado["gluten"] == 1 || $resultado["crustaceos"] == 1 ||
+                        $resultado["huevos"] == 1 || $resultado["pescado"] == 1 ||
+                        $resultado["cacahuetes"] == 1 || $resultado["soja"] == 1 ||
+                        $resultado["lactosa"] == 1 || $resultado["frutosdecascara"] == 1 ||
+                        $resultado["apio"] == 1 || $resultado["mostaza"] == 1 ||
+                        $resultado["sesamo"] == 1 || $resultado["sulfitos"] == 1 ||
+                        $resultado["moluscos"] == 1 || $resultado["altramuces"] == 1
+                    ) {
+                        echo "<h4>Alérgenos:</h4>";
+                        if ($resultado["gluten"] == 1) {
+                            echo "Gluten <br>";
+                        }
+                        if ($resultado["crustaceos"] == 1) {
+                            echo "Crustáceos <br>";
+                        }
+                        if ($resultado["huevos"] == 1) {
+                            echo "Huevos<br>";
+                        }
+                        if ($resultado["pescado"] == 1) {
+                            echo "Pescado<br>";
+                        }
+                        if ($resultado["cacahuetes"] == 1) {
+                            echo "Cacahuetes<br>";
+                        }
+                        if ($resultado["soja"] == 1) {
+                            echo "Soja<br>";
+                        }
+                        if ($resultado["lactosa"] == 1) {
+                            echo "Lactosa <br>";
+                        }
+                        if ($resultado["frutosdecascara"] == 1) {
+                            echo "Frutos de cáscara<br>";
+                        }
+                        if ($resultado["apio"] == 1) {
+                            echo "Apio<br>";
+                        }
+                        if ($resultado["mostaza"] == 1) {
+                            echo "Mostaza<br>";
+                        }
+                        if ($resultado["sesamo"] == 1) {
+                            echo "Sésamo<br>";
+                        }
+                        if ($resultado["sulfitos"] == 1) {
+                            echo "Sulfitos<br>";
+                        }
+                        if ($resultado["moluscos"] == 1) {
+                            echo "Moluscos<br>";
+                        }
+                        if ($resultado["altramuces"] == 1) {
+                            echo "Altramuces<br>";
+                        }
+                    }
+                    if ($resultado["vegan"] == 1 || $resultado["vegetarian"] == 1) {
+
+                        echo "<h4>Preferencias alimenticias:</h4>";
+
+                        if ($resultado["vegan"] == 1) {
+                            echo "Vegan<br>";
+                        }
+                        if ($resultado["vegetarian"] == 1) {
+                            echo "Vegetarian<br>";
+                        }
+                    }
+                    echo "<h4>Ingredientes</h4>";
+                    echo $resultado["ingredientes"] . "<br>";
+                    echo "<h4>Preparación</h4>";
+                    echo $resultado["receta"] . "<br> </div>";
+                }
+            }
+            if ($resultadoMostaza) {
+                echo "<h1>Recetas con mostaza:</h1><br/>";
+
+                foreach ($resultadoMostaza as $resultado) {
+                    echo "<div class=\"receta\">";
+                    echo "<h2>" . $resultado["nomReceta"] . "</h2><br>";
+                    echo $resultado["tPrep"] . " minutos. <br>";
+                    echo "Fecha subida: " . $resultado["fecha_subida"] . "<br>";
+                    if (
+                        $resultado["gluten"] == 1 || $resultado["crustaceos"] == 1 ||
+                        $resultado["huevos"] == 1 || $resultado["pescado"] == 1 ||
+                        $resultado["cacahuetes"] == 1 || $resultado["soja"] == 1 ||
+                        $resultado["lactosa"] == 1 || $resultado["frutosdecascara"] == 1 ||
+                        $resultado["apio"] == 1 || $resultado["mostaza"] == 1 ||
+                        $resultado["sesamo"] == 1 || $resultado["sulfitos"] == 1 ||
+                        $resultado["moluscos"] == 1 || $resultado["altramuces"] == 1
+                    ) {
+                        echo "<h4>Alérgenos:</h4>";
+                        if ($resultado["gluten"] == 1) {
+                            echo "Gluten <br>";
+                        }
+                        if ($resultado["crustaceos"] == 1) {
+                            echo "Crustáceos <br>";
+                        }
+                        if ($resultado["huevos"] == 1) {
+                            echo "Huevos<br>";
+                        }
+                        if ($resultado["pescado"] == 1) {
+                            echo "Pescado<br>";
+                        }
+                        if ($resultado["cacahuetes"] == 1) {
+                            echo "Cacahuetes<br>";
+                        }
+                        if ($resultado["soja"] == 1) {
+                            echo "Soja<br>";
+                        }
+                        if ($resultado["lactosa"] == 1) {
+                            echo "Lactosa <br>";
+                        }
+                        if ($resultado["frutosdecascara"] == 1) {
+                            echo "Frutos de cáscara<br>";
+                        }
+                        if ($resultado["apio"] == 1) {
+                            echo "Apio<br>";
+                        }
+                        if ($resultado["mostaza"] == 1) {
+                            echo "Mostaza<br>";
+                        }
+                        if ($resultado["sesamo"] == 1) {
+                            echo "Sésamo<br>";
+                        }
+                        if ($resultado["sulfitos"] == 1) {
+                            echo "Sulfitos<br>";
+                        }
+                        if ($resultado["moluscos"] == 1) {
+                            echo "Moluscos<br>";
+                        }
+                        if ($resultado["altramuces"] == 1) {
+                            echo "Altramuces<br>";
+                        }
+                    }
+                    if ($resultado["vegan"] == 1 || $resultado["vegetarian"] == 1) {
+
+                        echo "<h4>Preferencias alimenticias:</h4>";
+
+                        if ($resultado["vegan"] == 1) {
+                            echo "Vegan<br>";
+                        }
+                        if ($resultado["vegetarian"] == 1) {
+                            echo "Vegetarian<br>";
+                        }
+                    }
+                    echo "<h4>Ingredientes</h4>";
+                    echo $resultado["ingredientes"] . "<br>";
+                    echo "<h4>Preparación</h4>";
+                    echo $resultado["receta"] . "<br> </div>";
+                }
+            }
+            if ($resultadoSesamo) {
+                echo "<h1>Recetas con sésamo:</h1><br/>";
+
+                foreach ($resultadoSesamo as $resultado) {
+                    echo "<div class=\"receta\">";
+                    echo "<h2>" . $resultado["nomReceta"] . "</h2><br>";
+                    echo $resultado["tPrep"] . " minutos. <br>";
+                    echo "Fecha subida: " . $resultado["fecha_subida"] . "<br>";
+                    if (
+                        $resultado["gluten"] == 1 || $resultado["crustaceos"] == 1 ||
+                        $resultado["huevos"] == 1 || $resultado["pescado"] == 1 ||
+                        $resultado["cacahuetes"] == 1 || $resultado["soja"] == 1 ||
+                        $resultado["lactosa"] == 1 || $resultado["frutosdecascara"] == 1 ||
+                        $resultado["apio"] == 1 || $resultado["mostaza"] == 1 ||
+                        $resultado["sesamo"] == 1 || $resultado["sulfitos"] == 1 ||
+                        $resultado["moluscos"] == 1 || $resultado["altramuces"] == 1
+                    ) {
+                        echo "<h4>Alérgenos:</h4>";
+                        if ($resultado["gluten"] == 1) {
+                            echo "Gluten <br>";
+                        }
+                        if ($resultado["crustaceos"] == 1) {
+                            echo "Crustáceos <br>";
+                        }
+                        if ($resultado["huevos"] == 1) {
+                            echo "Huevos<br>";
+                        }
+                        if ($resultado["pescado"] == 1) {
+                            echo "Pescado<br>";
+                        }
+                        if ($resultado["cacahuetes"] == 1) {
+                            echo "Cacahuetes<br>";
+                        }
+                        if ($resultado["soja"] == 1) {
+                            echo "Soja<br>";
+                        }
+                        if ($resultado["lactosa"] == 1) {
+                            echo "Lactosa <br>";
+                        }
+                        if ($resultado["frutosdecascara"] == 1) {
+                            echo "Frutos de cáscara<br>";
+                        }
+                        if ($resultado["apio"] == 1) {
+                            echo "Apio<br>";
+                        }
+                        if ($resultado["mostaza"] == 1) {
+                            echo "Mostaza<br>";
+                        }
+                        if ($resultado["sesamo"] == 1) {
+                            echo "Sésamo<br>";
+                        }
+                        if ($resultado["sulfitos"] == 1) {
+                            echo "Sulfitos<br>";
+                        }
+                        if ($resultado["moluscos"] == 1) {
+                            echo "Moluscos<br>";
+                        }
+                        if ($resultado["altramuces"] == 1) {
+                            echo "Altramuces<br>";
+                        }
+                    }
+                    if ($resultado["vegan"] == 1 || $resultado["vegetarian"] == 1) {
+
+                        echo "<h4>Preferencias alimenticias:</h4>";
+
+                        if ($resultado["vegan"] == 1) {
+                            echo "Vegan<br>";
+                        }
+                        if ($resultado["vegetarian"] == 1) {
+                            echo "Vegetarian<br>";
+                        }
+                    }
+                    echo "<h4>Ingredientes</h4>";
+                    echo $resultado["ingredientes"] . "<br>";
+                    echo "<h4>Preparación</h4>";
+                    echo $resultado["receta"] . "<br> </div>";
+                }
+            }
+            if ($resultadoSulfitos) {
+                echo "<h1>Recetas con sulfitos:</h1><br/>";
+
+                foreach ($resultadoSulfitos as $resultado) {
+                    echo "<div class=\"receta\">";
+                    echo "<h2>" . $resultado["nomReceta"] . "</h2><br>";
+                    echo $resultado["tPrep"] . " minutos. <br>";
+                    echo "Fecha subida: " . $resultado["fecha_subida"] . "<br>";
+                    if (
+                        $resultado["gluten"] == 1 || $resultado["crustaceos"] == 1 ||
+                        $resultado["huevos"] == 1 || $resultado["pescado"] == 1 ||
+                        $resultado["cacahuetes"] == 1 || $resultado["soja"] == 1 ||
+                        $resultado["lactosa"] == 1 || $resultado["frutosdecascara"] == 1 ||
+                        $resultado["apio"] == 1 || $resultado["mostaza"] == 1 ||
+                        $resultado["sesamo"] == 1 || $resultado["sulfitos"] == 1 ||
+                        $resultado["moluscos"] == 1 || $resultado["altramuces"] == 1
+                    ) {
+                        echo "<h4>Alérgenos:</h4>";
+                        if ($resultado["gluten"] == 1) {
+                            echo "Gluten <br>";
+                        }
+                        if ($resultado["crustaceos"] == 1) {
+                            echo "Crustáceos <br>";
+                        }
+                        if ($resultado["huevos"] == 1) {
+                            echo "Huevos<br>";
+                        }
+                        if ($resultado["pescado"] == 1) {
+                            echo "Pescado<br>";
+                        }
+                        if ($resultado["cacahuetes"] == 1) {
+                            echo "Cacahuetes<br>";
+                        }
+                        if ($resultado["soja"] == 1) {
+                            echo "Soja<br>";
+                        }
+                        if ($resultado["lactosa"] == 1) {
+                            echo "Lactosa <br>";
+                        }
+                        if ($resultado["frutosdecascara"] == 1) {
+                            echo "Frutos de cáscara<br>";
+                        }
+                        if ($resultado["apio"] == 1) {
+                            echo "Apio<br>";
+                        }
+                        if ($resultado["mostaza"] == 1) {
+                            echo "Mostaza<br>";
+                        }
+                        if ($resultado["sesamo"] == 1) {
+                            echo "Sésamo<br>";
+                        }
+                        if ($resultado["sulfitos"] == 1) {
+                            echo "Sulfitos<br>";
+                        }
+                        if ($resultado["moluscos"] == 1) {
+                            echo "Moluscos<br>";
+                        }
+                        if ($resultado["altramuces"] == 1) {
+                            echo "Altramuces<br>";
+                        }
+                    }
+                    if ($resultado["vegan"] == 1 || $resultado["vegetarian"] == 1) {
+
+                        echo "<h4>Preferencias alimenticias:</h4>";
+
+                        if ($resultado["vegan"] == 1) {
+                            echo "Vegan<br>";
+                        }
+                        if ($resultado["vegetarian"] == 1) {
+                            echo "Vegetarian<br>";
+                        }
+                    }
+                    echo "<h4>Ingredientes</h4>";
+                    echo $resultado["ingredientes"] . "<br>";
+                    echo "<h4>Preparación</h4>";
+                    echo $resultado["receta"] . "<br> </div>";
+                }
+            }
+            if ($resultadoMoluscos) {
+                echo "<h1>Recetas con moluscos:</h1><br/>";
+
+                foreach ($resultadoMoluscos as $resultado) {
+                    echo "<div class=\"receta\">";
+                    echo "<h2>" . $resultado["nomReceta"] . "</h2><br>";
+                    echo $resultado["tPrep"] . " minutos. <br>";
+                    echo "Fecha subida: " . $resultado["fecha_subida"] . "<br>";
+                    if (
+                        $resultado["gluten"] == 1 || $resultado["crustaceos"] == 1 ||
+                        $resultado["huevos"] == 1 || $resultado["pescado"] == 1 ||
+                        $resultado["cacahuetes"] == 1 || $resultado["soja"] == 1 ||
+                        $resultado["lactosa"] == 1 || $resultado["frutosdecascara"] == 1 ||
+                        $resultado["apio"] == 1 || $resultado["mostaza"] == 1 ||
+                        $resultado["sesamo"] == 1 || $resultado["sulfitos"] == 1 ||
+                        $resultado["moluscos"] == 1 || $resultado["altramuces"] == 1
+                    ) {
+                        echo "<h4>Alérgenos:</h4>";
+                        if ($resultado["gluten"] == 1) {
+                            echo "Gluten <br>";
+                        }
+                        if ($resultado["crustaceos"] == 1) {
+                            echo "Crustáceos <br>";
+                        }
+                        if ($resultado["huevos"] == 1) {
+                            echo "Huevos<br>";
+                        }
+                        if ($resultado["pescado"] == 1) {
+                            echo "Pescado<br>";
+                        }
+                        if ($resultado["cacahuetes"] == 1) {
+                            echo "Cacahuetes<br>";
+                        }
+                        if ($resultado["soja"] == 1) {
+                            echo "Soja<br>";
+                        }
+                        if ($resultado["lactosa"] == 1) {
+                            echo "Lactosa <br>";
+                        }
+                        if ($resultado["frutosdecascara"] == 1) {
+                            echo "Frutos de cáscara<br>";
+                        }
+                        if ($resultado["apio"] == 1) {
+                            echo "Apio<br>";
+                        }
+                        if ($resultado["mostaza"] == 1) {
+                            echo "Mostaza<br>";
+                        }
+                        if ($resultado["sesamo"] == 1) {
+                            echo "Sésamo<br>";
+                        }
+                        if ($resultado["sulfitos"] == 1) {
+                            echo "Sulfitos<br>";
+                        }
+                        if ($resultado["moluscos"] == 1) {
+                            echo "Moluscos<br>";
+                        }
+                        if ($resultado["altramuces"] == 1) {
+                            echo "Altramuces<br>";
+                        }
+                    }
+                    if ($resultado["vegan"] == 1 || $resultado["vegetarian"] == 1) {
+
+                        echo "<h4>Preferencias alimenticias:</h4>";
+
+                        if ($resultado["vegan"] == 1) {
+                            echo "Vegan<br>";
+                        }
+                        if ($resultado["vegetarian"] == 1) {
+                            echo "Vegetarian<br>";
+                        }
+                    }
+                    echo "<h4>Ingredientes</h4>";
+                    echo $resultado["ingredientes"] . "<br>";
+                    echo "<h4>Preparación</h4>";
+                    echo $resultado["receta"] . "<br> </div>";
+                }
+            }
+            if ($resultadoAltramuces) {
+                echo "<h1>Recetas con altramuces:</h1><br/>";
+
+                foreach ($resultadoAltramuces as $resultado) {
+                    echo "<div class=\"receta\">";
+                    echo "<h2>" . $resultado["nomReceta"] . "</h2><br>";
+                    echo $resultado["tPrep"] . " minutos. <br>";
+                    echo "Fecha subida: " . $resultado["fecha_subida"] . "<br>";
+                    if (
+                        $resultado["gluten"] == 1 || $resultado["crustaceos"] == 1 ||
+                        $resultado["huevos"] == 1 || $resultado["pescado"] == 1 ||
+                        $resultado["cacahuetes"] == 1 || $resultado["soja"] == 1 ||
+                        $resultado["lactosa"] == 1 || $resultado["frutosdecascara"] == 1 ||
+                        $resultado["apio"] == 1 || $resultado["mostaza"] == 1 ||
+                        $resultado["sesamo"] == 1 || $resultado["sulfitos"] == 1 ||
+                        $resultado["moluscos"] == 1 || $resultado["altramuces"] == 1
+                    ) {
+                        echo "<h4>Alérgenos:</h4>";
+                        if ($resultado["gluten"] == 1) {
+                            echo "Gluten <br>";
+                        }
+                        if ($resultado["crustaceos"] == 1) {
+                            echo "Crustáceos <br>";
+                        }
+                        if ($resultado["huevos"] == 1) {
+                            echo "Huevos<br>";
+                        }
+                        if ($resultado["pescado"] == 1) {
+                            echo "Pescado<br>";
+                        }
+                        if ($resultado["cacahuetes"] == 1) {
+                            echo "Cacahuetes<br>";
+                        }
+                        if ($resultado["soja"] == 1) {
+                            echo "Soja<br>";
+                        }
+                        if ($resultado["lactosa"] == 1) {
+                            echo "Lactosa <br>";
+                        }
+                        if ($resultado["frutosdecascara"] == 1) {
+                            echo "Frutos de cáscara<br>";
+                        }
+                        if ($resultado["apio"] == 1) {
+                            echo "Apio<br>";
+                        }
+                        if ($resultado["mostaza"] == 1) {
+                            echo "Mostaza<br>";
+                        }
+                        if ($resultado["sesamo"] == 1) {
+                            echo "Sésamo<br>";
+                        }
+                        if ($resultado["sulfitos"] == 1) {
+                            echo "Sulfitos<br>";
+                        }
+                        if ($resultado["moluscos"] == 1) {
+                            echo "Moluscos<br>";
+                        }
+                        if ($resultado["altramuces"] == 1) {
+                            echo "Altramuces<br>";
+                        }
+                    }
+                    if ($resultado["vegan"] == 1 || $resultado["vegetarian"] == 1) {
+
+                        echo "<h4>Preferencias alimenticias:</h4>";
+
+                        if ($resultado["vegan"] == 1) {
+                            echo "Vegan<br>";
+                        }
+                        if ($resultado["vegetarian"] == 1) {
+                            echo "Vegetarian<br>";
+                        }
+                    }
+                    echo "<h4>Ingredientes</h4>";
+                    echo $resultado["ingredientes"] . "<br>";
+                    echo "<h4>Preparación</h4>";
+                    echo $resultado["receta"] . "<br> </div>";
+                }
+            }
+            if ($resultadoVegano) {
+                echo "<h1>Recetas veganas:</h1><br/>";
+
+                foreach ($resultadoVegano as $resultado) {
+                    echo "<div class=\"receta\">";
+                    echo "<h2>" . $resultado["nomReceta"] . "</h2><br>";
+                    echo $resultado["tPrep"] . " minutos. <br>";
+                    echo "Fecha subida: " . $resultado["fecha_subida"] . "<br>";
+                    if (
+                        $resultado["gluten"] == 1 || $resultado["crustaceos"] == 1 ||
+                        $resultado["huevos"] == 1 || $resultado["pescado"] == 1 ||
+                        $resultado["cacahuetes"] == 1 || $resultado["soja"] == 1 ||
+                        $resultado["lactosa"] == 1 || $resultado["frutosdecascara"] == 1 ||
+                        $resultado["apio"] == 1 || $resultado["mostaza"] == 1 ||
+                        $resultado["sesamo"] == 1 || $resultado["sulfitos"] == 1 ||
+                        $resultado["moluscos"] == 1 || $resultado["altramuces"] == 1
+                    ) {
+                        echo "<h4>Alérgenos:</h4>";
+                        if ($resultado["gluten"] == 1) {
+                            echo "Gluten <br>";
+                        }
+                        if ($resultado["crustaceos"] == 1) {
+                            echo "Crustáceos <br>";
+                        }
+                        if ($resultado["huevos"] == 1) {
+                            echo "Huevos<br>";
+                        }
+                        if ($resultado["pescado"] == 1) {
+                            echo "Pescado<br>";
+                        }
+                        if ($resultado["cacahuetes"] == 1) {
+                            echo "Cacahuetes<br>";
+                        }
+                        if ($resultado["soja"] == 1) {
+                            echo "Soja<br>";
+                        }
+                        if ($resultado["lactosa"] == 1) {
+                            echo "Lactosa <br>";
+                        }
+                        if ($resultado["frutosdecascara"] == 1) {
+                            echo "Frutos de cáscara<br>";
+                        }
+                        if ($resultado["apio"] == 1) {
+                            echo "Apio<br>";
+                        }
+                        if ($resultado["mostaza"] == 1) {
+                            echo "Mostaza<br>";
+                        }
+                        if ($resultado["sesamo"] == 1) {
+                            echo "Sésamo<br>";
+                        }
+                        if ($resultado["sulfitos"] == 1) {
+                            echo "Sulfitos<br>";
+                        }
+                        if ($resultado["moluscos"] == 1) {
+                            echo "Moluscos<br>";
+                        }
+                        if ($resultado["altramuces"] == 1) {
+                            echo "Altramuces<br>";
+                        }
+                    }
+                    if ($resultado["vegan"] == 1 || $resultado["vegetarian"] == 1) {
+
+                        echo "<h4>Preferencias alimenticias:</h4>";
+
+                        if ($resultado["vegan"] == 1) {
+                            echo "Vegan<br>";
+                        }
+                        if ($resultado["vegetarian"] == 1) {
+                            echo "Vegetarian<br>";
+                        }
+                    }
+                    echo "<h4>Ingredientes</h4>";
+                    echo $resultado["ingredientes"] . "<br>";
+                    echo "<h4>Preparación</h4>";
+                    echo $resultado["receta"] . "<br> </div>";
+                }
+            }
+            if ($resultadoVegetariano) {
+                echo "<h1>Recetas vegetarianas:</h1><br/>";
+                foreach ($resultadoVegetariano as $resultado) {
+                    echo "<div class=\"receta\">";
+                    
+                    echo "<h2>" . $resultado["nomReceta"] . "</h2><br>";
+                    echo $resultado["tPrep"] . " minutos. <br>";
+                    echo "Fecha subida: " . $resultado["fecha_subida"] . "<br>";
+                    if (
+                        $resultado["gluten"] == 1 || $resultado["crustaceos"] == 1 ||
+                        $resultado["huevos"] == 1 || $resultado["pescado"] == 1 ||
+                        $resultado["cacahuetes"] == 1 || $resultado["soja"] == 1 ||
+                        $resultado["lactosa"] == 1 || $resultado["frutosdecascara"] == 1 ||
+                        $resultado["apio"] == 1 || $resultado["mostaza"] == 1 ||
+                        $resultado["sesamo"] == 1 || $resultado["sulfitos"] == 1 ||
+                        $resultado["moluscos"] == 1 || $resultado["altramuces"] == 1
+                    ) {
+                        echo "<h4>Alérgenos:</h4>";
+                        if ($resultado["gluten"] == 1) {
+                            echo "Gluten <br>";
+                        }
+                        if ($resultado["crustaceos"] == 1) {
+                            echo "Crustáceos <br>";
+                        }
+                        if ($resultado["huevos"] == 1) {
+                            echo "Huevos<br>";
+                        }
+                        if ($resultado["pescado"] == 1) {
+                            echo "Pescado<br>";
+                        }
+                        if ($resultado["cacahuetes"] == 1) {
+                            echo "Cacahuetes<br>";
+                        }
+                        if ($resultado["soja"] == 1) {
+                            echo "Soja<br>";
+                        }
+                        if ($resultado["lactosa"] == 1) {
+                            echo "Lactosa <br>";
+                        }
+                        if ($resultado["frutosdecascara"] == 1) {
+                            echo "Frutos de cáscara<br>";
+                        }
+                        if ($resultado["apio"] == 1) {
+                            echo "Apio<br>";
+                        }
+                        if ($resultado["mostaza"] == 1) {
+                            echo "Mostaza<br>";
+                        }
+                        if ($resultado["sesamo"] == 1) {
+                            echo "Sésamo<br>";
+                        }
+                        if ($resultado["sulfitos"] == 1) {
+                            echo "Sulfitos<br>";
+                        }
+                        if ($resultado["moluscos"] == 1) {
+                            echo "Moluscos<br>";
+                        }
+                        if ($resultado["altramuces"] == 1) {
+                            echo "Altramuces<br>";
+                        }
+                    }
+                    if ($resultado["vegan"] == 1 || $resultado["vegetarian"] == 1) {
+
+                        echo "<h4>Preferencias alimenticias:</h4>";
+
+                        if ($resultado["vegan"] == 1) {
+                            echo "Vegan<br>";
+                        }
+                        if ($resultado["vegetarian"] == 1) {
+                            echo "Vegetarian<br>";
+                        }
+                    }
+                    echo "<h4>Ingredientes</h4>";
+                    echo $resultado["ingredientes"] . "<br>";
+                    echo "<h4>Preparación</h4>";
+                    echo $resultado["receta"] . "<br> </div>";
+                }
+            }
+        } catch (Exception $e) {
+            error_log($e->getMessage() . microtime() . PHP_EOL, 3, "logException.txt");
+            header('Location: index.php?ctl=error');
+        } catch (Error $e) {
+            error_log($e->getMessage() . microtime() . PHP_EOL, 3, "logError.txt");
+            header('Location: index.php?ctl=error');
+        }   
         require __DIR__ . '/../vista/paginas/recetas.php';
     }
     public function subir_recetas()
@@ -982,4 +2259,4 @@ class Controller
         }
     }
 }
-?>
+?>                                                                                            

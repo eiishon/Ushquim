@@ -149,6 +149,168 @@ class Model extends PDO
         $row = $result->fetchAll();
         return $row;
     }
+    public function getRecetasGluten(){
+        $consulta = "SELECT `nomReceta`, `receta`, `tPrep`, `fecha_subida`, `ingredientes`, 
+        `aprobada`, `idUser`, `gluten`, `crustaceos`, `huevos`, `pescado`, `cacahuetes`, `soja`, 
+        `lactosa`, `frutosdecascara`, `apio`, `mostaza`, `sesamo`, `sulfitos`, `moluscos`, `altramuces`, 
+        `vegan`, `vegetarian` FROM `recetas` WHERE aprobada = 1 AND gluten = 1";
+        $result = $this->conexion->prepare($consulta);
+        $result->execute();
+        $row = $result->fetchAll();
+        return $row;
+    }
+    public function getRecetasCrustaceos(){
+        $consulta = "SELECT `nomReceta`, `receta`, `tPrep`, `fecha_subida`, `ingredientes`, 
+        `aprobada`, `idUser`, `gluten`, `crustaceos`, `huevos`, `pescado`, `cacahuetes`, `soja`, 
+        `lactosa`, `frutosdecascara`, `apio`, `mostaza`, `sesamo`, `sulfitos`, `moluscos`, `altramuces`, 
+        `vegan`, `vegetarian` FROM `recetas` WHERE aprobada = 1 AND crustaceos = 1";
+        $result = $this->conexion->prepare($consulta);
+        $result->execute();
+        $row = $result->fetchAll();
+        return $row;
+    }
+    public function getRecetasHuevos(){
+        $consulta = "SELECT `nomReceta`, `receta`, `tPrep`, `fecha_subida`, `ingredientes`, 
+        `aprobada`, `idUser`, `gluten`, `crustaceos`, `huevos`, `pescado`, `cacahuetes`, `soja`, 
+        `lactosa`, `frutosdecascara`, `apio`, `mostaza`, `sesamo`, `sulfitos`, `moluscos`, `altramuces`, 
+        `vegan`, `vegetarian` FROM `recetas` WHERE aprobada = 1 AND huevos = 1";
+        $result = $this->conexion->prepare($consulta);
+        $result->execute();
+        $row = $result->fetchAll();
+        return $row;
+    }
+    public function getRecetasPescado(){
+        $consulta = "SELECT `nomReceta`, `receta`, `tPrep`, `fecha_subida`, `ingredientes`, 
+        `aprobada`, `idUser`, `gluten`, `crustaceos`, `huevos`, `pescado`, `cacahuetes`, `soja`, 
+        `lactosa`, `frutosdecascara`, `apio`, `mostaza`, `sesamo`, `sulfitos`, `moluscos`, `altramuces`, 
+        `vegan`, `vegetarian` FROM `recetas` WHERE aprobada = 1 AND pescado = 1";
+        $result = $this->conexion->prepare($consulta);
+        $result->execute();
+        $row = $result->fetchAll();
+        return $row;
+    }
+    public function getRecetasCacahuetes(){
+        $consulta = "SELECT `nomReceta`, `receta`, `tPrep`, `fecha_subida`, `ingredientes`, 
+        `aprobada`, `idUser`, `gluten`, `crustaceos`, `huevos`, `pescado`, `cacahuetes`, `soja`, 
+        `lactosa`, `frutosdecascara`, `apio`, `mostaza`, `sesamo`, `sulfitos`, `moluscos`, `altramuces`, 
+        `vegan`, `vegetarian` FROM `recetas` WHERE aprobada = 1 AND cacahuetes = 1";
+        $result = $this->conexion->prepare($consulta);
+        $result->execute();
+        $row = $result->fetchAll();
+        return $row;
+    }
+    public function getRecetasSoja(){
+        $consulta = "SELECT `nomReceta`, `receta`, `tPrep`, `fecha_subida`, `ingredientes`, 
+        `aprobada`, `idUser`, `gluten`, `crustaceos`, `huevos`, `pescado`, `cacahuetes`, `soja`, 
+        `lactosa`, `frutosdecascara`, `apio`, `mostaza`, `sesamo`, `sulfitos`, `moluscos`, `altramuces`, 
+        `vegan`, `vegetarian` FROM `recetas` WHERE aprobada = 1 AND soja = 1";
+        $result = $this->conexion->prepare($consulta);
+        $result->execute();
+        $row = $result->fetchAll();
+        return $row;
+    }
+    public function getRecetasLactosa(){
+        $consulta = "SELECT `nomReceta`, `receta`, `tPrep`, `fecha_subida`, `ingredientes`, 
+        `aprobada`, `idUser`, `gluten`, `crustaceos`, `huevos`, `pescado`, `cacahuetes`, `soja`, 
+        `lactosa`, `frutosdecascara`, `apio`, `mostaza`, `sesamo`, `sulfitos`, `moluscos`, `altramuces`, 
+        `vegan`, `vegetarian` FROM `recetas` WHERE aprobada = 1 AND lactosa = 1";
+        $result = $this->conexion->prepare($consulta);
+        $result->execute();
+        $row = $result->fetchAll();
+        return $row;
+    }
+    public function getRecetasFrutosCascara(){
+        $consulta = "SELECT `nomReceta`, `receta`, `tPrep`, `fecha_subida`, `ingredientes`, 
+        `aprobada`, `idUser`, `gluten`, `crustaceos`, `huevos`, `pescado`, `cacahuetes`, `soja`, 
+        `lactosa`, `frutosdecascara`, `apio`, `mostaza`, `sesamo`, `sulfitos`, `moluscos`, `altramuces`, 
+        `vegan`, `vegetarian` FROM `recetas` WHERE aprobada = 1 AND frutosdecascara = 1";
+        $result = $this->conexion->prepare($consulta);
+        $result->execute();
+        $row = $result->fetchAll();
+        return $row;
+    }
+    public function getRecetasApio(){
+        $consulta = "SELECT `nomReceta`, `receta`, `tPrep`, `fecha_subida`, `ingredientes`, 
+        `aprobada`, `idUser`, `gluten`, `crustaceos`, `huevos`, `pescado`, `cacahuetes`, `soja`, 
+        `lactosa`, `frutosdecascara`, `apio`, `mostaza`, `sesamo`, `sulfitos`, `moluscos`, `altramuces`, 
+        `vegan`, `vegetarian` FROM `recetas` WHERE aprobada = 1 AND apio = 1";
+        $result = $this->conexion->prepare($consulta);
+        $result->execute();
+        $row = $result->fetchAll();
+        return $row;
+    }
+    public function getRecetasMostaza(){
+        $consulta = "SELECT `nomReceta`, `receta`, `tPrep`, `fecha_subida`, `ingredientes`, 
+        `aprobada`, `idUser`, `gluten`, `crustaceos`, `huevos`, `pescado`, `cacahuetes`, `soja`, 
+        `lactosa`, `frutosdecascara`, `apio`, `mostaza`, `sesamo`, `sulfitos`, `moluscos`, `altramuces`, 
+        `vegan`, `vegetarian` FROM `recetas` WHERE aprobada = 1 AND mostaza = 1";
+        $result = $this->conexion->prepare($consulta);
+        $result->execute();
+        $row = $result->fetchAll();
+        return $row;
+    }
+    public function getRecetasSesamo(){
+        $consulta = "SELECT `nomReceta`, `receta`, `tPrep`, `fecha_subida`, `ingredientes`, 
+        `aprobada`, `idUser`, `gluten`, `crustaceos`, `huevos`, `pescado`, `cacahuetes`, `soja`, 
+        `lactosa`, `frutosdecascara`, `apio`, `mostaza`, `sesamo`, `sulfitos`, `moluscos`, `altramuces`, 
+        `vegan`, `vegetarian` FROM `recetas` WHERE aprobada = 1 AND sesamo = 1";
+        $result = $this->conexion->prepare($consulta);
+        $result->execute();
+        $row = $result->fetchAll();
+        return $row;
+    }
+    public function getRecetasSulfitos(){
+        $consulta = "SELECT `nomReceta`, `receta`, `tPrep`, `fecha_subida`, `ingredientes`, 
+        `aprobada`, `idUser`, `gluten`, `crustaceos`, `huevos`, `pescado`, `cacahuetes`, `soja`, 
+        `lactosa`, `frutosdecascara`, `apio`, `mostaza`, `sesamo`, `sulfitos`, `moluscos`, `altramuces`, 
+        `vegan`, `vegetarian` FROM `recetas` WHERE aprobada = 1 AND sulfitos = 1";
+        $result = $this->conexion->prepare($consulta);
+        $result->execute();
+        $row = $result->fetchAll();
+        return $row;
+    }
+    public function getRecetasMoluscos(){
+        $consulta = "SELECT `nomReceta`, `receta`, `tPrep`, `fecha_subida`, `ingredientes`, 
+        `aprobada`, `idUser`, `gluten`, `crustaceos`, `huevos`, `pescado`, `cacahuetes`, `soja`, 
+        `lactosa`, `frutosdecascara`, `apio`, `mostaza`, `sesamo`, `sulfitos`, `moluscos`, `altramuces`, 
+        `vegan`, `vegetarian` FROM `recetas` WHERE aprobada = 1 AND moluscos = 1";
+        $result = $this->conexion->prepare($consulta);
+        $result->execute();
+        $row = $result->fetchAll();
+        return $row;
+    }
+    public function getRecetasAltramuces(){
+        $consulta = "SELECT `nomReceta`, `receta`, `tPrep`, `fecha_subida`, `ingredientes`, 
+        `aprobada`, `idUser`, `gluten`, `crustaceos`, `huevos`, `pescado`, `cacahuetes`, `soja`, 
+        `lactosa`, `frutosdecascara`, `apio`, `mostaza`, `sesamo`, `sulfitos`, `moluscos`, `altramuces`, 
+        `vegan`, `vegetarian` FROM `recetas` WHERE aprobada = 1 AND altramuces = 1";
+        $result = $this->conexion->prepare($consulta);
+        $result->execute();
+        $row = $result->fetchAll();
+        return $row;
+    }
+    public function getRecetasVegan(){
+        $consulta = "SELECT `nomReceta`, `receta`, `tPrep`, `fecha_subida`, `ingredientes`, 
+        `aprobada`, `idUser`, `gluten`, `crustaceos`, `huevos`, `pescado`, `cacahuetes`, `soja`, 
+        `lactosa`, `frutosdecascara`, `apio`, `mostaza`, `sesamo`, `sulfitos`, `moluscos`, `altramuces`, 
+        `vegan`, `vegetarian` FROM `recetas` WHERE aprobada = 1 AND vegan = 1";
+        $result = $this->conexion->prepare($consulta);
+        $result->execute();
+        $row = $result->fetchAll();
+        return $row;
+    }
+    public function getRecetasVegetarian(){
+        $consulta = "SELECT `nomReceta`, `receta`, `tPrep`, `fecha_subida`, `ingredientes`, 
+        `aprobada`, `idUser`, `gluten`, `crustaceos`, `huevos`, `pescado`, `cacahuetes`, `soja`, 
+        `lactosa`, `frutosdecascara`, `apio`, `mostaza`, `sesamo`, `sulfitos`, `moluscos`, `altramuces`, 
+        `vegan`, `vegetarian` FROM `recetas` WHERE aprobada = 1 AND vegetarian = 1";
+        $result = $this->conexion->prepare($consulta);
+        $result->execute();
+        $row = $result->fetchAll();
+        return $row;
+    }
+
+
 
     public function getIdReceta($receta){
         $consulta = "select idReceta from recetas where receta=:receta";
