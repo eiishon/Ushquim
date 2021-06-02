@@ -3,9 +3,10 @@
 if($_SESSION['user_lvl'] >= 1) {
     
     session_destroy();
-    $contenido = 'Ha cerrado sesión correctamente. <a href="index.php?ctl=inicio">Volver al inicio.</a>';
+    header('Location: index.php?ctl=inicio');
 }else{
-    $contenido = 'No se ha podido cerrar sesión. <a href="index.php?ctl=cerrarsesion">Volver a intentarlo.</a>';
+    $_SESSION['mensajeError'] = 'No se ha podido cerrar sesión. <a href="index.php?ctl=cerrarsesion">Volver a intentarlo.</a>';
+    header('Location: index.php?ctl=error');
 }
 
 ?>
