@@ -27,13 +27,45 @@
         text-shadow: 1px 1px 2px #082b34;
         padding-top: 2%;
     }
-    h5{
+
+    h5,h6 {
         font-family: 'Akaya Kanadaka', cursive;
         color: #2C5919;
         text-shadow: 1px 1px 2px grey;
         padding-top: 1%;
     }
-    
+
+    .gestion {
+        width: 90%;
+        padding-left: 10%;
+    }
+
+    input[type=button], input[type=submit] {
+        margin-top: 3%;
+        margin-bottom: 3%;
+        width: 40%;
+        margin-left: 7%;
+        padding: 1%;
+        background-color: rgba(167, 195, 155, 0.4);
+        border: none;
+        border-radius: 30px 30px 30px 5px;
+        font-family: 'Akaya Kanadaka', cursive;
+        color: #2C5919;
+    }
+
+    .perfil{
+        width: 80%;
+        margin-left: 10%;
+        margin-top: 5%;
+        margin-bottom: 5%;
+        border: 1px dotted;
+        background-color: white;
+    }
+    .infoper{
+        margin-left: 5%;
+    }
+
+
 </style>
 <?php
 include('validar/validate.php');
@@ -662,11 +694,13 @@ class Controller
             $db = new Model();
             $resultados = $db->getRecetasNoAprobadas();
             if ($resultados) {
+                echo "<div class = \"gestion\">";
                 foreach ($resultados as $resultado) {
-                    echo "<div class=\"gestion\">";
-                    echo "<h2>" . $resultado["nomReceta"] . "</h2><br>";
-                    echo $resultado["tPrep"] . "<br>";
-                    echo "Fecha subida: " . $resultado["fecha_subida"] . "<br>";
+                    echo "<div class=\"col\"><div class=\" card h-100\"> 
+                    <div class=\"card-body\">";
+                    echo "<h3 class=\"card-title\">" . $resultado["nomReceta"] . "</h3><br><p class=\"card-text\"><div class=\"info\">";
+                    echo $resultado["tPrep"] . " minutos. <br>";
+                    echo "Fecha subida: " . $resultado["fecha_subida"] . "</div><br>";
                     if (
                         $resultado["gluten"] == 1 || $resultado["crustaceos"] == 1 ||
                         $resultado["huevos"] == 1 || $resultado["pescado"] == 1 ||
@@ -676,7 +710,7 @@ class Controller
                         $resultado["sesamo"] == 1 || $resultado["sulfitos"] == 1 ||
                         $resultado["moluscos"] == 1 || $resultado["altramuces"] == 1
                     ) {
-                        echo "<h4>Alérgenos:</h4>";
+                        echo "<h5>Alérgenos:</h5>";
                         if ($resultado["gluten"] == 1) {
                             echo "Gluten <br>";
                         }
@@ -722,7 +756,7 @@ class Controller
                     }
                     if ($resultado["vegan"] == 1 || $resultado["vegetarian"] == 1) {
 
-                        echo "<h4>Preferencias alimenticias:</h4>";
+                        echo "<h5>Preferencias alimenticias:</h5>";
 
                         if ($resultado["vegan"] == 1) {
                             echo "Vegan<br>";
@@ -731,13 +765,14 @@ class Controller
                             echo "Vegetarian<br>";
                         }
                     }
-                    echo "<h4>Ingredientes</h4>";
+                    echo "<h5>Ingredientes</h5>";
                     echo $resultado["ingredientes"] . "<br>";
-                    echo "<h4>Preparación</h4>";
-                    echo $resultado["receta"] . "<br> </div>";
+                    echo "<h5>Preparación</h5>";
+                    echo $resultado["receta"] . "<br></p></div></div></div>";
+
                     echo " <form method=\"POST\" action=\"" . $_SERVER["PHP_SELF"] . "\" name=\"gestion\" enctype=\"multipart/form-data\">
-                <button type= \"button\" name= \"aceptar\">Aceptar</button> 
-                <button type = \"button\" name= \"rechazar\">Rechazar</button>
+                <input type= \"button\" name= \"aceptar\" value=\"Aceptar\" /> 
+                <input type = \"button\" name= \"rechazar\" value =\"Rechazar\" />
                 </form>";
                     $idReceta = $db->getIdReceta($resultado["receta"]);
                     $_SESSION["idReceta"] = $idReceta;
@@ -760,6 +795,7 @@ class Controller
                             throw new Exception("Ha habido un error a la hora de rechazar la receta");
                         }
                     }
+                    echo "</div>";
                 }
             } else {
                 $_SESSION['mensajeError'] = 'No hay recetas para gestionar';
@@ -785,13 +821,14 @@ class Controller
             $resultado = $db->getPerfil($idUser);
             if ($resultado) {
                 ob_start();
-                echo "<h1> " . $_SESSION["user"] . "</h1>";
-                echo "Nombre: " . $resultado["nomUser"] . " ";
+                echo "<div class=\"perfil\">";
+                echo "<h1> " . $_SESSION["user"] . "</h1> <br><div class=\"infoper\">";
+                echo "<h6>Nombre:</h6> " . $resultado["nomUser"] . " ";
                 echo $resultado["apUser"] . "<br>";
-                echo "Email: " . $resultado["email"] . "<br>";
-                echo "Nombre de usuario: " . $resultado["user"] . "<br>";
-                echo "Contraseña: " . $resultado["pwd"] . "<br>";
-                echo "Biografía: " . $resultado["bio"] . "<br>";
+                echo "<h6>Email:</h6> " . $resultado["email"] . "<br>";
+                echo "<h6>Nombre de usuario:</h6> " . $resultado["user"] . "<br>";
+                echo "<h6>Contraseña:</h6> " . $resultado["pwd"] . "<br>";
+                echo "<h6>Biografía:</h6> " . $resultado["bio"] . "<br>";
                 if (
                     $resultado["gluten"] == 1 || $resultado["crustaceos"] == 1 ||
                     $resultado["huevos"] == 1 || $resultado["pescado"] == 1 ||
@@ -801,7 +838,7 @@ class Controller
                     $resultado["sesamo"] == 1 || $resultado["sulfitos"] == 1 ||
                     $resultado["moluscos"] == 1 || $resultado["altramuces"] == 1
                 ) {
-                    echo "<h2>Alérgenos:</h2>";
+                    echo "<h5>Alérgenos:</h5>";
                     if ($resultado["gluten"] == 1) {
                         echo "Gluten <br>";
                     }
@@ -847,7 +884,7 @@ class Controller
                 }
                 if ($resultado["vegan"] == 1 || $resultado["vegetarian"] == 1) {
 
-                    echo "<h2>Preferencias alimenticias:</h2>";
+                    echo "<h5>Preferencias alimenticias:</h5> ";
 
                     if ($resultado["vegan"] == 1) {
                         echo "Vegan<br>";
@@ -856,6 +893,7 @@ class Controller
                         echo "Vegetarian<br>";
                     }
                 }
+                echo "</p></div></div>";
             } else {
                 $_SESSION['mensajeError'] = 'Ha habido un error a la hora de visualizar el contenido';
                 throw new Exception("Ha habido un error a la hora de visualizar el contenido");
@@ -2187,7 +2225,6 @@ class Controller
                 }
                 echo "</div></div>";
             }
-        
         } catch (Exception $e) {
             error_log($e->getMessage() . microtime() . PHP_EOL, 3, "logException.txt");
             header('Location: index.php?ctl=error');

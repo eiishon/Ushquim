@@ -5,6 +5,41 @@
         background-color: rgba(255, 0, 0, 0.1);
         border-width: 2px;
     }
+    .container {
+            width: 80%;
+            margin-left: 10%;
+            margin-top: 5%;
+            margin-bottom: 5%;
+            border: 1px dotted;
+            background-color: white;
+            text-align: center;
+        }
+
+        legend {
+            font-family: 'Akaya Kanadaka', cursive;
+            color: #2C5919;
+            text-align: center;
+            text-shadow: 1px 1px 2px #082b34;
+            padding-top: 2%;
+            margin-bottom: 3%;
+        }
+
+        label {
+            font-family: 'Akaya Kanadaka', cursive;
+            color: #2C5919;
+            padding-top: 1%;
+        }
+
+        input[type=text],
+        input[type=password],
+        input[type=email] {
+            margin-left: 1%;
+            margin-right: 2%;
+            margin-bottom: 3%;
+        }
+        textarea {
+            margin-left: 1%;
+        }
 </style>
 <script>
     window.onload = function(elEvento) {
@@ -84,6 +119,8 @@
                         <div class="dos">
                             <label for="usuario">Nombre de usuario: </label>
                             <input type="text" name="user" id="user">
+                        </div>
+                        <div class="pwd">
                             <label for="pwd">Contraseña: </label>
                             <input type="password" name="pwd" id="pwd">
                             <label for="reppwd">Repite tu contraseña: </label>
@@ -94,9 +131,11 @@
                             <input type="email" name="email" id="email">
                             <label for="repemail">Repite el email: </label>
                             <input type="email" name="repemail" id="repemail">
+                            </div>
+                            <div class="cuatro">
                             <label for="bio">Cuéntanos un poco sobre ti:</label>
                             <textarea id="bio" name="bio" rows="4" cols="40"></textarea>
-                        </div>
+                            </div>
                         <label for="alergias">Alergias: </label>
                         <div class="al">
                             <input type="checkbox" id="gluten" name="gluten" value="gluten">

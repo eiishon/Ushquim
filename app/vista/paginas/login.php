@@ -20,6 +20,7 @@
     color: #2C5919;
     border: none;
     border-radius: 30px 30px 30px 5px;
+    font-family: 'Akaya Kanadaka', cursive;
   }
   .wrapper {
   display: flex;
