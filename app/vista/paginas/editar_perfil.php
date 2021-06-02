@@ -138,7 +138,7 @@
                     </div>
                     <div class="button">
                         <input type="submit" name="editar" value="Editar" id="editar">
-                        <input type="button" name="borrarperfil" value="Borrar perfil" id="borrar_perfil">
+                        <input type="button" name="borrar_perfil" value="Borrar perfil" id="borrar_perfil">
                     </div>
                 </fieldset>
                 <div id="errores"></div>

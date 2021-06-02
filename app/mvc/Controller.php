@@ -1,4 +1,40 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Akaya+Kanadaka&display=swap');
+
+    .receta {
+        margin: 2% 5% 2% 5%;
+        padding: 2%;
+        /*border: 1px solid;
+        border-color: #2C5919;*/
+        width: 90%;
+        background-color: rgba(167, 195, 155, 0.4);
+        border-radius: 15px 50px 30px 5px;
+    }
+
+    .info {
+        font-size: small;
+        text-align: right;
+    }
+
+    h1,
+    h3 {
+        font-family: 'Akaya Kanadaka', cursive;
+        color: #2C5919;
+        text-align: center;
+        text-shadow: 1px 1px 2px #082b34;
+        padding-top: 2%;
+    }
+    h5{
+        font-family: 'Akaya Kanadaka', cursive;
+        color: #2C5919;
+        text-shadow: 1px 1px 2px grey;
+        padding-top: 1%;
+    }
+    
+</style>
 <?php
 include('validar/validate.php');
 class Controller
@@ -11,11 +47,13 @@ class Controller
             $db = new Model();
             $resultados = $db->getRecetas();
             if ($resultados) {
+                echo "<div class=\"receta\"><div class=\"row row-cols-1 row-cols-md-2 g-4\">";
                 foreach ($resultados as $resultado) {
-                echo "<div class=\"receta\">";
-                    echo "<h2>" . $resultado["nomReceta"] . "</h2><br>";
+                    echo "<div class=\"col\"><div class=\" card h-100\"> 
+                    <div class=\"card-body\">";
+                    echo "<h3 class=\"card-title\">" . $resultado["nomReceta"] . "</h3><br><p class=\"card-text\"><div class=\"info\">";
                     echo $resultado["tPrep"] . " minutos. <br>";
-                    echo "Fecha subida: " . $resultado["fecha_subida"] . "<br>";
+                    echo "Fecha subida: " . $resultado["fecha_subida"] . "</div><br>";
                     if (
                         $resultado["gluten"] == 1 || $resultado["crustaceos"] == 1 ||
                         $resultado["huevos"] == 1 || $resultado["pescado"] == 1 ||
@@ -25,7 +63,7 @@ class Controller
                         $resultado["sesamo"] == 1 || $resultado["sulfitos"] == 1 ||
                         $resultado["moluscos"] == 1 || $resultado["altramuces"] == 1
                     ) {
-                        echo "<h4>Alérgenos:</h4>";
+                        echo "<h5>Alérgenos:</h5>";
                         if ($resultado["gluten"] == 1) {
                             echo "Gluten <br>";
                         }
@@ -71,7 +109,7 @@ class Controller
                     }
                     if ($resultado["vegan"] == 1 || $resultado["vegetarian"] == 1) {
 
-                        echo "<h4>Preferencias alimenticias:</h4>";
+                        echo "<h5>Preferencias alimenticias:</h5>";
 
                         if ($resultado["vegan"] == 1) {
                             echo "Vegan<br>";
@@ -80,11 +118,12 @@ class Controller
                             echo "Vegetarian<br>";
                         }
                     }
-                    echo "<h4>Ingredientes</h4>";
+                    echo "<h5>Ingredientes</h5>";
                     echo $resultado["ingredientes"] . "<br>";
-                    echo "<h4>Preparación</h4>";
-                    echo $resultado["receta"] . "<br> </div>";
+                    echo "<h5>Preparación</h5>";
+                    echo $resultado["receta"] . "<br></p></div></div></div>";
                 }
+                echo "</div></div>";
             }
         } catch (Exception $e) {
             error_log($e->getMessage() . microtime() . PHP_EOL, 3, "logException.txt");
@@ -161,7 +200,7 @@ class Controller
                 } else {
                     $errores[] = "* El campo email es obligatorio.<br>";
                 }
-                  //ALERGENOS
+                //ALERGENOS
                 if (isset($_POST['gluten'])) {
                     $gluten = 1;
                     $cont++;
@@ -313,8 +352,7 @@ class Controller
                     $_SESSION['user'] = $user;
                     $idUser = $db->getIdUser($user);
                     $_SESSION['idUser'] = $idUser;
-                    session_regenerate_id(true);
-                    header('Location: index.php?ctl=inicio');
+                    //header('Location: index.php?ctl=inicio');
                 } else {
                     $_SESSION['mensajeError'] = 'El usuario o contraseña no son correctos';
                     throw new Exception("El usuario o contraseña no son correctos");
@@ -483,9 +521,7 @@ class Controller
 
                     $db = new Model();
                     $idUser = $_SESSION["idUser"];
-                    if (isset($_POST["borrarperfil"])) {
-                        $resultado = $db->borrarPerfil($idUser);
-                    }
+
                     //CARGAMOS PERFIL Y ASIGNAMOS INFO
                     $resultado = $db->getPerfil($idUser);
                     if ($name == "") {
@@ -595,6 +631,17 @@ class Controller
                     }
                 }
             }
+            if (isset($_POST['borrar_perfil'])) {
+                $db = new Model();
+                $idUser = $_SESSION["idUser"];
+                echo $_SESSION["idUser"];
+                $resultado = $db->borrarPerfil($idUser);
+                if ($resultado) {
+                    echo "Perfil borrado correctamente";
+                } else {
+                    echo "Ha habido un error al borrar el perfil";
+                }
+            }
         } catch (Exception $e) {
             $_SESSION['mensajeError'] = error_log($e->getMessage() . microtime() . PHP_EOL, 3, "logException.txt");
             header('Location: index.php?ctl=error');
@@ -615,11 +662,136 @@ class Controller
             $db = new Model();
             $resultados = $db->getRecetasNoAprobadas();
             if ($resultados) {
-                foreach($resultados as $resultado){
-                echo "<div class=\"gestion\">";
-                echo "<h2>" . $resultado["nomReceta"] . "</h2><br>";
-                echo $resultado["tPrep"] . "<br>";
-                echo "Fecha subida: " . $resultado["fecha_subida"] . "<br>";
+                foreach ($resultados as $resultado) {
+                    echo "<div class=\"gestion\">";
+                    echo "<h2>" . $resultado["nomReceta"] . "</h2><br>";
+                    echo $resultado["tPrep"] . "<br>";
+                    echo "Fecha subida: " . $resultado["fecha_subida"] . "<br>";
+                    if (
+                        $resultado["gluten"] == 1 || $resultado["crustaceos"] == 1 ||
+                        $resultado["huevos"] == 1 || $resultado["pescado"] == 1 ||
+                        $resultado["cacahuetes"] == 1 || $resultado["soja"] == 1 ||
+                        $resultado["lactosa"] == 1 || $resultado["frutosdecascara"] == 1 ||
+                        $resultado["apio"] == 1 || $resultado["mostaza"] == 1 ||
+                        $resultado["sesamo"] == 1 || $resultado["sulfitos"] == 1 ||
+                        $resultado["moluscos"] == 1 || $resultado["altramuces"] == 1
+                    ) {
+                        echo "<h4>Alérgenos:</h4>";
+                        if ($resultado["gluten"] == 1) {
+                            echo "Gluten <br>";
+                        }
+                        if ($resultado["crustaceos"] == 1) {
+                            echo "Crustáceos <br>";
+                        }
+                        if ($resultado["huevos"] == 1) {
+                            echo "Huevos<br>";
+                        }
+                        if ($resultado["pescado"] == 1) {
+                            echo "Pescado<br>";
+                        }
+                        if ($resultado["cacahuetes"] == 1) {
+                            echo "Cacahuetes<br>";
+                        }
+                        if ($resultado["soja"] == 1) {
+                            echo "Soja<br>";
+                        }
+                        if ($resultado["lactosa"] == 1) {
+                            echo "Lactosa <br>";
+                        }
+                        if ($resultado["frutosdecascara"] == 1) {
+                            echo "Frutos de cáscara<br>";
+                        }
+                        if ($resultado["apio"] == 1) {
+                            echo "Apio<br>";
+                        }
+                        if ($resultado["mostaza"] == 1) {
+                            echo "Mostaza<br>";
+                        }
+                        if ($resultado["sesamo"] == 1) {
+                            echo "Sésamo<br>";
+                        }
+                        if ($resultado["sulfitos"] == 1) {
+                            echo "Sulfitos<br>";
+                        }
+                        if ($resultado["moluscos"] == 1) {
+                            echo "Moluscos<br>";
+                        }
+                        if ($resultado["altramuces"] == 1) {
+                            echo "Altramuces<br>";
+                        }
+                    }
+                    if ($resultado["vegan"] == 1 || $resultado["vegetarian"] == 1) {
+
+                        echo "<h4>Preferencias alimenticias:</h4>";
+
+                        if ($resultado["vegan"] == 1) {
+                            echo "Vegan<br>";
+                        }
+                        if ($resultado["vegetarian"] == 1) {
+                            echo "Vegetarian<br>";
+                        }
+                    }
+                    echo "<h4>Ingredientes</h4>";
+                    echo $resultado["ingredientes"] . "<br>";
+                    echo "<h4>Preparación</h4>";
+                    echo $resultado["receta"] . "<br> </div>";
+                    echo " <form method=\"POST\" action=\"" . $_SERVER["PHP_SELF"] . "\" name=\"gestion\" enctype=\"multipart/form-data\">
+                <button type= \"button\" name= \"aceptar\">Aceptar</button> 
+                <button type = \"button\" name= \"rechazar\">Rechazar</button>
+                </form>";
+                    $idReceta = $db->getIdReceta($resultado["receta"]);
+                    $_SESSION["idReceta"] = $idReceta;
+                    if (isset($_POST["aceptar"])) {
+                        echo "Aceptar receta";
+                        $resultado = $db->aceptarReceta($idReceta);
+                        if ($resultado) {
+                            echo "Receta aprobada";
+                        } else {
+                            $_SESSION['mensajeError'] = 'Ha habido un error a la hora de aceptar la receta';
+                            throw new Exception("Ha habido un error a la hora de aceptar la receta");
+                        }
+                    } elseif (isset($_POST["rechazar"])) {
+                        echo "Rechazar receta";
+                        $resultado = $db->rechazarReceta($idReceta);
+                        if ($resultado) {
+                            echo "Receta rechazada";
+                        } else {
+                            $_SESSION['mensajeError'] = 'Ha habido un error a la hora de rechazar la receta';
+                            throw new Exception("Ha habido un error a la hora de rechazar la receta");
+                        }
+                    }
+                }
+            } else {
+                $_SESSION['mensajeError'] = 'No hay recetas para gestionar';
+                throw new Exception("No hay recetas para gestionar");
+            }
+        } catch (Exception $e) {
+            error_log($e->getMessage() . microtime() . PHP_EOL, 3, "logException.txt");
+            header('Location: index.php?ctl=error');
+        } catch (Error $e) {
+            error_log($e->getMessage() . microtime() . PHP_EOL, 3, "logError.txt");
+            header('Location: index.php?ctl=error');
+        }
+        require __DIR__ . '/../vista/paginas/gestion.php';
+    }
+
+    public function perfil()
+    {
+
+
+        try {
+            $db = new Model();
+            $idUser = $_SESSION["idUser"];
+            $resultado = $db->getPerfil($idUser);
+            if ($resultado) {
+                ob_start();
+                echo "<h1> " . $_SESSION["user"] . "</h1>";
+                echo "Nombre: " . $resultado["nomUser"] . " ";
+                echo $resultado["apUser"] . "<br>";
+                echo "Email: " . $resultado["email"] . "<br>";
+                echo "Nombre de usuario: " . $resultado["user"] . "<br>";
+                echo "Contraseña: " . $resultado["pwd"] . "<br>";
+                echo "Biografía: " . $resultado["bio"] . "<br>";
                 if (
                     $resultado["gluten"] == 1 || $resultado["crustaceos"] == 1 ||
                     $resultado["huevos"] == 1 || $resultado["pescado"] == 1 ||
@@ -629,7 +801,7 @@ class Controller
                     $resultado["sesamo"] == 1 || $resultado["sulfitos"] == 1 ||
                     $resultado["moluscos"] == 1 || $resultado["altramuces"] == 1
                 ) {
-                    echo "<h4>Alérgenos:</h4>";
+                    echo "<h2>Alérgenos:</h2>";
                     if ($resultado["gluten"] == 1) {
                         echo "Gluten <br>";
                     }
@@ -675,7 +847,7 @@ class Controller
                 }
                 if ($resultado["vegan"] == 1 || $resultado["vegetarian"] == 1) {
 
-                    echo "<h4>Preferencias alimenticias:</h4>";
+                    echo "<h2>Preferencias alimenticias:</h2>";
 
                     if ($resultado["vegan"] == 1) {
                         echo "Vegan<br>";
@@ -684,121 +856,6 @@ class Controller
                         echo "Vegetarian<br>";
                     }
                 }
-                echo "<h4>Ingredientes</h4>";
-                echo $resultado["ingredientes"] . "<br>";
-                echo "<h4>Preparación</h4>";
-                echo $resultado["receta"] . "<br> </div>";
-                echo " <form method=\"POST\" action=\"" . $_SERVER["PHP_SELF"] . "\" name=\"gestion\" enctype=\"multipart/form-data\">
-                <button type= \"button\" name= \"aceptar\">Aceptar</button> 
-                <button type = \"button\" name= \"rechazar\">Rechazar</button>
-                </form>";
-                $idReceta = $db->getIdReceta($resultado["receta"]);
-                $_SESSION["idReceta"] = $idReceta;
-                if (isset($_POST["aceptar"])) {
-                    echo "Aceptar receta";
-                    $resultado = $db->aceptarReceta($idReceta);
-                } elseif (isset($_POST["rechazar"])) {
-                    echo "Rechazar receta";
-                    $resultado = $db->rechazarReceta($idReceta);
-                }
-            }
-            } else {
-                $_SESSION['mensajeError'] = 'No hay recetas para gestionar';
-                throw new Exception("No hay recetas para gestionar");
-            }
-        
-        } catch (Exception $e) {
-            error_log($e->getMessage() . microtime() . PHP_EOL, 3, "logException.txt");
-            header('Location: index.php?ctl=error');
-        } catch (Error $e) {
-            error_log($e->getMessage() . microtime() . PHP_EOL, 3, "logError.txt");
-            header('Location: index.php?ctl=error');
-        }
-        require __DIR__ . '/../vista/paginas/gestion.php';
-    }
-
-    public function perfil()
-    {
-
-
-        try {
-            $db = new Model();
-            $idUser = $_SESSION["idUser"];
-            $resultado = $db->getPerfil($idUser);
-            if ($resultado) {
-                    ob_start();
-                    echo "<h1> " . $_SESSION["user"] . "</h1>";
-                    echo "Nombre: " . $resultado["nomUser"] . " ";
-                    echo $resultado["apUser"] . "<br>";
-                    echo "Email: " . $resultado["email"] . "<br>";
-                    echo "Nombre de usuario: " . $resultado["user"] . "<br>";
-                    echo "Contraseña: " . $resultado["pwd"] . "<br>";
-                    echo "Biografía: " . $resultado["bio"] . "<br>";
-                    if (
-                        $resultado["gluten"] == 1 || $resultado["crustaceos"] == 1 ||
-                        $resultado["huevos"] == 1 || $resultado["pescado"] == 1 ||
-                        $resultado["cacahuetes"] == 1 || $resultado["soja"] == 1 ||
-                        $resultado["lactosa"] == 1 || $resultado["frutosdecascara"] == 1 ||
-                        $resultado["apio"] == 1 || $resultado["mostaza"] == 1 ||
-                        $resultado["sesamo"] == 1 || $resultado["sulfitos"] == 1 ||
-                        $resultado["moluscos"] == 1 || $resultado["altramuces"] == 1
-                    ) {
-                        echo "<h2>Alérgenos:</h2>";
-                        if ($resultado["gluten"] == 1) {
-                            echo "Gluten <br>";
-                        }
-                        if ($resultado["crustaceos"] == 1) {
-                            echo "Crustáceos <br>";
-                        }
-                        if ($resultado["huevos"] == 1) {
-                            echo "Huevos<br>";
-                        }
-                        if ($resultado["pescado"] == 1) {
-                            echo "Pescado<br>";
-                        }
-                        if ($resultado["cacahuetes"] == 1) {
-                            echo "Cacahuetes<br>";
-                        }
-                        if ($resultado["soja"] == 1) {
-                            echo "Soja<br>";
-                        }
-                        if ($resultado["lactosa"] == 1) {
-                            echo "Lactosa <br>";
-                        }
-                        if ($resultado["frutosdecascara"] == 1) {
-                            echo "Frutos de cáscara<br>";
-                        }
-                        if ($resultado["apio"] == 1) {
-                            echo "Apio<br>";
-                        }
-                        if ($resultado["mostaza"] == 1) {
-                            echo "Mostaza<br>";
-                        }
-                        if ($resultado["sesamo"] == 1) {
-                            echo "Sésamo<br>";
-                        }
-                        if ($resultado["sulfitos"] == 1) {
-                            echo "Sulfitos<br>";
-                        }
-                        if ($resultado["moluscos"] == 1) {
-                            echo "Moluscos<br>";
-                        }
-                        if ($resultado["altramuces"] == 1) {
-                            echo "Altramuces<br>";
-                        }
-                    }
-                    if ($resultado["vegan"] == 1 || $resultado["vegetarian"] == 1) {
-
-                        echo "<h2>Preferencias alimenticias:</h2>";
-
-                        if ($resultado["vegan"] == 1) {
-                            echo "Vegan<br>";
-                        }
-                        if ($resultado["vegetarian"] == 1) {
-                            echo "Vegetarian<br>";
-                        }
-                    }
-                
             } else {
                 $_SESSION['mensajeError'] = 'Ha habido un error a la hora de visualizar el contenido';
                 throw new Exception("Ha habido un error a la hora de visualizar el contenido");
@@ -815,7 +872,6 @@ class Controller
     public function recetas()
     {
         ob_start();
-        echo "<h1>Bienvenido a Ushquim </h1>";
         try {
             $db = new Model();
             $resultadoGluten = $db->getRecetasGluten();
@@ -836,13 +892,14 @@ class Controller
             $resultadoVegetariano = $db->getRecetasVegetarian();
 
             if ($resultadoGluten) {
-                echo "<h1>Recetas con gluten:</h1><br/>";
-
+                echo "<h2>Recetas con gluten:</h2><br/>";
+                echo "<div class=\"receta\"><div class=\"row row-cols-1 row-cols-md-2 g-4\">";
                 foreach ($resultadoGluten as $resultado) {
-                    echo "<div class=\"receta\">";
-                    echo "<h2>" . $resultado["nomReceta"] . "</h2><br>";
+                    echo "<div class=\"col\"><div class=\" card h-100\"> 
+                    <div class=\"card-body\">";
+                    echo "<h3 class=\"card-title\">" . $resultado["nomReceta"] . "</h3><br><p class=\"card-text\"><div class=\"info\">";
                     echo $resultado["tPrep"] . " minutos. <br>";
-                    echo "Fecha subida: " . $resultado["fecha_subida"] . "<br>";
+                    echo "Fecha subida: " . $resultado["fecha_subida"] . "</div><br>";
                     if (
                         $resultado["gluten"] == 1 || $resultado["crustaceos"] == 1 ||
                         $resultado["huevos"] == 1 || $resultado["pescado"] == 1 ||
@@ -852,7 +909,7 @@ class Controller
                         $resultado["sesamo"] == 1 || $resultado["sulfitos"] == 1 ||
                         $resultado["moluscos"] == 1 || $resultado["altramuces"] == 1
                     ) {
-                        echo "<h4>Alérgenos:</h4>";
+                        echo "<h5>Alérgenos:</h5>";
                         if ($resultado["gluten"] == 1) {
                             echo "Gluten <br>";
                         }
@@ -898,7 +955,7 @@ class Controller
                     }
                     if ($resultado["vegan"] == 1 || $resultado["vegetarian"] == 1) {
 
-                        echo "<h4>Preferencias alimenticias:</h4>";
+                        echo "<h5>Preferencias alimenticias:</h5>";
 
                         if ($resultado["vegan"] == 1) {
                             echo "Vegan<br>";
@@ -907,21 +964,24 @@ class Controller
                             echo "Vegetarian<br>";
                         }
                     }
-                    echo "<h4>Ingredientes</h4>";
+                    echo "<h5>Ingredientes</h5>";
                     echo $resultado["ingredientes"] . "<br>";
-                    echo "<h4>Preparación</h4>";
-                    echo $resultado["receta"] . "<br> </div>";
+                    echo "<h5>Preparación</h5>";
+                    echo $resultado["receta"] . "<br></p></div></div></div>";
                 }
+                echo "</div></div>";
             }
 
             if ($resultadoCrustaceos) {
                 echo "<h1>Recetas con crustáceos:</h1><br/>";
+                echo "<div class=\"receta\"><div class=\"row row-cols-1 row-cols-md-2 g-4\">";
 
                 foreach ($resultadoCrustaceos as $resultado) {
-                    echo "<div class=\"receta\">";
-                    echo "<h2>" . $resultado["nomReceta"] . "</h2><br>";
+                    echo "<div class=\"col\"><div class=\" card h-100\"> 
+                    <div class=\"card-body\">";
+                    echo "<h3 class=\"card-title\">" . $resultado["nomReceta"] . "</h3><br><p class=\"card-text\"><div class=\"info\">";
                     echo $resultado["tPrep"] . " minutos. <br>";
-                    echo "Fecha subida: " . $resultado["fecha_subida"] . "<br>";
+                    echo "Fecha subida: " . $resultado["fecha_subida"] . "</div><br>";
                     if (
                         $resultado["gluten"] == 1 || $resultado["crustaceos"] == 1 ||
                         $resultado["huevos"] == 1 || $resultado["pescado"] == 1 ||
@@ -931,7 +991,7 @@ class Controller
                         $resultado["sesamo"] == 1 || $resultado["sulfitos"] == 1 ||
                         $resultado["moluscos"] == 1 || $resultado["altramuces"] == 1
                     ) {
-                        echo "<h4>Alérgenos:</h4>";
+                        echo "<h5>Alérgenos:</h5>";
                         if ($resultado["gluten"] == 1) {
                             echo "Gluten <br>";
                         }
@@ -977,7 +1037,7 @@ class Controller
                     }
                     if ($resultado["vegan"] == 1 || $resultado["vegetarian"] == 1) {
 
-                        echo "<h4>Preferencias alimenticias:</h4>";
+                        echo "<h5>Preferencias alimenticias:</h5>";
 
                         if ($resultado["vegan"] == 1) {
                             echo "Vegan<br>";
@@ -986,20 +1046,23 @@ class Controller
                             echo "Vegetarian<br>";
                         }
                     }
-                    echo "<h4>Ingredientes</h4>";
+                    echo "<h5>Ingredientes</h5>";
                     echo $resultado["ingredientes"] . "<br>";
-                    echo "<h4>Preparación</h4>";
-                    echo $resultado["receta"] . "<br> </div>";
+                    echo "<h5>Preparación</h5>";
+                    echo $resultado["receta"] . "<br></p></div></div></div>";
                 }
+                echo "</div></div>";
             }
             if ($resultadoHuevos) {
                 echo "<h1>Recetas con huevo:</h1><br/>";
+                echo "<div class=\"receta\"><div class=\"row row-cols-1 row-cols-md-2 g-4\">";
 
                 foreach ($resultadoHuevos as $resultado) {
-                    echo "<div class=\"receta\">";
-                    echo "<h2>" . $resultado["nomReceta"] . "</h2><br>";
+                    echo "<div class=\"col\"><div class=\" card h-100\"> 
+                    <div class=\"card-body\">";
+                    echo "<h3 class=\"card-title\">" . $resultado["nomReceta"] . "</h3><br><p class=\"card-text\"><div class=\"info\">";
                     echo $resultado["tPrep"] . " minutos. <br>";
-                    echo "Fecha subida: " . $resultado["fecha_subida"] . "<br>";
+                    echo "Fecha subida: " . $resultado["fecha_subida"] . "</div><br>";
                     if (
                         $resultado["gluten"] == 1 || $resultado["crustaceos"] == 1 ||
                         $resultado["huevos"] == 1 || $resultado["pescado"] == 1 ||
@@ -1009,7 +1072,7 @@ class Controller
                         $resultado["sesamo"] == 1 || $resultado["sulfitos"] == 1 ||
                         $resultado["moluscos"] == 1 || $resultado["altramuces"] == 1
                     ) {
-                        echo "<h4>Alérgenos:</h4>";
+                        echo "<h5>Alérgenos:</h5>";
                         if ($resultado["gluten"] == 1) {
                             echo "Gluten <br>";
                         }
@@ -1055,7 +1118,7 @@ class Controller
                     }
                     if ($resultado["vegan"] == 1 || $resultado["vegetarian"] == 1) {
 
-                        echo "<h4>Preferencias alimenticias:</h4>";
+                        echo "<h5>Preferencias alimenticias:</h5>";
 
                         if ($resultado["vegan"] == 1) {
                             echo "Vegan<br>";
@@ -1064,20 +1127,23 @@ class Controller
                             echo "Vegetarian<br>";
                         }
                     }
-                    echo "<h4>Ingredientes</h4>";
+                    echo "<h5>Ingredientes</h5>";
                     echo $resultado["ingredientes"] . "<br>";
-                    echo "<h4>Preparación</h4>";
-                    echo $resultado["receta"] . "<br> </div>";
+                    echo "<h5>Preparación</h5>";
+                    echo $resultado["receta"] . "<br></p></div></div></div>";
                 }
+                echo "</div></div>";
             }
             if ($resultadoPescado) {
                 echo "<h1>Recetas con pescado:</h1><br/>";
+                echo "<div class=\"receta\"><div class=\"row row-cols-1 row-cols-md-2 g-4\">";
 
                 foreach ($resultadoPescado as $resultado) {
-                    echo "<div class=\"receta\">";
-                    echo "<h2>" . $resultado["nomReceta"] . "</h2><br>";
+                    echo "<div class=\"col\"><div class=\" card h-100\"> 
+                    <div class=\"card-body\">";
+                    echo "<h3 class=\"card-title\">" . $resultado["nomReceta"] . "</h3><br><p class=\"card-text\"><div class=\"info\">";
                     echo $resultado["tPrep"] . " minutos. <br>";
-                    echo "Fecha subida: " . $resultado["fecha_subida"] . "<br>";
+                    echo "Fecha subida: " . $resultado["fecha_subida"] . "</div><br>";
                     if (
                         $resultado["gluten"] == 1 || $resultado["crustaceos"] == 1 ||
                         $resultado["huevos"] == 1 || $resultado["pescado"] == 1 ||
@@ -1087,7 +1153,7 @@ class Controller
                         $resultado["sesamo"] == 1 || $resultado["sulfitos"] == 1 ||
                         $resultado["moluscos"] == 1 || $resultado["altramuces"] == 1
                     ) {
-                        echo "<h4>Alérgenos:</h4>";
+                        echo "<h5>Alérgenos:</h5>";
                         if ($resultado["gluten"] == 1) {
                             echo "Gluten <br>";
                         }
@@ -1133,7 +1199,7 @@ class Controller
                     }
                     if ($resultado["vegan"] == 1 || $resultado["vegetarian"] == 1) {
 
-                        echo "<h4>Preferencias alimenticias:</h4>";
+                        echo "<h5>Preferencias alimenticias:</h5>";
 
                         if ($resultado["vegan"] == 1) {
                             echo "Vegan<br>";
@@ -1142,20 +1208,23 @@ class Controller
                             echo "Vegetarian<br>";
                         }
                     }
-                    echo "<h4>Ingredientes</h4>";
+                    echo "<h5>Ingredientes</h5>";
                     echo $resultado["ingredientes"] . "<br>";
-                    echo "<h4>Preparación</h4>";
-                    echo $resultado["receta"] . "<br> </div>";
+                    echo "<h5>Preparación</h5>";
+                    echo $resultado["receta"] . "<br></p></div></div></div>";
                 }
+                echo "</div></div>";
             }
             if ($resultadoCacahuetes) {
                 echo "<h1>Recetas con cacahuetes:</h1><br/>";
+                echo "<div class=\"receta\"><div class=\"row row-cols-1 row-cols-md-2 g-4\">";
 
                 foreach ($resultadoCacahuetes as $resultado) {
-                    echo "<div class=\"receta\">";
-                    echo "<h2>" . $resultado["nomReceta"] . "</h2><br>";
+                    echo "<div class=\"col\"><div class=\" card h-100\"> 
+                    <div class=\"card-body\">";
+                    echo "<h3 class=\"card-title\">" . $resultado["nomReceta"] . "</h3><br><p class=\"card-text\"><div class=\"info\">";
                     echo $resultado["tPrep"] . " minutos. <br>";
-                    echo "Fecha subida: " . $resultado["fecha_subida"] . "<br>";
+                    echo "Fecha subida: " . $resultado["fecha_subida"] . "</div><br>";
                     if (
                         $resultado["gluten"] == 1 || $resultado["crustaceos"] == 1 ||
                         $resultado["huevos"] == 1 || $resultado["pescado"] == 1 ||
@@ -1165,7 +1234,7 @@ class Controller
                         $resultado["sesamo"] == 1 || $resultado["sulfitos"] == 1 ||
                         $resultado["moluscos"] == 1 || $resultado["altramuces"] == 1
                     ) {
-                        echo "<h4>Alérgenos:</h4>";
+                        echo "<h5>Alérgenos:</h5>";
                         if ($resultado["gluten"] == 1) {
                             echo "Gluten <br>";
                         }
@@ -1211,7 +1280,7 @@ class Controller
                     }
                     if ($resultado["vegan"] == 1 || $resultado["vegetarian"] == 1) {
 
-                        echo "<h4>Preferencias alimenticias:</h4>";
+                        echo "<h5>Preferencias alimenticias:</h5>";
 
                         if ($resultado["vegan"] == 1) {
                             echo "Vegan<br>";
@@ -1220,20 +1289,23 @@ class Controller
                             echo "Vegetarian<br>";
                         }
                     }
-                    echo "<h4>Ingredientes</h4>";
+                    echo "<h5>Ingredientes</h5>";
                     echo $resultado["ingredientes"] . "<br>";
-                    echo "<h4>Preparación</h4>";
-                    echo $resultado["receta"] . "<br> </div>";
+                    echo "<h5>Preparación</h5>";
+                    echo $resultado["receta"] . "<br></p></div></div></div>";
                 }
+                echo "</div></div>";
             }
             if ($resultadoSoja) {
                 echo "<h1>Recetas con soja:</h1><br/>";
+                echo "<div class=\"receta\"><div class=\"row row-cols-1 row-cols-md-2 g-4\">";
 
                 foreach ($resultadoSoja as $resultado) {
-                    echo "<div class=\"receta\">";
-                    echo "<h2>" . $resultado["nomReceta"] . "</h2><br>";
+                    echo "<div class=\"col\"><div class=\" card h-100\"> 
+                    <div class=\"card-body\">";
+                    echo "<h3 class=\"card-title\">" . $resultado["nomReceta"] . "</h3><br><p class=\"card-text\"><div class=\"info\">";
                     echo $resultado["tPrep"] . " minutos. <br>";
-                    echo "Fecha subida: " . $resultado["fecha_subida"] . "<br>";
+                    echo "Fecha subida: " . $resultado["fecha_subida"] . "</div><br>";
                     if (
                         $resultado["gluten"] == 1 || $resultado["crustaceos"] == 1 ||
                         $resultado["huevos"] == 1 || $resultado["pescado"] == 1 ||
@@ -1243,7 +1315,7 @@ class Controller
                         $resultado["sesamo"] == 1 || $resultado["sulfitos"] == 1 ||
                         $resultado["moluscos"] == 1 || $resultado["altramuces"] == 1
                     ) {
-                        echo "<h4>Alérgenos:</h4>";
+                        echo "<h5>Alérgenos:</h5>";
                         if ($resultado["gluten"] == 1) {
                             echo "Gluten <br>";
                         }
@@ -1289,7 +1361,7 @@ class Controller
                     }
                     if ($resultado["vegan"] == 1 || $resultado["vegetarian"] == 1) {
 
-                        echo "<h4>Preferencias alimenticias:</h4>";
+                        echo "<h5>Preferencias alimenticias:</h5>";
 
                         if ($resultado["vegan"] == 1) {
                             echo "Vegan<br>";
@@ -1298,20 +1370,23 @@ class Controller
                             echo "Vegetarian<br>";
                         }
                     }
-                    echo "<h4>Ingredientes</h4>";
+                    echo "<h5>Ingredientes</h5>";
                     echo $resultado["ingredientes"] . "<br>";
-                    echo "<h4>Preparación</h4>";
-                    echo $resultado["receta"] . "<br> </div>";
+                    echo "<h5>Preparación</h5>";
+                    echo $resultado["receta"] . "<br></p></div></div></div>";
                 }
+                echo "</div></div>";
             }
             if ($resultadoLactosa) {
                 echo "<h1>Recetas con lactosa:</h1><br/>";
+                echo "<div class=\"receta\"><div class=\"row row-cols-1 row-cols-md-2 g-4\">";
 
                 foreach ($resultadoLactosa as $resultado) {
-                    echo "<div class=\"receta\">";
-                    echo "<h2>" . $resultado["nomReceta"] . "</h2><br>";
+                    echo "<div class=\"col\"><div class=\" card h-100\"> 
+                    <div class=\"card-body\">";
+                    echo "<h3 class=\"card-title\">" . $resultado["nomReceta"] . "</h3><br><p class=\"card-text\"><div class=\"info\">";
                     echo $resultado["tPrep"] . " minutos. <br>";
-                    echo "Fecha subida: " . $resultado["fecha_subida"] . "<br>";
+                    echo "Fecha subida: " . $resultado["fecha_subida"] . "</div><br>";
                     if (
                         $resultado["gluten"] == 1 || $resultado["crustaceos"] == 1 ||
                         $resultado["huevos"] == 1 || $resultado["pescado"] == 1 ||
@@ -1321,7 +1396,7 @@ class Controller
                         $resultado["sesamo"] == 1 || $resultado["sulfitos"] == 1 ||
                         $resultado["moluscos"] == 1 || $resultado["altramuces"] == 1
                     ) {
-                        echo "<h4>Alérgenos:</h4>";
+                        echo "<h5>Alérgenos:</h5>";
                         if ($resultado["gluten"] == 1) {
                             echo "Gluten <br>";
                         }
@@ -1367,7 +1442,7 @@ class Controller
                     }
                     if ($resultado["vegan"] == 1 || $resultado["vegetarian"] == 1) {
 
-                        echo "<h4>Preferencias alimenticias:</h4>";
+                        echo "<h5>Preferencias alimenticias:</h5>";
 
                         if ($resultado["vegan"] == 1) {
                             echo "Vegan<br>";
@@ -1376,20 +1451,23 @@ class Controller
                             echo "Vegetarian<br>";
                         }
                     }
-                    echo "<h4>Ingredientes</h4>";
+                    echo "<h5>Ingredientes</h5>";
                     echo $resultado["ingredientes"] . "<br>";
-                    echo "<h4>Preparación</h4>";
-                    echo $resultado["receta"] . "<br> </div>";
+                    echo "<h5>Preparación</h5>";
+                    echo $resultado["receta"] . "<br></p></div></div></div>";
                 }
+                echo "</div></div>";
             }
             if ($resultadoFrutosCascara) {
                 echo "<h1>Recetas con frutos de cáscara:</h1><br/>";
+                echo "<div class=\"receta\"><div class=\"row row-cols-1 row-cols-md-2 g-4\">";
 
                 foreach ($resultadoFrutosCascara as $resultado) {
-                    echo "<div class=\"receta\">";
-                    echo "<h2>" . $resultado["nomReceta"] . "</h2><br>";
+                    echo "<div class=\"col\"><div class=\" card h-100\"> 
+                    <div class=\"card-body\">";
+                    echo "<h3 class=\"card-title\">" . $resultado["nomReceta"] . "</h3><br><p class=\"card-text\"><div class=\"info\">";
                     echo $resultado["tPrep"] . " minutos. <br>";
-                    echo "Fecha subida: " . $resultado["fecha_subida"] . "<br>";
+                    echo "Fecha subida: " . $resultado["fecha_subida"] . "</div><br>";
                     if (
                         $resultado["gluten"] == 1 || $resultado["crustaceos"] == 1 ||
                         $resultado["huevos"] == 1 || $resultado["pescado"] == 1 ||
@@ -1399,7 +1477,7 @@ class Controller
                         $resultado["sesamo"] == 1 || $resultado["sulfitos"] == 1 ||
                         $resultado["moluscos"] == 1 || $resultado["altramuces"] == 1
                     ) {
-                        echo "<h4>Alérgenos:</h4>";
+                        echo "<h5>Alérgenos:</h5>";
                         if ($resultado["gluten"] == 1) {
                             echo "Gluten <br>";
                         }
@@ -1445,7 +1523,7 @@ class Controller
                     }
                     if ($resultado["vegan"] == 1 || $resultado["vegetarian"] == 1) {
 
-                        echo "<h4>Preferencias alimenticias:</h4>";
+                        echo "<h5>Preferencias alimenticias:</h5>";
 
                         if ($resultado["vegan"] == 1) {
                             echo "Vegan<br>";
@@ -1454,20 +1532,23 @@ class Controller
                             echo "Vegetarian<br>";
                         }
                     }
-                    echo "<h4>Ingredientes</h4>";
+                    echo "<h5>Ingredientes</h5>";
                     echo $resultado["ingredientes"] . "<br>";
-                    echo "<h4>Preparación</h4>";
-                    echo $resultado["receta"] . "<br> </div>";
+                    echo "<h5>Preparación</h5>";
+                    echo $resultado["receta"] . "<br></p></div></div></div>";
                 }
+                echo "</div></div>";
             }
             if ($resultadoApio) {
                 echo "<h1>Recetas con apio:</h1><br/>";
+                echo "<div class=\"receta\"><div class=\"row row-cols-1 row-cols-md-2 g-4\">";
 
                 foreach ($resultadoApio as $resultado) {
-                    echo "<div class=\"receta\">";
-                    echo "<h2>" . $resultado["nomReceta"] . "</h2><br>";
+                    echo "<div class=\"col\"><div class=\" card h-100\"> 
+                    <div class=\"card-body\">";
+                    echo "<h3 class=\"card-title\">" . $resultado["nomReceta"] . "</h3><br><p class=\"card-text\"><div class=\"info\">";
                     echo $resultado["tPrep"] . " minutos. <br>";
-                    echo "Fecha subida: " . $resultado["fecha_subida"] . "<br>";
+                    echo "Fecha subida: " . $resultado["fecha_subida"] . "</div><br>";
                     if (
                         $resultado["gluten"] == 1 || $resultado["crustaceos"] == 1 ||
                         $resultado["huevos"] == 1 || $resultado["pescado"] == 1 ||
@@ -1477,7 +1558,7 @@ class Controller
                         $resultado["sesamo"] == 1 || $resultado["sulfitos"] == 1 ||
                         $resultado["moluscos"] == 1 || $resultado["altramuces"] == 1
                     ) {
-                        echo "<h4>Alérgenos:</h4>";
+                        echo "<h5>Alérgenos:</h5>";
                         if ($resultado["gluten"] == 1) {
                             echo "Gluten <br>";
                         }
@@ -1523,7 +1604,7 @@ class Controller
                     }
                     if ($resultado["vegan"] == 1 || $resultado["vegetarian"] == 1) {
 
-                        echo "<h4>Preferencias alimenticias:</h4>";
+                        echo "<h5>Preferencias alimenticias:</h5>";
 
                         if ($resultado["vegan"] == 1) {
                             echo "Vegan<br>";
@@ -1532,20 +1613,23 @@ class Controller
                             echo "Vegetarian<br>";
                         }
                     }
-                    echo "<h4>Ingredientes</h4>";
+                    echo "<h5>Ingredientes</h5>";
                     echo $resultado["ingredientes"] . "<br>";
-                    echo "<h4>Preparación</h4>";
-                    echo $resultado["receta"] . "<br> </div>";
+                    echo "<h5>Preparación</h5>";
+                    echo $resultado["receta"] . "<br></p></div></div></div>";
                 }
+                echo "</div></div>";
             }
             if ($resultadoMostaza) {
                 echo "<h1>Recetas con mostaza:</h1><br/>";
+                echo "<div class=\"receta\"><div class=\"row row-cols-1 row-cols-md-2 g-4\">";
 
                 foreach ($resultadoMostaza as $resultado) {
-                    echo "<div class=\"receta\">";
-                    echo "<h2>" . $resultado["nomReceta"] . "</h2><br>";
+                    echo "<div class=\"col\"><div class=\" card h-100\"> 
+                    <div class=\"card-body\">";
+                    echo "<h3 class=\"card-title\">" . $resultado["nomReceta"] . "</h3><br><p class=\"card-text\"><div class=\"info\">";
                     echo $resultado["tPrep"] . " minutos. <br>";
-                    echo "Fecha subida: " . $resultado["fecha_subida"] . "<br>";
+                    echo "Fecha subida: " . $resultado["fecha_subida"] . "</div><br>";
                     if (
                         $resultado["gluten"] == 1 || $resultado["crustaceos"] == 1 ||
                         $resultado["huevos"] == 1 || $resultado["pescado"] == 1 ||
@@ -1555,7 +1639,7 @@ class Controller
                         $resultado["sesamo"] == 1 || $resultado["sulfitos"] == 1 ||
                         $resultado["moluscos"] == 1 || $resultado["altramuces"] == 1
                     ) {
-                        echo "<h4>Alérgenos:</h4>";
+                        echo "<h5>Alérgenos:</h5>";
                         if ($resultado["gluten"] == 1) {
                             echo "Gluten <br>";
                         }
@@ -1601,7 +1685,7 @@ class Controller
                     }
                     if ($resultado["vegan"] == 1 || $resultado["vegetarian"] == 1) {
 
-                        echo "<h4>Preferencias alimenticias:</h4>";
+                        echo "<h5>Preferencias alimenticias:</h5>";
 
                         if ($resultado["vegan"] == 1) {
                             echo "Vegan<br>";
@@ -1610,20 +1694,23 @@ class Controller
                             echo "Vegetarian<br>";
                         }
                     }
-                    echo "<h4>Ingredientes</h4>";
+                    echo "<h5>Ingredientes</h5>";
                     echo $resultado["ingredientes"] . "<br>";
-                    echo "<h4>Preparación</h4>";
-                    echo $resultado["receta"] . "<br> </div>";
+                    echo "<h5>Preparación</h5>";
+                    echo $resultado["receta"] . "<br></p></div></div></div>";
                 }
+                echo "</div></div>";
             }
             if ($resultadoSesamo) {
                 echo "<h1>Recetas con sésamo:</h1><br/>";
+                echo "<div class=\"receta\"><div class=\"row row-cols-1 row-cols-md-2 g-4\">";
 
                 foreach ($resultadoSesamo as $resultado) {
-                    echo "<div class=\"receta\">";
-                    echo "<h2>" . $resultado["nomReceta"] . "</h2><br>";
+                    echo "<div class=\"col\"><div class=\" card h-100\"> 
+                    <div class=\"card-body\">";
+                    echo "<h3 class=\"card-title\">" . $resultado["nomReceta"] . "</h3><br><p class=\"card-text\"><div class=\"info\">";
                     echo $resultado["tPrep"] . " minutos. <br>";
-                    echo "Fecha subida: " . $resultado["fecha_subida"] . "<br>";
+                    echo "Fecha subida: " . $resultado["fecha_subida"] . "</div><br>";
                     if (
                         $resultado["gluten"] == 1 || $resultado["crustaceos"] == 1 ||
                         $resultado["huevos"] == 1 || $resultado["pescado"] == 1 ||
@@ -1633,7 +1720,7 @@ class Controller
                         $resultado["sesamo"] == 1 || $resultado["sulfitos"] == 1 ||
                         $resultado["moluscos"] == 1 || $resultado["altramuces"] == 1
                     ) {
-                        echo "<h4>Alérgenos:</h4>";
+                        echo "<h5>Alérgenos:</h5>";
                         if ($resultado["gluten"] == 1) {
                             echo "Gluten <br>";
                         }
@@ -1679,7 +1766,7 @@ class Controller
                     }
                     if ($resultado["vegan"] == 1 || $resultado["vegetarian"] == 1) {
 
-                        echo "<h4>Preferencias alimenticias:</h4>";
+                        echo "<h5>Preferencias alimenticias:</h5>";
 
                         if ($resultado["vegan"] == 1) {
                             echo "Vegan<br>";
@@ -1688,20 +1775,23 @@ class Controller
                             echo "Vegetarian<br>";
                         }
                     }
-                    echo "<h4>Ingredientes</h4>";
+                    echo "<h5>Ingredientes</h5>";
                     echo $resultado["ingredientes"] . "<br>";
-                    echo "<h4>Preparación</h4>";
-                    echo $resultado["receta"] . "<br> </div>";
+                    echo "<h5>Preparación</h5>";
+                    echo $resultado["receta"] . "<br></p></div></div></div>";
                 }
+                echo "</div></div>";
             }
             if ($resultadoSulfitos) {
                 echo "<h1>Recetas con sulfitos:</h1><br/>";
+                echo "<div class=\"receta\"><div class=\"row row-cols-1 row-cols-md-2 g-4\">";
 
                 foreach ($resultadoSulfitos as $resultado) {
-                    echo "<div class=\"receta\">";
-                    echo "<h2>" . $resultado["nomReceta"] . "</h2><br>";
+                    echo "<div class=\"col\"><div class=\" card h-100\"> 
+                    <div class=\"card-body\">";
+                    echo "<h3 class=\"card-title\">" . $resultado["nomReceta"] . "</h3><br><p class=\"card-text\"><div class=\"info\">";
                     echo $resultado["tPrep"] . " minutos. <br>";
-                    echo "Fecha subida: " . $resultado["fecha_subida"] . "<br>";
+                    echo "Fecha subida: " . $resultado["fecha_subida"] . "</div><br>";
                     if (
                         $resultado["gluten"] == 1 || $resultado["crustaceos"] == 1 ||
                         $resultado["huevos"] == 1 || $resultado["pescado"] == 1 ||
@@ -1711,7 +1801,7 @@ class Controller
                         $resultado["sesamo"] == 1 || $resultado["sulfitos"] == 1 ||
                         $resultado["moluscos"] == 1 || $resultado["altramuces"] == 1
                     ) {
-                        echo "<h4>Alérgenos:</h4>";
+                        echo "<h5>Alérgenos:</h5>";
                         if ($resultado["gluten"] == 1) {
                             echo "Gluten <br>";
                         }
@@ -1757,7 +1847,7 @@ class Controller
                     }
                     if ($resultado["vegan"] == 1 || $resultado["vegetarian"] == 1) {
 
-                        echo "<h4>Preferencias alimenticias:</h4>";
+                        echo "<h5>Preferencias alimenticias:</h5>";
 
                         if ($resultado["vegan"] == 1) {
                             echo "Vegan<br>";
@@ -1766,20 +1856,23 @@ class Controller
                             echo "Vegetarian<br>";
                         }
                     }
-                    echo "<h4>Ingredientes</h4>";
+                    echo "<h5>Ingredientes</h5>";
                     echo $resultado["ingredientes"] . "<br>";
-                    echo "<h4>Preparación</h4>";
-                    echo $resultado["receta"] . "<br> </div>";
+                    echo "<h5>Preparación</h5>";
+                    echo $resultado["receta"] . "<br></p></div></div></div>";
                 }
+                echo "</div></div>";
             }
             if ($resultadoMoluscos) {
                 echo "<h1>Recetas con moluscos:</h1><br/>";
+                echo "<div class=\"receta\"><div class=\"row row-cols-1 row-cols-md-2 g-4\">";
 
                 foreach ($resultadoMoluscos as $resultado) {
-                    echo "<div class=\"receta\">";
-                    echo "<h2>" . $resultado["nomReceta"] . "</h2><br>";
+                    echo "<div class=\"col\"><div class=\" card h-100\"> 
+                    <div class=\"card-body\">";
+                    echo "<h3 class=\"card-title\">" . $resultado["nomReceta"] . "</h3><br><p class=\"card-text\"><div class=\"info\">";
                     echo $resultado["tPrep"] . " minutos. <br>";
-                    echo "Fecha subida: " . $resultado["fecha_subida"] . "<br>";
+                    echo "Fecha subida: " . $resultado["fecha_subida"] . "</div><br>";
                     if (
                         $resultado["gluten"] == 1 || $resultado["crustaceos"] == 1 ||
                         $resultado["huevos"] == 1 || $resultado["pescado"] == 1 ||
@@ -1789,7 +1882,7 @@ class Controller
                         $resultado["sesamo"] == 1 || $resultado["sulfitos"] == 1 ||
                         $resultado["moluscos"] == 1 || $resultado["altramuces"] == 1
                     ) {
-                        echo "<h4>Alérgenos:</h4>";
+                        echo "<h5>Alérgenos:</h5>";
                         if ($resultado["gluten"] == 1) {
                             echo "Gluten <br>";
                         }
@@ -1835,7 +1928,7 @@ class Controller
                     }
                     if ($resultado["vegan"] == 1 || $resultado["vegetarian"] == 1) {
 
-                        echo "<h4>Preferencias alimenticias:</h4>";
+                        echo "<h5>Preferencias alimenticias:</h5>";
 
                         if ($resultado["vegan"] == 1) {
                             echo "Vegan<br>";
@@ -1844,20 +1937,23 @@ class Controller
                             echo "Vegetarian<br>";
                         }
                     }
-                    echo "<h4>Ingredientes</h4>";
+                    echo "<h5>Ingredientes</h5>";
                     echo $resultado["ingredientes"] . "<br>";
-                    echo "<h4>Preparación</h4>";
-                    echo $resultado["receta"] . "<br> </div>";
+                    echo "<h5>Preparación</h5>";
+                    echo $resultado["receta"] . "<br></p></div></div></div>";
                 }
+                echo "</div></div>";
             }
             if ($resultadoAltramuces) {
                 echo "<h1>Recetas con altramuces:</h1><br/>";
+                echo "<div class=\"receta\"><div class=\"row row-cols-1 row-cols-md-2 g-4\">";
 
                 foreach ($resultadoAltramuces as $resultado) {
-                    echo "<div class=\"receta\">";
-                    echo "<h2>" . $resultado["nomReceta"] . "</h2><br>";
+                    echo "<div class=\"col\"><div class=\" card h-100\"> 
+                    <div class=\"card-body\">";
+                    echo "<h3 class=\"card-title\">" . $resultado["nomReceta"] . "</h3><br><p class=\"card-text\"><div class=\"info\">";
                     echo $resultado["tPrep"] . " minutos. <br>";
-                    echo "Fecha subida: " . $resultado["fecha_subida"] . "<br>";
+                    echo "Fecha subida: " . $resultado["fecha_subida"] . "</div><br>";
                     if (
                         $resultado["gluten"] == 1 || $resultado["crustaceos"] == 1 ||
                         $resultado["huevos"] == 1 || $resultado["pescado"] == 1 ||
@@ -1867,7 +1963,7 @@ class Controller
                         $resultado["sesamo"] == 1 || $resultado["sulfitos"] == 1 ||
                         $resultado["moluscos"] == 1 || $resultado["altramuces"] == 1
                     ) {
-                        echo "<h4>Alérgenos:</h4>";
+                        echo "<h5>Alérgenos:</h5>";
                         if ($resultado["gluten"] == 1) {
                             echo "Gluten <br>";
                         }
@@ -1913,7 +2009,7 @@ class Controller
                     }
                     if ($resultado["vegan"] == 1 || $resultado["vegetarian"] == 1) {
 
-                        echo "<h4>Preferencias alimenticias:</h4>";
+                        echo "<h5>Preferencias alimenticias:</h5>";
 
                         if ($resultado["vegan"] == 1) {
                             echo "Vegan<br>";
@@ -1922,20 +2018,23 @@ class Controller
                             echo "Vegetarian<br>";
                         }
                     }
-                    echo "<h4>Ingredientes</h4>";
+                    echo "<h5>Ingredientes</h5>";
                     echo $resultado["ingredientes"] . "<br>";
-                    echo "<h4>Preparación</h4>";
-                    echo $resultado["receta"] . "<br> </div>";
+                    echo "<h5>Preparación</h5>";
+                    echo $resultado["receta"] . "<br></p></div></div></div>";
                 }
+                echo "</div></div>";
             }
             if ($resultadoVegano) {
                 echo "<h1>Recetas veganas:</h1><br/>";
+                echo "<div class=\"receta\"><div class=\"row row-cols-1 row-cols-md-2 g-4\">";
 
                 foreach ($resultadoVegano as $resultado) {
-                    echo "<div class=\"receta\">";
-                    echo "<h2>" . $resultado["nomReceta"] . "</h2><br>";
+                    echo "<div class=\"col\"><div class=\" card h-100\"> 
+                    <div class=\"card-body\">";
+                    echo "<h3 class=\"card-title\">" . $resultado["nomReceta"] . "</h3><br><p class=\"card-text\"><div class=\"info\">";
                     echo $resultado["tPrep"] . " minutos. <br>";
-                    echo "Fecha subida: " . $resultado["fecha_subida"] . "<br>";
+                    echo "Fecha subida: " . $resultado["fecha_subida"] . "</div><br>";
                     if (
                         $resultado["gluten"] == 1 || $resultado["crustaceos"] == 1 ||
                         $resultado["huevos"] == 1 || $resultado["pescado"] == 1 ||
@@ -1945,7 +2044,7 @@ class Controller
                         $resultado["sesamo"] == 1 || $resultado["sulfitos"] == 1 ||
                         $resultado["moluscos"] == 1 || $resultado["altramuces"] == 1
                     ) {
-                        echo "<h4>Alérgenos:</h4>";
+                        echo "<h5>Alérgenos:</h5>";
                         if ($resultado["gluten"] == 1) {
                             echo "Gluten <br>";
                         }
@@ -1991,7 +2090,7 @@ class Controller
                     }
                     if ($resultado["vegan"] == 1 || $resultado["vegetarian"] == 1) {
 
-                        echo "<h4>Preferencias alimenticias:</h4>";
+                        echo "<h5>Preferencias alimenticias:</h5>";
 
                         if ($resultado["vegan"] == 1) {
                             echo "Vegan<br>";
@@ -2000,20 +2099,23 @@ class Controller
                             echo "Vegetarian<br>";
                         }
                     }
-                    echo "<h4>Ingredientes</h4>";
+                    echo "<h5>Ingredientes</h5>";
                     echo $resultado["ingredientes"] . "<br>";
-                    echo "<h4>Preparación</h4>";
-                    echo $resultado["receta"] . "<br> </div>";
+                    echo "<h5>Preparación</h5>";
+                    echo $resultado["receta"] . "<br></p></div></div></div>";
                 }
+                echo "</div></div>";
             }
             if ($resultadoVegetariano) {
                 echo "<h1>Recetas vegetarianas:</h1><br/>";
+                echo "<div class=\"receta\"><div class=\"row row-cols-1 row-cols-md-2 g-4\">";
+
                 foreach ($resultadoVegetariano as $resultado) {
-                    echo "<div class=\"receta\">";
-                    
-                    echo "<h2>" . $resultado["nomReceta"] . "</h2><br>";
+                    echo "<div class=\"col\"><div class=\" card h-100\"> 
+                    <div class=\"card-body\">";
+                    echo "<h3 class=\"card-title\">" . $resultado["nomReceta"] . "</h3><br><p class=\"card-text\"><div class=\"info\">";
                     echo $resultado["tPrep"] . " minutos. <br>";
-                    echo "Fecha subida: " . $resultado["fecha_subida"] . "<br>";
+                    echo "Fecha subida: " . $resultado["fecha_subida"] . "</div><br>";
                     if (
                         $resultado["gluten"] == 1 || $resultado["crustaceos"] == 1 ||
                         $resultado["huevos"] == 1 || $resultado["pescado"] == 1 ||
@@ -2023,7 +2125,7 @@ class Controller
                         $resultado["sesamo"] == 1 || $resultado["sulfitos"] == 1 ||
                         $resultado["moluscos"] == 1 || $resultado["altramuces"] == 1
                     ) {
-                        echo "<h4>Alérgenos:</h4>";
+                        echo "<h5>Alérgenos:</h5>";
                         if ($resultado["gluten"] == 1) {
                             echo "Gluten <br>";
                         }
@@ -2069,7 +2171,7 @@ class Controller
                     }
                     if ($resultado["vegan"] == 1 || $resultado["vegetarian"] == 1) {
 
-                        echo "<h4>Preferencias alimenticias:</h4>";
+                        echo "<h5>Preferencias alimenticias:</h5>";
 
                         if ($resultado["vegan"] == 1) {
                             echo "Vegan<br>";
@@ -2078,19 +2180,21 @@ class Controller
                             echo "Vegetarian<br>";
                         }
                     }
-                    echo "<h4>Ingredientes</h4>";
+                    echo "<h5>Ingredientes</h5>";
                     echo $resultado["ingredientes"] . "<br>";
-                    echo "<h4>Preparación</h4>";
-                    echo $resultado["receta"] . "<br> </div>";
+                    echo "<h5>Preparación</h5>";
+                    echo $resultado["receta"] . "<br></p></div></div></div>";
                 }
+                echo "</div></div>";
             }
+        
         } catch (Exception $e) {
             error_log($e->getMessage() . microtime() . PHP_EOL, 3, "logException.txt");
             header('Location: index.php?ctl=error');
         } catch (Error $e) {
             error_log($e->getMessage() . microtime() . PHP_EOL, 3, "logError.txt");
             header('Location: index.php?ctl=error');
-        }   
+        }
         require __DIR__ . '/../vista/paginas/recetas.php';
     }
     public function subir_recetas()
@@ -2259,4 +2363,4 @@ class Controller
         }
     }
 }
-?>                                                                                            
+?>
