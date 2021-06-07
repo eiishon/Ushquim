@@ -2297,7 +2297,7 @@ class Controller
                 $archivo = $_FILES['fotosreceta']['name'];
                 if ($archivo != "") {
                     $file = cfile("fotosreceta", $rutaIMG, $extensionesValidas, $errores);
-                    $archivo =  $idReceta . $nomReceta . ".jpg";
+                    $archivo =  $idReceta ."-". $_FILES['fotosreceta']['name'] . ".jpg";
                     $origen = $_FILES["fotosreceta"]['tmp_name'];
                     $destino = $rutaIMG .$archivo;
                     if(move_uploaded_file($origen, $destino)){

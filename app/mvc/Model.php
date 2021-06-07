@@ -97,7 +97,7 @@ class Model extends PDO
     {
         $consulta = "insert into fotosreceta(idReceta, rutafoto) values (:idReceta, :img)";
         $result = $this->conexion->prepare($consulta);
-        $result->bindParam(':idRecceta', $idReceta);
+        $result->bindParam(':idReceta', $idReceta);
         $result->bindParam(':img', $img);
         $result->execute();
         $result->fetch();
