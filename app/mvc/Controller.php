@@ -19,6 +19,12 @@
         text-align: right;
     }
 
+    .fit-image {
+        width: 100%;
+        object-fit: cover;
+        max-height: 200px;
+    }
+
     h1,
     h3 {
         font-family: 'Akaya Kanadaka', cursive;
@@ -79,10 +85,17 @@ class Controller
         try {
             $db = new Model();
             $resultados = $db->getRecetas();
+            $rutaIMG = "app\\mvc\\img\\recetas\\";
+
             if ($resultados) {
                 echo "<div class=\"receta\"><div class=\"row row-cols-1 row-cols-md-2 g-4\">";
                 foreach ($resultados as $resultado) {
+                    $idReceta = $db->getIdReceta($resultado["receta"]);
+                    $img = $db->getImg($idReceta);
                     echo "<div class=\"col\"><div class=\" card h-100\"> 
+
+                    <img src=\"" . $rutaIMG . $img . "\" class=\"card-img-top rounded mx-auto d-block img-fluid fit-image\" alt=\"IMAGEN RECETA\">
+
                     <div class=\"card-body\">";
                     echo "<h3 class=\"card-title\">" . $resultado["nomReceta"] . "</h3><br><p class=\"card-text\"><div class=\"info\">";
                     echo $resultado["tPrep"] . " minutos. <br>";
@@ -603,11 +616,17 @@ class Controller
 
             $db = new Model();
             $resultados = $db->getRecetasNoAprobadas();
+            $rutaIMG = "app\\mvc\\img\\recetas\\";
             if ($resultados) {
                 echo "<div class = \"gestion\">";
                 foreach ($resultados as $resultado) {
-                    echo "<div class=\"col\"><div class=\" card h-100\"> 
-                    <div class=\"card-body\">";
+                    $idReceta = $db->getIdReceta($resultado["receta"]);
+                    $img = $db->getImg($idReceta);
+                    echo "<div class=\"col\"><div class=\" card h-300\"> 
+
+                    <img src=\"" . $rutaIMG . $img . "\" class=\"card-img-top rounded mx-auto d-block img-fluid fit-image\" alt=\"IMAGEN RECETA\">
+
+                    <div class=\"card-body \">";
                     echo "<h3 class=\"card-title\">" . $resultado["nomReceta"] . "</h3><br><p class=\"card-text\"><div class=\"info\">";
                     echo $resultado["tPrep"] . " minutos. <br>";
                     echo "Fecha subida: " . $resultado["fecha_subida"] . "</div><br>";
@@ -831,12 +850,20 @@ class Controller
             $resultadoAltramuces = $db->getRecetasAltramuces();
             $resultadoVegano = $db->getRecetasVegan();
             $resultadoVegetariano = $db->getRecetasVegetarian();
-
+            $rutaIMG = "app\\mvc\\img\\recetas\\";
             if ($resultadoGluten) {
+
                 echo "<h1>Recetas con gluten:</h1><br/>";
                 echo "<div class=\"receta\"><div class=\"row row-cols-1 row-cols-md-2 g-4\">";
                 foreach ($resultadoGluten as $resultado) {
+                    
+                   
+                    $idReceta = $db->getIdReceta($resultado["receta"]);
+                    $img = $db->getImg($idReceta);
                     echo "<div class=\"col\"><div class=\" card h-100\"> 
+
+                    <img src=\"" . $rutaIMG . $img . "\" class=\"card-img-top rounded mx-auto d-block img-fluid fit-image\" alt=\"IMAGEN RECETA\">
+
                     <div class=\"card-body\">";
                     echo "<h3 class=\"card-title\">" . $resultado["nomReceta"] . "</h3><br><p class=\"card-text\"><div class=\"info\">";
                     echo $resultado["tPrep"] . " minutos. <br>";
@@ -918,7 +945,12 @@ class Controller
                 echo "<div class=\"receta\"><div class=\"row row-cols-1 row-cols-md-2 g-4\">";
 
                 foreach ($resultadoCrustaceos as $resultado) {
+                    $idReceta = $db->getIdReceta($resultado["receta"]);
+                    $img = $db->getImg($idReceta);
                     echo "<div class=\"col\"><div class=\" card h-100\"> 
+
+                    <img src=\"" . $rutaIMG . $img . "\" class=\"card-img-top rounded mx-auto d-block img-fluid fit-image\" alt=\"IMAGEN RECETA\">
+
                     <div class=\"card-body\">";
                     echo "<h3 class=\"card-title\">" . $resultado["nomReceta"] . "</h3><br><p class=\"card-text\"><div class=\"info\">";
                     echo $resultado["tPrep"] . " minutos. <br>";
@@ -999,7 +1031,12 @@ class Controller
                 echo "<div class=\"receta\"><div class=\"row row-cols-1 row-cols-md-2 g-4\">";
 
                 foreach ($resultadoHuevos as $resultado) {
+                    $idReceta = $db->getIdReceta($resultado["receta"]);
+                    $img = $db->getImg($idReceta);
                     echo "<div class=\"col\"><div class=\" card h-100\"> 
+
+                    <img src=\"" . $rutaIMG . $img . "\" class=\"card-img-top rounded mx-auto d-block img-fluid fit-image\" alt=\"IMAGEN RECETA\">
+
                     <div class=\"card-body\">";
                     echo "<h3 class=\"card-title\">" . $resultado["nomReceta"] . "</h3><br><p class=\"card-text\"><div class=\"info\">";
                     echo $resultado["tPrep"] . " minutos. <br>";
@@ -1080,7 +1117,12 @@ class Controller
                 echo "<div class=\"receta\"><div class=\"row row-cols-1 row-cols-md-2 g-4\">";
 
                 foreach ($resultadoPescado as $resultado) {
+                    $idReceta = $db->getIdReceta($resultado["receta"]);
+                    $img = $db->getImg($idReceta);
                     echo "<div class=\"col\"><div class=\" card h-100\"> 
+
+                    <img src=\"" . $rutaIMG . $img . "\" class=\"card-img-top rounded mx-auto d-block img-fluid fit-image\" alt=\"IMAGEN RECETA\">
+ 
                     <div class=\"card-body\">";
                     echo "<h3 class=\"card-title\">" . $resultado["nomReceta"] . "</h3><br><p class=\"card-text\"><div class=\"info\">";
                     echo $resultado["tPrep"] . " minutos. <br>";
@@ -1161,7 +1203,12 @@ class Controller
                 echo "<div class=\"receta\"><div class=\"row row-cols-1 row-cols-md-2 g-4\">";
 
                 foreach ($resultadoCacahuetes as $resultado) {
+                    $idReceta = $db->getIdReceta($resultado["receta"]);
+                    $img = $db->getImg($idReceta);
                     echo "<div class=\"col\"><div class=\" card h-100\"> 
+
+                    <img src=\"" . $rutaIMG . $img . "\" class=\"card-img-top rounded mx-auto d-block img-fluid fit-image\" alt=\"IMAGEN RECETA\">
+
                     <div class=\"card-body\">";
                     echo "<h3 class=\"card-title\">" . $resultado["nomReceta"] . "</h3><br><p class=\"card-text\"><div class=\"info\">";
                     echo $resultado["tPrep"] . " minutos. <br>";
@@ -1242,7 +1289,12 @@ class Controller
                 echo "<div class=\"receta\"><div class=\"row row-cols-1 row-cols-md-2 g-4\">";
 
                 foreach ($resultadoSoja as $resultado) {
+                    $idReceta = $db->getIdReceta($resultado["receta"]);
+                    $img = $db->getImg($idReceta);
                     echo "<div class=\"col\"><div class=\" card h-100\"> 
+
+                    <img src=\"" . $rutaIMG . $img . "\" class=\"card-img-top rounded mx-auto d-block img-fluid fit-image\" alt=\"IMAGEN RECETA\">
+
                     <div class=\"card-body\">";
                     echo "<h3 class=\"card-title\">" . $resultado["nomReceta"] . "</h3><br><p class=\"card-text\"><div class=\"info\">";
                     echo $resultado["tPrep"] . " minutos. <br>";
@@ -1323,7 +1375,12 @@ class Controller
                 echo "<div class=\"receta\"><div class=\"row row-cols-1 row-cols-md-2 g-4\">";
 
                 foreach ($resultadoLactosa as $resultado) {
+                    $idReceta = $db->getIdReceta($resultado["receta"]);
+                    $img = $db->getImg($idReceta);
                     echo "<div class=\"col\"><div class=\" card h-100\"> 
+
+                    <img src=\"" . $rutaIMG . $img . "\" class=\"card-img-top rounded mx-auto d-block img-fluid fit-image\" alt=\"IMAGEN RECETA\">
+ 
                     <div class=\"card-body\">";
                     echo "<h3 class=\"card-title\">" . $resultado["nomReceta"] . "</h3><br><p class=\"card-text\"><div class=\"info\">";
                     echo $resultado["tPrep"] . " minutos. <br>";
@@ -1404,7 +1461,12 @@ class Controller
                 echo "<div class=\"receta\"><div class=\"row row-cols-1 row-cols-md-2 g-4\">";
 
                 foreach ($resultadoFrutosCascara as $resultado) {
+                    $idReceta = $db->getIdReceta($resultado["receta"]);
+                    $img = $db->getImg($idReceta);
                     echo "<div class=\"col\"><div class=\" card h-100\"> 
+
+                    <img src=\"" . $rutaIMG . $img . "\" class=\"card-img-top rounded mx-auto d-block img-fluid fit-image\" alt=\"IMAGEN RECETA\">
+
                     <div class=\"card-body\">";
                     echo "<h3 class=\"card-title\">" . $resultado["nomReceta"] . "</h3><br><p class=\"card-text\"><div class=\"info\">";
                     echo $resultado["tPrep"] . " minutos. <br>";
@@ -1485,7 +1547,12 @@ class Controller
                 echo "<div class=\"receta\"><div class=\"row row-cols-1 row-cols-md-2 g-4\">";
 
                 foreach ($resultadoApio as $resultado) {
+                    $idReceta = $db->getIdReceta($resultado["receta"]);
+                    $img = $db->getImg($idReceta);
                     echo "<div class=\"col\"><div class=\" card h-100\"> 
+
+                    <img src=\"" . $rutaIMG . $img . "\" class=\"card-img-top rounded mx-auto d-block img-fluid fit-image\" alt=\"IMAGEN RECETA\">
+ 
                     <div class=\"card-body\">";
                     echo "<h3 class=\"card-title\">" . $resultado["nomReceta"] . "</h3><br><p class=\"card-text\"><div class=\"info\">";
                     echo $resultado["tPrep"] . " minutos. <br>";
@@ -1566,7 +1633,12 @@ class Controller
                 echo "<div class=\"receta\"><div class=\"row row-cols-1 row-cols-md-2 g-4\">";
 
                 foreach ($resultadoMostaza as $resultado) {
+                    $idReceta = $db->getIdReceta($resultado["receta"]);
+                    $img = $db->getImg($idReceta);
                     echo "<div class=\"col\"><div class=\" card h-100\"> 
+
+                    <img src=\"" . $rutaIMG . $img . "\" class=\"card-img-top rounded mx-auto d-block img-fluid fit-image\" alt=\"IMAGEN RECETA\">
+ 
                     <div class=\"card-body\">";
                     echo "<h3 class=\"card-title\">" . $resultado["nomReceta"] . "</h3><br><p class=\"card-text\"><div class=\"info\">";
                     echo $resultado["tPrep"] . " minutos. <br>";
@@ -1647,7 +1719,12 @@ class Controller
                 echo "<div class=\"receta\"><div class=\"row row-cols-1 row-cols-md-2 g-4\">";
 
                 foreach ($resultadoSesamo as $resultado) {
+                    $idReceta = $db->getIdReceta($resultado["receta"]);
+                    $img = $db->getImg($idReceta);
                     echo "<div class=\"col\"><div class=\" card h-100\"> 
+
+                    <img src=\"" . $rutaIMG . $img . "\" class=\"card-img-top rounded mx-auto d-block img-fluid fit-image\" alt=\"IMAGEN RECETA\">
+
                     <div class=\"card-body\">";
                     echo "<h3 class=\"card-title\">" . $resultado["nomReceta"] . "</h3><br><p class=\"card-text\"><div class=\"info\">";
                     echo $resultado["tPrep"] . " minutos. <br>";
@@ -1728,7 +1805,12 @@ class Controller
                 echo "<div class=\"receta\"><div class=\"row row-cols-1 row-cols-md-2 g-4\">";
 
                 foreach ($resultadoSulfitos as $resultado) {
+                    $idReceta = $db->getIdReceta($resultado["receta"]);
+                    $img = $db->getImg($idReceta);
                     echo "<div class=\"col\"><div class=\" card h-100\"> 
+
+                    <img src=\"" . $rutaIMG . $img . "\" class=\"card-img-top rounded mx-auto d-block img-fluid fit-image\" alt=\"IMAGEN RECETA\">
+ 
                     <div class=\"card-body\">";
                     echo "<h3 class=\"card-title\">" . $resultado["nomReceta"] . "</h3><br><p class=\"card-text\"><div class=\"info\">";
                     echo $resultado["tPrep"] . " minutos. <br>";
@@ -1809,7 +1891,12 @@ class Controller
                 echo "<div class=\"receta\"><div class=\"row row-cols-1 row-cols-md-2 g-4\">";
 
                 foreach ($resultadoMoluscos as $resultado) {
+                    $idReceta = $db->getIdReceta($resultado["receta"]);
+                    $img = $db->getImg($idReceta);
                     echo "<div class=\"col\"><div class=\" card h-100\"> 
+
+                    <img src=\"" . $rutaIMG . $img . "\" class=\"card-img-top rounded mx-auto d-block img-fluid fit-image\" alt=\"IMAGEN RECETA\">
+ 
                     <div class=\"card-body\">";
                     echo "<h3 class=\"card-title\">" . $resultado["nomReceta"] . "</h3><br><p class=\"card-text\"><div class=\"info\">";
                     echo $resultado["tPrep"] . " minutos. <br>";
@@ -1890,7 +1977,12 @@ class Controller
                 echo "<div class=\"receta\"><div class=\"row row-cols-1 row-cols-md-2 g-4\">";
 
                 foreach ($resultadoAltramuces as $resultado) {
+                    $idReceta = $db->getIdReceta($resultado["receta"]);
+                    $img = $db->getImg($idReceta);
                     echo "<div class=\"col\"><div class=\" card h-100\"> 
+
+                    <img src=\"" . $rutaIMG . $img . "\" class=\"card-img-top rounded mx-auto d-block img-fluid fit-image\" alt=\"IMAGEN RECETA\">
+
                     <div class=\"card-body\">";
                     echo "<h3 class=\"card-title\">" . $resultado["nomReceta"] . "</h3><br><p class=\"card-text\"><div class=\"info\">";
                     echo $resultado["tPrep"] . " minutos. <br>";
@@ -1971,7 +2063,12 @@ class Controller
                 echo "<div class=\"receta\"><div class=\"row row-cols-1 row-cols-md-2 g-4\">";
 
                 foreach ($resultadoVegano as $resultado) {
+                    $idReceta = $db->getIdReceta($resultado["receta"]);
+                    $img = $db->getImg($idReceta);
                     echo "<div class=\"col\"><div class=\" card h-100\"> 
+
+                    <img src=\"" . $rutaIMG . $img . "\" class=\"card-img-top rounded mx-auto d-block img-fluid fit-image\" alt=\"IMAGEN RECETA\">
+
                     <div class=\"card-body\">";
                     echo "<h3 class=\"card-title\">" . $resultado["nomReceta"] . "</h3><br><p class=\"card-text\"><div class=\"info\">";
                     echo $resultado["tPrep"] . " minutos. <br>";
@@ -2052,7 +2149,12 @@ class Controller
                 echo "<div class=\"receta\"><div class=\"row row-cols-1 row-cols-md-2 g-4\">";
 
                 foreach ($resultadoVegetariano as $resultado) {
+                    $idReceta = $db->getIdReceta($resultado["receta"]);
+                    $img = $db->getImg($idReceta);
                     echo "<div class=\"col\"><div class=\" card h-100\"> 
+
+                    <img src=\"" . $rutaIMG . $img . "\" class=\"card-img-top rounded mx-auto d-block img-fluid fit-image\" alt=\"IMAGEN RECETA\">
+
                     <div class=\"card-body\">";
                     echo "<h3 class=\"card-title\">" . $resultado["nomReceta"] . "</h3><br><p class=\"card-text\"><div class=\"info\">";
                     echo $resultado["tPrep"] . " minutos. <br>";
@@ -2292,17 +2394,17 @@ class Controller
 
                 $idReceta = $db->getIdReceta($receta);
                 //CONFIGURACIÓN IMAGENES
-                $rutaIMG = __DIR__."\img\\recetas\\";
+                $rutaIMG = __DIR__ . "\img\\recetas\\";
                 $extensionesValidas = ["image/jpeg", "image/gif"];
                 $archivo = $_FILES['fotosreceta']['name'];
                 if ($archivo != "") {
                     $file = cfile("fotosreceta", $rutaIMG, $extensionesValidas, $errores);
-                    $archivo =  $idReceta ."-". $_FILES['fotosreceta']['name'] . ".jpg";
+                    $archivo =  $idReceta . "-" . $_FILES['fotosreceta']['name'];
                     $origen = $_FILES["fotosreceta"]['tmp_name'];
-                    $destino = $rutaIMG .$archivo;
-                    if(move_uploaded_file($origen, $destino)){
-                        $resultado = $db->setImg($idReceta, $destino);
-                    } else{
+                    $destino = $rutaIMG . $archivo;
+                    if (move_uploaded_file($origen, $destino)) {
+                        $resultado = $db->setImg($idReceta, $archivo);
+                    } else {
                         $_SESSION["mensajeError"] = "Ha habido un error a la hora de subir la imagen";
                         throw new Exception("Ha habido un error a la hora de subir la imagen");
                     }

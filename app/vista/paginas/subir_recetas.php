@@ -101,7 +101,7 @@
                     <label for="tPrep">Tiempo preparación (en minutos)</label>
                     <input type="number" name="tPrep" id="tPrep" required><br>
                     <label for="ingredientes">Ingredientes</label><br>
-                   <textarea name="ingredientes" id="" cols="30" rows="10" required></textarea>
+                   <textarea name="ingredientes" id="" cols="30" rows="12" required></textarea>
                    <br>
                     <label for="alergias">Alergias: </label>
                         <div class="al">
@@ -143,7 +143,7 @@
                             <label for="vegetarian">Vegetariano</label>
                         </div>
                 <label for="receta">Cuerpo de la receta</label><br>
-                <textarea name="receta" id="" cols="30" rows="10" required></textarea><br>
+                <textarea name="receta" id="" cols="100" rows="15" required></textarea><br>
                 <label for="fotosreceta">Fotos de la receta</label>
                 <div class="file">
                 <input type="file" name="fotosreceta" id="fotosreceta" multiple></div>

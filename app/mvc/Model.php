@@ -104,6 +104,15 @@ class Model extends PDO
         return $result;
     }
 
+    public function getImg($idReceta){
+        $consulta = "select rutafoto from fotosreceta where idReceta=:idReceta";
+        $result = $this->conexion->prepare($consulta);
+        $result->bindParam(':idReceta', $idReceta);
+        $result->execute();
+        $row = $result->fetch();
+        return $row["rutafoto"];
+    }
+
     public function getIdUser($user)
     {
         $consulta = "select idUser from users where user=:user";
@@ -392,7 +401,8 @@ class Model extends PDO
         $result->bindParam(':receta', $receta);
         $result->execute();
         $row = $result->fetch();
-        return $row["idReceta"];
+        if ($row == false) return false;
+        else return $row["idReceta"];
     }
 
     public function aceptarReceta($idReceta)

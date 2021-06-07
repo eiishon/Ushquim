@@ -10,3 +10,4 @@ SQLSTATE[42S22]: Column not found: 1054 Unknown column 'pfp' in 'field list'0.48
 El usuario o contraseña no son correctos0.22834300 1621940463
 El usuario o contraseña no son correctos0.85396900 1622129860
 Ha habido un error a la hora de subir la imagen0.89250800 1623080982
+No hay recetas para gestionar0.52539800 1623085003
