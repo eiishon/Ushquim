@@ -595,6 +595,7 @@ class Controller
                 $resultado = $db->borrarPerfil($idUser);
                 if ($resultado) {
                     header('Location: index.php?ctl=inicio');
+                    session_destroy();
                 }
             }
         } catch (Exception $e) {
