@@ -679,33 +679,28 @@ class Controller
                     echo $resultado["ingredientes"] . "<br>";
                     echo "<h5>Preparación</h5>";
                     echo $resultado["receta"] . "<br></p></div></div></div>";
-                }
-                echo " <form method=\"POST\" action=\"index.php?ctl=gestion\" name=\"gestion\" enctype=\"multipart/form-data\">
+                    echo " <form method=\"POST\" action=\"index.php?ctl=gestion\" name=\"gestion\" enctype=\"multipart/form-data\">
                     <input type= \"submit\" name= \"aceptar\" value=\"Aceptar\" /> 
                     <input type = \"submit\" name= \"rechazar\" value =\"Rechazar\" />
                     </form>";
-                $idReceta = $db->getIdReceta($resultado["receta"]);
-                $_SESSION["idReceta"] = $idReceta;
-                if (isset($_POST["aceptar"])) {
-                    echo "Aceptar receta";
-                    $resultado = $db->aceptarReceta($idReceta);
-                    if ($resultado) {
-                        echo "Receta aprobada";
-                    } else {
-                        $_SESSION['mensajeError'] = 'Ha habido un error a la hora de aceptar la receta';
-                        throw new Exception("Ha habido un error a la hora de aceptar la receta");
-                    }
-                } elseif (isset($_POST["rechazar"])) {
-                    echo "Rechazar receta";
-                    $resultado = $db->rechazarReceta($idReceta);
-                    if ($resultado) {
-                        echo "Receta rechazada";
-                    } else {
-                        $_SESSION['mensajeError'] = 'Ha habido un error a la hora de rechazar la receta';
-                        throw new Exception("Ha habido un error a la hora de rechazar la receta");
-                    }
-                    echo "</div>";
+                    
                 }
+                $idReceta = $db->getIdReceta($resultado["receta"]);
+                    $_SESSION["idReceta"] = $idReceta;
+                    if (isset($_POST["aceptar"])) {
+                        $resultado = $db->aceptarReceta($idReceta);
+                        if (!$resultado) {
+                            $_SESSION['mensajeError'] = 'Ha habido un error a la hora de aceptar la receta';
+                            throw new Exception("Ha habido un error a la hora de aceptar la receta");
+                        }
+                    } elseif (isset($_POST["rechazar"])) {
+                        $resultado = $db->rechazarReceta($idReceta);
+                        if (!$resultado) {
+                            $_SESSION['mensajeError'] = 'Ha habido un error a la hora de rechazar la receta';
+                            throw new Exception("Ha habido un error a la hora de rechazar la receta");
+                        }
+                        echo "</div>";
+                    }
             } else {
                 $_SESSION['mensajeError'] = 'No hay recetas para gestionar';
                 throw new Exception("No hay recetas para gestionar");
@@ -2172,15 +2167,13 @@ class Controller
             $fecha_subida = date('Y-m-d H:i:s');
             $idUser = "";
             $errores = [];
-            //CONFIGURACIÓN IMAGENES
-            $rutaIMG = "../vista/paginas/img";
-            $extensionesValidas = ["image/jpeg", "image/gif"];
+
             if (isset($_POST['enviar'])) {
 
                 $nomReceta = recoge('nomReceta');
                 $ingredientes = recoge('ingredientes');
                 $receta = recoge('receta');
-
+                $tPrep = recoge('tPrep');
                 if (!empty($nomReceta)) {
                     cName($nomReceta, $errores);
                 } else {
@@ -2265,21 +2258,19 @@ class Controller
                 if ($cont == 0) {
                     $errores[] = "* Al menos debes marcar una alergia o preferencia alimenticia.";
                 }
-                if (isset($_FILES["fotosreceta"]) && !empty($_FILES["fotosreceta"]) && $_FILES["fotosreceta"]["name"] != "") {
-                    $file = cfile("fotosreceta", $rutaIMG, $extensionesValidas, $errores);
-                } else {
-                    $errores[] = "* Al menos debes subir una imagen";
-                }
+                //CONFIGURACIÓN IMAGENES
+                $rutaIMG = "../vista/paginas/img/";
+                $extensionesValidas = ["image/jpeg", "image/gif"];
+                $archivo = $_FILES['fotosreceta']['name'];
 
-                $_FILES["fotosreceta"]["name"] =  $idReceta . $nomReceta . ".jpg";
-                $origen = $_FILES["fotosreceta"]['tmp_name'];
-                $destino = $rutaIMG . $_FILES["fotosreceta"]["name"];
-                move_uploaded_file($origen, $destino);
+                $db = new Model();
+
+
+
 
                 //LO PASAMOS A EJECUTAR AL MODELO
 
 
-                $db = new Model();
                 $idUser = $_SESSION["idUser"];
 
                 $resultado = $db->setReceta(
@@ -2310,9 +2301,16 @@ class Controller
 
                 $idReceta = $db->getIdReceta($receta);
 
+                if ($archivo != "") {
+                    $file = cfile("fotosreceta", $rutaIMG, $extensionesValidas, $errores);
+                    $_FILES["fotosreceta"]["name"] =  $idReceta . $nomReceta . ".jpg";
+
+                } else {
+                    $errores[] = "* Al menos debes subir una imagen";
+                }
                 $resultadoIMG = $db->setImg(
                     $idReceta,
-                    $destino
+                    $archivo
                 );
             }
         } catch (Exception $e) {

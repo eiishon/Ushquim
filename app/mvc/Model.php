@@ -426,8 +426,6 @@ class Model extends PDO
         return $row;
     }
 
-    
-
     public function editarPerfil($dbdato, $dato, $idUser)
     {
         $consulta = "update users set ".$dbdato."=:dato where idUser=:idUser";
