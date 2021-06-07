@@ -512,7 +512,7 @@ class Controller
 
 
 
-                if (empty($bio)) {
+                if (!empty($bio)) {
                     $resultado = $db->editarPerfil($dbbio, $bio, $idUser);
                 }
 
